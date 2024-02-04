@@ -8,8 +8,14 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        'white': '#ffffff',
+        'primary': '#BD945A',
+        'secondary': '#F6F1F0',
+      },
       fontFamily: {
         script: ['Alex Brush', 'cursive'],
+        serif: ['Cormorant Garamond', ...defaultTheme.fontFamily.sans],
         sans: ['Nunito Sans', ...defaultTheme.fontFamily.sans]
       },
     },

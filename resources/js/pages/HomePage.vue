@@ -1,5 +1,5 @@
 <template>
-    <div class="flex" id="oliven-page">
+    <div class="flex w-full justify-end" id="oliven-page">
         <SidebarSection />
         <MainSection />
     </div>

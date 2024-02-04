@@ -1,5 +1,5 @@
 <template>
-    <header id="home" class="flex items-center justify-center h-screen hero-image">
+    <header id="home" class="flex justify-center items-center justify-center h-screen hero-image">
         <div>
             <div>
                 <div class="col-md-12 text-center caption">

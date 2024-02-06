@@ -1,42 +1,45 @@
 <template>
     <!-- eslint-disable max-len -->
     <aside
-        class="fixed bottom-0 left-0 top-0 z-[1001] flex w-[270px] translate-x-[-270px] flex-col justify-between overflow-y-scroll bg-secondary px-8 py-8 duration-[0.5s] sm:translate-x-[0] md:w-[30%] md:py-16 xl:w-[22%]"
+        class="fixed bottom-0 left-0 top-0 z-[1001] flex w-[270px] flex-col justify-between overflow-y-scroll bg-secondary px-8 py-8 duration-[0.5s] sm:translate-x-[0] md:w-[30%] md:py-16 xl:w-[22%]"
+        :class="navOpen ? 'translate-x-0' : 'translate-x-[-270px]'"
     >
-        <!-- Logo -->
-        <div class="w-full pb-16 text-center leading-5 text-black">
-            <a :href="route('home')" class="flex flex-col items-center">
-                <img
-                    class="mb-0 w-[90px]"
-                    src="../../../resources/assets/logo.png"
-                    alt=""
-                />
-                <span
-                    class="font-script text-4xl font-normal normal-case text-primary"
-                    >Heather <small>&</small> Adam</span
-                >
-                <h6 class="mb-2 font-sans text-xs tracking-[5px]">
-                    02.10.2024
-                </h6>
-            </a>
-        </div>
-        <!-- Menu -->
-        <nav>
-            <ul class="mx-0 mb-8 mt-0 p-0 text-center sm:mb-0">
-                <li
-                    v-for="navItem in navItems"
-                    :key="navItem.text"
-                    class="my-[3px] pb-[3px]"
-                >
-                    <a
-                        :href="navItem.route"
-                        class="border-b border-b-transparent font-serif text-lg leading-6 tracking-wide duration-[0.3s] hover:border-b-primary hover:duration-[0.5s]"
+        <div class="flex flex-col">
+            <!-- Logo -->
+            <div class="w-full pb-16 text-center leading-5 text-black">
+                <a :href="route('home')" class="flex flex-col items-center">
+                    <img
+                        class="mb-0 w-[90px]"
+                        src="../../../resources/assets/logo.png"
+                        alt=""
+                    />
+                    <span
+                        class="font-script text-4xl font-normal normal-case text-primary"
+                        >Heather <small>&</small> Adam</span
                     >
-                        {{ navItem.text }}
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                    <h6 class="mb-2 font-sans text-xs tracking-[5px]">
+                        02.10.2024
+                    </h6>
+                </a>
+            </div>
+            <!-- Menu -->
+            <nav>
+                <ul class="mx-0 mb-8 mt-0 p-0 text-center sm:mb-0">
+                    <li
+                        v-for="navItem in navItems"
+                        :key="navItem.text"
+                        class="my-[3px] pb-[3px]"
+                    >
+                        <a
+                            :href="navItem.route"
+                            class="border-b border-b-transparent font-serif text-lg leading-6 tracking-wide duration-[0.3s] hover:border-b-primary hover:duration-[0.5s]"
+                        >
+                            {{ navItem.text }}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
         <!-- Sidebar Footer -->
         <div
             class="m-0 flex flex-col items-center pt-16 text-center text-xs tracking-wide text-gray-600"
@@ -92,6 +95,13 @@ const navItems = [
         route: route('home'),
     },
 ];
+
+defineProps({
+    navOpen: {
+        type: Boolean,
+        required: true,
+    },
+});
 </script>
 
 <style lang="postcss" scoped>

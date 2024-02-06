@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-import MainSection from '../components/MainSection.vue';
-import SidebarSection from '../components/SidebarSection.vue';
+import MainSection from '../components/MainSection.vue'
+import SidebarSection from '../components/SidebarSection.vue'
 </script>
 
 <style lang="postcss" scoped>

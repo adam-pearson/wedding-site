@@ -1,5 +1,8 @@
 <template>
-    <header id="home" class="flex justify-center items-center h-screen hero-image">
+    <header
+        id="home"
+        class="hero-image flex h-screen items-center justify-center"
+    >
         <div>
             <div>
                 <div class="text-center">
@@ -19,9 +22,7 @@
     </header>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped lang="postcss">
 .hero-image {
@@ -33,17 +34,21 @@
 }
 .hero-names {
     @apply font-script;
-    @apply mb-4;
-    @apply text-[7.5rem];
+    @apply my-0;
+    @apply text-[40px];
+    @apply md:text-[7.5rem];
     @apply text-white;
     @apply leading-[7.5rem];
+    @apply md:my-4;
+    @apply md:leading-none;
 }
 
 .hero-caption {
     @apply font-sans;
-    @apply text-xl;
+    @apply text-[12px];
+    @apply md:text-xl;
     @apply tracking-[5px];
     @apply text-white;
     @apply uppercase;
- }
+}
 </style>

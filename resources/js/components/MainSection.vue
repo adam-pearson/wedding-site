@@ -5,6 +5,7 @@
         id="oliven-main"
     >
         <HeroSection />
+        <OurStorySection />
         <FamilySection />
     </div>
     <!-- eslint-enable max-len -->
@@ -13,4 +14,5 @@
 <script setup>
 import HeroSection from './HeroSection.vue';
 import FamilySection from './FamilySection.vue';
+import OurStorySection from './OurStorySection.vue';
 </script>

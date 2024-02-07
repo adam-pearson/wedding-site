@@ -32,5 +32,6 @@ module.exports = {
         indent: ['error', 4],
         'vue/multi-word-component-names': 'off',
         'import/no-extraneous-dependencies': 'off',
+        'import/no-unresolved': 'off',
     },
 };

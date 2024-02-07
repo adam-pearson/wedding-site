@@ -59,10 +59,6 @@ const navItems = [
         route: route('home'),
     },
     {
-        text: 'Couple',
-        route: '#couple',
-    },
-    {
         text: 'Our Story',
         route: '#story',
     },
@@ -73,10 +69,6 @@ const navItems = [
     {
         text: 'Organization',
         route: '#organization',
-    },
-    {
-        text: 'Gallery',
-        route: '#gallery',
     },
     {
         text: 'When & Where',
@@ -91,8 +83,8 @@ const navItems = [
         route: '#gift',
     },
     {
-        text: 'Blog',
-        route: route('home'),
+        text: 'Admin Login',
+        route: route('admin.login'),
     },
 ];
 

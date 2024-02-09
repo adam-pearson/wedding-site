@@ -8,6 +8,9 @@ export default {
     ],
     theme: {
         extend: {
+            animation: {
+                'spin-slow': 'spin 12s linear infinite',
+            },
             colors: {
                 white: '#ffffff',
                 primary: '#BD945A',

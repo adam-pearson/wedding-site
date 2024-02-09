@@ -2,7 +2,6 @@
     <!-- eslint-disable max-len -->
     <div
         class="flex w-full flex-col transition-width duration-[0.5s] sm:w-[calc(100%-270px)] md:w-[70%] xl:w-[78%]"
-        id="oliven-main"
     >
         <HeroSection />
         <OurStorySection />

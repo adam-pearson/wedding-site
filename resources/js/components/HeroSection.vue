@@ -35,7 +35,7 @@ const weddingDate = computed(() => getFormattedWeddingDate('Do MMMM, YYYY'));
 
 <style scoped lang="postcss">
 .hero-image {
-    @apply bg-[url(/resources/assets/heroImage.jpg)];
+    @apply bg-[url(/resources/assets/heroImage_small.webp)];
     @apply bg-cover;
     @apply bg-no-repeat;
     @apply bg-center;

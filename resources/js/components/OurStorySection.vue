@@ -12,13 +12,13 @@
                     >
                         <div class="img relative pb-8 pl-4 pr-8">
                             <img
-                                src="/images/story.jpg"
+                                src="/images/story_small.webp"
                                 class="relative z-[2]"
                                 alt=""
                             />
                         </div>
                         <div
-                            class="story-img-2 story-wedding animate-spin-slow absolute right-[12%] top-[2%] z-[3] h-[30%] w-[30%] bg-[url('/resources/assets/wedding-logo.png')] bg-cover bg-center bg-no-repeat md:right-[40px] md:top-[5%] md:h-[30%] md:w-[30%] lg:right-[15%] lg:top-[15px] lg:h-[25%] lg:w-[25%]"
+                            class="story-img-2 story-wedding animate-spin-slow absolute right-[8%] top-[4%] z-[3] h-[35%] w-[31%] bg-[url('/resources/assets/wedding-logo.png')] bg-cover bg-center bg-no-repeat md:right-[15%] md:top-[3%] md:h-[35%] md:w-[31%] lg:right-[10%] lg:top-[3%]"
                         ></div>
                     </div>
                 </div>

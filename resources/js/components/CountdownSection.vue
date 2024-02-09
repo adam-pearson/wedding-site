@@ -2,7 +2,7 @@
     <!-- eslint-disable max-len -->
     <div
         id="countdown"
-        class="min-h-96 bg-[url(/resources/assets/countdownBackground.jpg)] bg-cover bg-fixed bg-center bg-no-repeat py-[100px] text-center"
+        class="min-h-96 bg-[url(/resources/assets/countdownBackground_small.webp)] bg-cover bg-fixed bg-center bg-no-repeat py-[100px] text-center"
     >
         <div>
             <div>

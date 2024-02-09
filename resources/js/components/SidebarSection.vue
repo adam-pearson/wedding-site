@@ -47,7 +47,11 @@
             <span
                 class="my-2 inline-block w-20 border-b border-b-primary"
             ></span>
-            <p>Heather & Adam wedding<br />2nd October 2024</p>
+            <p>
+                Heather & Adam's Wedding<br />{{
+                    getFormattedWeddingDate('Do MMMM YYYY')
+                }}
+            </p>
         </div>
     </aside>
     <!-- eslint-enable max-len -->

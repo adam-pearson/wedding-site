@@ -12,7 +12,7 @@
                     >
                         <div class="img relative pb-8 pl-4 pr-8">
                             <img
-                                src="/images/1.jpg"
+                                src="/images/story.jpg"
                                 class="relative z-[2]"
                                 alt=""
                             />

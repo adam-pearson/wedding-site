@@ -52,8 +52,9 @@
 
 <script setup>
 import { onBeforeMount, reactive, ref } from 'vue';
+import useWeddingDateHelper from '../utils/weddingDateHelper';
 
-const WEDDING_DATE = 'Oct 02, 2024, 10:37:00';
+const { WEDDING_DATE } = useWeddingDateHelper();
 
 const weddingHasStarted = ref(false);
 

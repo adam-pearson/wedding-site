@@ -8,7 +8,9 @@
                 <div class="text-center">
                     <h5 class="hero-caption">The wedding of</h5>
                     <h1 class="hero-names">Heather & Adam</h1>
-                    <h5 class="hero-caption">2nd October, 2024</h5>
+                    <h5 class="hero-caption">
+                        {{ weddingDate }}
+                    </h5>
                 </div>
             </div>
             <!-- <div>
@@ -22,7 +24,14 @@
     </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from 'vue';
+import useWeddingDateHelper from '../utils/weddingDateHelper';
+
+const { getFormattedWeddingDate } = useWeddingDateHelper();
+
+const weddingDate = computed(() => getFormattedWeddingDate('Do MMMM, YYYY'));
+</script>
 
 <style scoped lang="postcss">
 .hero-image {

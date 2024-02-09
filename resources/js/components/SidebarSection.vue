@@ -18,7 +18,7 @@
                         >Heather <small>&</small> Adam</span
                     >
                     <h6 class="mb-2 font-sans text-xs tracking-[5px]">
-                        02.10.2024
+                        {{ getFormattedWeddingDate('DD.MM.YYYY') }}
                     </h6>
                 </a>
             </div>
@@ -53,6 +53,8 @@
     <!-- eslint-enable max-len -->
 </template>
 <script setup>
+import useWeddingDateHelper from '../utils/weddingDateHelper';
+
 const navItems = [
     {
         text: 'Home',
@@ -87,6 +89,8 @@ const navItems = [
         route: route('admin.login'),
     },
 ];
+
+const { getFormattedWeddingDate } = useWeddingDateHelper();
 
 defineProps({
     navOpen: {

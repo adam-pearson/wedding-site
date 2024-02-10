@@ -1,10 +1,10 @@
 <template>
     <div class="text-center">
-        <h5 class="hero-caption">The wedding of</h5>
+        <span class="hero-caption">The wedding of</span>
         <h1 class="hero-names">Heather & Adam</h1>
-        <h5 class="hero-caption">
+        <h2 class="hero-caption">
             {{ weddingDate }}
-        </h5>
+        </h2>
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
     <!-- eslint-disable max-len -->
     <button
+        aria-label="Open Nav Button"
         @click="emit('clicked')"
         class="hamburger visible fixed left-0 top-0 z-[9999] mx-8 my-4 rounded-full bg-primary px-4 py-3 opacity-100 duration-500 sm:hidden sm:opacity-0"
     >

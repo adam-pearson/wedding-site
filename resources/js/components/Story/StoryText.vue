@@ -48,7 +48,7 @@
 .story-text p {
     @apply font-sans;
     @apply leading-7;
-    @apply text-lightgray;
+    @apply text-gray-500;
     @apply text-sm;
 }
 </style>

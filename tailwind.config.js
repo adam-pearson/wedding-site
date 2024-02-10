@@ -13,9 +13,8 @@ export default {
             },
             colors: {
                 white: '#ffffff',
-                primary: '#BD945A',
+                primary: '#b87921',
                 secondary: '#F6F1F0',
-                lightgray: '#888',
             },
             fontFamily: {
                 script: ['Alex Brush', 'cursive'],

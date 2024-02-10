@@ -17,7 +17,7 @@ export default {
                 secondary: '#F6F1F0',
             },
             fontFamily: {
-                script: ['Alex Brush', 'cursive'],
+                script: ['Alex Brush', 'Brush Script MT', 'cursive'],
                 serif: ['Cormorant Garamond', ...defaultTheme.fontFamily.sans],
                 sans: ['Nunito Sans', ...defaultTheme.fontFamily.sans],
             },

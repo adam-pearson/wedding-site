@@ -17,7 +17,7 @@
 <script setup>
 import { ref } from 'vue';
 import MainSection from '../components/MainSection.vue';
-import SidebarSection from '../components/SidebarSection.vue';
+import SidebarSection from '../components/Sidebar/SidebarSection.vue';
 import HamburgerButton from '../components/Shared/HamburgerButton.vue';
 
 const navOpen = ref(false);

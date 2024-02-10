@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import HeroSection from './HeroSection.vue';
-import OurStorySection from './OurStorySection.vue';
-import CountdownSection from './CountdownSection.vue';
+import HeroSection from './Hero/HeroSection.vue';
+import OurStorySection from './Story/OurStorySection.vue';
+import CountdownSection from './Countdown/CountdownSection.vue';
 </script>

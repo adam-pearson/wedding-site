@@ -26,30 +26,30 @@ const navItems = [
         text: 'Our Story',
         route: '#story',
     },
-    {
-        text: 'Friends',
-        route: '#friends',
-    },
-    {
-        text: 'Organization',
-        route: '#organization',
-    },
-    {
-        text: 'When & Where',
-        route: '#whenwhere',
-    },
-    {
-        text: 'R.S.V.P.',
-        route: '#rsvp',
-    },
-    {
-        text: 'Gift Registry',
-        route: '#gift',
-    },
-    {
-        text: 'Admin Login',
-        route: route('admin.login'),
-    },
+    // {
+    //     text: 'Friends',
+    //     route: '#friends',
+    // },
+    // {
+    //     text: 'Organization',
+    //     route: '#organization',
+    // },
+    // {
+    //     text: 'When & Where',
+    //     route: '#whenwhere',
+    // },
+    // {
+    //     text: 'R.S.V.P.',
+    //     route: '#rsvp',
+    // },
+    // {
+    //     text: 'Gift Registry',
+    //     route: '#gift',
+    // },
+    // {
+    //     text: 'Admin Login',
+    //     route: route('admin.login'),
+    // },
 ];
 
 defineProps({

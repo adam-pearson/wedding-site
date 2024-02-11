@@ -46,10 +46,10 @@ const navItems = [
     //     text: 'Gift Registry',
     //     route: '#gift',
     // },
-    // {
-    //     text: 'Admin Login',
-    //     route: route('admin.login'),
-    // },
+    {
+        text: 'Admin Login',
+        route: route('login'),
+    },
 ];
 
 defineProps({

@@ -2,6 +2,7 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,8 @@ Route::get('/', function () {
     return Inertia::render('HomePage');
 })->name('home');
 
-Route::get('/admin/login', function () {
-    return redirect()->back(307);
-})->name('admin.login');
+Route::get('home', function () {
+    return Inertia::render('HomePage');
+})->name('home');
+
+// Route::get('/login', [AuthController::class, 'index'])->name('auth.login');

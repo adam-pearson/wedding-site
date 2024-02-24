@@ -1,8 +1,9 @@
 <?php
 
-use Inertia\Inertia;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Middleware\Authenticated;
+use App\Http\Controllers\HomePageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,8 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('HomePage');
-})->name('home');
+Route::get(uri: '/', action: HomePageController::class)->name('home');
 
-Route::get('home', function () {
-    return Inertia::render('HomePage');
-})->name('home');
-
-// Route::get('/login', [AuthController::class, 'index'])->name('auth.login');
+Route::get(uri: '/dashboard', action: AdminDashboardController::class)
+    ->name('dashboard')
+    ->middleware([Authenticated::class]);

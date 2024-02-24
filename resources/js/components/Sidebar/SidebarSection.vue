@@ -9,10 +9,27 @@
             <SidebarNav :nav-items="navItems" />
         </div>
         <SidebarFooter />
+        <a
+            v-if="!isLoggedIn"
+            :href="route('login')"
+            class="mx-auto block py-4 text-sm"
+            >Login</a
+        >
+        <Link
+            v-else
+            :href="route('logout')"
+            method="post"
+            as="button"
+            class="mx-auto block py-4 text-sm"
+        >
+            Logout
+        </Link>
     </aside>
     <!-- eslint-enable max-len -->
 </template>
 <script setup>
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import SidebarHeader from './SidebarHeader.vue';
 import SidebarNav from './SidebarNav.vue';
 import SidebarFooter from './SidebarFooter.vue';
@@ -26,30 +43,6 @@ const navItems = [
         text: 'Our Story',
         route: '#story',
     },
-    // {
-    //     text: 'Friends',
-    //     route: '#friends',
-    // },
-    // {
-    //     text: 'Organization',
-    //     route: '#organization',
-    // },
-    // {
-    //     text: 'When & Where',
-    //     route: '#whenwhere',
-    // },
-    // {
-    //     text: 'R.S.V.P.',
-    //     route: '#rsvp',
-    // },
-    // {
-    //     text: 'Gift Registry',
-    //     route: '#gift',
-    // },
-    {
-        text: 'Admin Login',
-        route: route('login'),
-    },
 ];
 
 defineProps({
@@ -58,6 +51,9 @@ defineProps({
         required: true,
     },
 });
+const page = usePage();
+
+const isLoggedIn = computed(() => Boolean(page?.props?.auth?.user));
 </script>
 
 <style lang="postcss" scoped>

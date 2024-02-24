@@ -12,11 +12,12 @@
             <h2
                 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
             >
-                Register a New Account
+                Log in to your account
             </h2>
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <NotificationBanner class="mb-4" :errors="formattedErrors" />
             <form class="space-y-6" @submit.prevent="submit">
                 <div>
                     <label
@@ -89,8 +90,23 @@
     <!-- eslint-enable max-len -->
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
+import NotificationBanner from '../../../components/Shared/NotificationBanner.vue';
+
+const props = defineProps({
+    errors: {
+        type: Object,
+        required: false,
+        default: () => {},
+    },
+});
+
+const formattedErrors = computed(() => {
+    console.log('props: ', props);
+    console.log('Object.values: ', Object.entries(props.errors));
+    return Object.values(props.errors);
+});
 
 const form = reactive({
     email: null,

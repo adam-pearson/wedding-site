@@ -18,6 +18,22 @@ use App\Http\Controllers\HomePageController;
 
 Route::get(uri: '/', action: HomePageController::class)->name('home');
 
-Route::get(uri: '/dashboard', action: AdminDashboardController::class)
-    ->name('dashboard')
-    ->middleware([Authenticated::class]);
+Route::middleware([Authenticated::class])->group(function () {
+    Route::get(uri: '/dashboard', action: AdminDashboardController::class)
+        ->name('admin.dashboard');
+
+    Route::get(uri: '/guests', action: AdminDashboardController::class)
+        ->name('admin.guests.list');
+
+    Route::get(uri: '/todo', action: AdminDashboardController::class)
+        ->name('admin.todo.list');
+
+    Route::get(uri: '/budget', action: AdminDashboardController::class)
+        ->name('admin.budget');
+
+    Route::get(uri: '/documents', action: AdminDashboardController::class)
+        ->name('admin.documents');
+
+    Route::get(uri: '/settings', action: AdminDashboardController::class)
+        ->name('admin.settings');
+});

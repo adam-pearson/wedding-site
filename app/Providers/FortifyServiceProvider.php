@@ -56,7 +56,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                return redirect('/dashboard');
+                return redirect()->route('admin.dashboard');
             }
         });
     }

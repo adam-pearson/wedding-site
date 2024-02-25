@@ -1,6 +1,6 @@
 <template>
     <AdminLayout>
-        <div>Tets</div>
+        <div>Test</div>
     </AdminLayout>
 </template>
 

@@ -102,47 +102,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <div
-                                            class="text-xs font-semibold leading-6 text-gray-400"
-                                        >
-                                            Your teams
-                                        </div>
-                                        <ul
-                                            role="list"
-                                            class="-mx-2 mt-2 space-y-1"
-                                        >
-                                            <li
-                                                v-for="team in teams"
-                                                :key="team.name"
-                                            >
-                                                <a
-                                                    :href="team.href"
-                                                    :class="[
-                                                        team.current
-                                                            ? 'bg-gray-50 text-indigo-600'
-                                                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                                                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                                                    ]"
-                                                >
-                                                    <span
-                                                        :class="[
-                                                            team.current
-                                                                ? 'border-indigo-600 text-indigo-600'
-                                                                : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
-                                                            'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
-                                                        ]"
-                                                        >{{
-                                                            team.initial
-                                                        }}</span
-                                                    >
-                                                    <span class="truncate">{{
-                                                        team.name
-                                                    }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -196,52 +155,22 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <div
-                            class="text-xs font-semibold leading-6 text-gray-400"
-                        >
-                            Your teams
-                        </div>
-                        <ul role="list" class="-mx-2 mt-2 space-y-1">
-                            <li v-for="team in teams" :key="team.name">
-                                <a
-                                    :href="team.href"
-                                    :class="[
-                                        team.current
-                                            ? 'bg-gray-50 text-indigo-600'
-                                            : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
-                                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                                    ]"
-                                >
-                                    <span
-                                        :class="[
-                                            team.current
-                                                ? 'border-indigo-600 text-indigo-600'
-                                                : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
-                                            'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
-                                        ]"
-                                        >{{ team.initial }}</span
-                                    >
-                                    <span class="truncate">{{
-                                        team.name
-                                    }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="-mx-6 mt-auto">
-                        <a
-                            href="#"
-                            class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
-                        >
-                            <img
-                                class="h-8 w-8 rounded-full bg-gray-50"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                            />
-                            <span class="sr-only">Your profile</span>
-                            <span aria-hidden="true">Tom Cook</span>
-                        </a>
+                    <li class="mb-4 mt-auto flex items-center gap-2 text-left">
+                        <img
+                            class="h-8 w-8 rounded-full bg-gray-50"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt=""
+                        />
+                        <span aria-hidden="true" class="flex flex-col text-sm">
+                            {{ page.props.auth?.user?.name }}
+                            <Link
+                                as="button"
+                                method="post"
+                                :href="route('logout')"
+                                class="text-left text-xs text-gray-500"
+                                >Logout</Link
+                            >
+                        </span>
                     </li>
                 </ul>
             </nav>
@@ -262,19 +191,17 @@
         <div class="flex-1 text-sm font-semibold leading-6 text-gray-900">
             Dashboard
         </div>
-        <a href="#">
-            <span class="sr-only">Your profile</span>
-            <img
-                class="h-8 w-8 rounded-full bg-gray-50"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-            />
-        </a>
+        <img
+            class="h-8 w-8 rounded-full bg-gray-50"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+        />
     </div>
     <!-- eslint-enable max-len -->
 </template>
 <script setup>
 import { ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import {
     Dialog,
     DialogPanel,
@@ -284,75 +211,54 @@ import {
 import {
     Bars3Icon,
     CalendarIcon,
-    ChartPieIcon,
     DocumentDuplicateIcon,
     FolderIcon,
     HomeIcon,
     UsersIcon,
     XMarkIcon,
+    Cog6ToothIcon,
 } from '@heroicons/vue/24/outline';
 
 const navigation = [
     {
         name: 'Dashboard',
-        href: '#',
+        href: route('admin.dashboard'),
         icon: HomeIcon,
         current: true,
     },
     {
-        name: 'Team',
-        href: '#',
+        name: 'Guest List',
+        href: route('admin.guests.list'),
         icon: UsersIcon,
         current: false,
     },
     {
-        name: 'Projects',
-        href: '#',
+        name: 'To Do List',
+        href: route('admin.todo.list'),
         icon: FolderIcon,
         current: false,
     },
     {
-        name: 'Calendar',
-        href: '#',
+        name: 'Budget Calculator',
+        href: route('admin.budget'),
         icon: CalendarIcon,
         current: false,
     },
     {
         name: 'Documents',
-        href: '#',
+        href: route('admin.documents'),
         icon: DocumentDuplicateIcon,
         current: false,
     },
     {
-        name: 'Reports',
-        href: '#',
-        icon: ChartPieIcon,
+        name: 'Settings',
+        href: route('admin.settings'),
+        icon: Cog6ToothIcon,
         current: false,
     },
 ];
-const teams = [
-    {
-        id: 1,
-        name: 'Heroicons',
-        href: '#',
-        initial: 'H',
-        current: false,
-    },
-    {
-        id: 2,
-        name: 'Tailwind Labs',
-        href: '#',
-        initial: 'T',
-        current: false,
-    },
-    {
-        id: 3,
-        name: 'Workcation',
-        href: '#',
-        initial: 'W',
-        current: false,
-    },
-];
+
+const page = usePage();
 
 const sidebarOpen = ref(false);
 </script>

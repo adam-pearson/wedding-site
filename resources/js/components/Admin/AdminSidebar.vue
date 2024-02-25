@@ -221,6 +221,12 @@ import {
 
 const navigation = [
     {
+        name: 'Home',
+        href: route('home'),
+        icon: HomeIcon,
+        current: false,
+    },
+    {
         name: 'Dashboard',
         href: route('admin.dashboard'),
         icon: HomeIcon,
@@ -242,12 +248,6 @@ const navigation = [
         name: 'Budget Calculator',
         href: route('admin.budget'),
         icon: CalendarIcon,
-        current: false,
-    },
-    {
-        name: 'Documents',
-        href: route('admin.documents'),
-        icon: DocumentDuplicateIcon,
         current: false,
     },
     {

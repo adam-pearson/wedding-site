@@ -14,12 +14,12 @@
 </template>
 <script setup>
 import { usePage } from '@inertiajs/vue3';
-import { onBeforeMount } from 'vue';
+import { computed } from 'vue';
 import SidebarHeader from './SidebarHeader.vue';
 import SidebarNav from './SidebarNav.vue';
 import SidebarFooter from './SidebarFooter.vue';
 
-const navItems = [
+const navigationArray = [
     {
         text: 'Home',
         route: route('home'),
@@ -32,20 +32,23 @@ const navItems = [
 
 const page = usePage();
 
+const isLoggedIn = computed(() => Boolean(page?.props?.auth?.user));
+
+const navItems = computed(() => {
+    if (isLoggedIn.value) {
+        return [
+            ...navigationArray,
+            { text: 'Admin Dashboard', route: route('admin.dashboard') },
+        ];
+    }
+
+    return navigationArray;
+});
 defineProps({
     navOpen: {
         type: Boolean,
         required: true,
     },
-});
-
-onBeforeMount(() => {
-    if (page.props?.auth?.user) {
-        navItems.push({
-            text: 'Admin Dashboard',
-            route: route('admin.dashboard'),
-        });
-    }
 });
 </script>
 

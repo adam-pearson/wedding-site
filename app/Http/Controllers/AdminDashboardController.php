@@ -8,6 +8,6 @@ class AdminDashboardController extends Controller
 {
     public function __invoke()
     {
-        return Inertia::render('admin/Dashboard');
+        return Inertia::render('admin/DashboardPage');
     }
 }

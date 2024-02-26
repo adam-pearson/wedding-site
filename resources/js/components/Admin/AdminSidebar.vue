@@ -200,7 +200,7 @@
     <!-- eslint-enable max-len -->
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, onBeforeMount } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import {
     Dialog,
@@ -211,7 +211,6 @@ import {
 import {
     Bars3Icon,
     CalendarIcon,
-    DocumentDuplicateIcon,
     FolderIcon,
     HomeIcon,
     UsersIcon,
@@ -219,7 +218,7 @@ import {
     Cog6ToothIcon,
 } from '@heroicons/vue/24/outline';
 
-const navigation = [
+const navigation = reactive([
     {
         name: 'Home',
         href: route('home'),
@@ -230,7 +229,7 @@ const navigation = [
         name: 'Dashboard',
         href: route('admin.dashboard'),
         icon: HomeIcon,
-        current: true,
+        current: false,
     },
     {
         name: 'Guest List',
@@ -256,11 +255,17 @@ const navigation = [
         icon: Cog6ToothIcon,
         current: false,
     },
-];
+]);
 
 const page = usePage();
 
 const sidebarOpen = ref(false);
+
+onBeforeMount(() => {
+    const currentItem = navigation.find((e) => e.href === window.location.href);
+
+    currentItem.current = true;
+});
 </script>
 
 <style lang="postcss" scoped>

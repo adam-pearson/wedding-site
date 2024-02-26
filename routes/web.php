@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminGuestListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticated;
 use App\Http\Controllers\HomePageController;
@@ -22,7 +23,7 @@ Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/dashboard', action: AdminDashboardController::class)
         ->name('admin.dashboard');
 
-    Route::get(uri: '/guests', action: AdminDashboardController::class)
+    Route::get(uri: '/guests', action: AdminGuestListController::class)
         ->name('admin.guests.list');
 
     Route::get(uri: '/todo', action: AdminDashboardController::class)

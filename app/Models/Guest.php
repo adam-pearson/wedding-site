@@ -14,9 +14,16 @@ class Guest extends Model
 
     protected $table = 'guests';
 
-    public const GUEST_TYPES = [
-        'all_day',
-        'evening',
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'plus_one_allowed',
+        'guest_type',
+        'plus_one_of',
+        'unique_code',
+        'invite_sent_at',
     ];
 
     public function plusOneParent(): BelongsTo

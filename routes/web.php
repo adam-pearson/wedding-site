@@ -24,10 +24,10 @@ Route::middleware([Authenticated::class])->group(function () {
         ->name('admin.dashboard');
 
     Route::get(uri: '/guests', action: AdminGuestListController::class)
-        ->name('admin.guests.list');
+        ->name('admin.guests.index');
 
     Route::get(uri: '/todo', action: AdminDashboardController::class)
-        ->name('admin.todo.list');
+        ->name('admin.todo.index');
 
     Route::get(uri: '/budget', action: AdminDashboardController::class)
         ->name('admin.budget');

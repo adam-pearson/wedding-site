@@ -47,18 +47,6 @@
                                         scope="col"
                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                     >
-                                        Alcohol With Meal
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                    >
-                                        Dietary Requirements
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                                    >
                                         Code
                                     </th>
                                     <th
@@ -76,50 +64,51 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="person in people" :key="person.id">
+                                <tr v-for="guest in guests" :key="guest.id">
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                     >
-                                        {{ person.name }}
+                                        <div class="flex items-center gap-2">
+                                            <UsersIcon
+                                                class="h-4"
+                                                v-if="guest.is_child"
+                                            />
+                                            {{ guest.name }}
+                                        </div>
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        {{ person.type }}
+                                        {{ getGuestType(guest) }}
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        {{ person.date_sent ?? 'N/A' }}
-                                    </td>
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                                    >
-                                        {{ person.has_plus_one ? 'Yes' : 'No' }}
-                                    </td>
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                                    >
-                                        <StatusBadge :status="person.status" />
-                                    </td>
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
-                                    >
-                                        {{ person.alcohol ? 'Yes' : 'No' }}
+                                        {{ guest.invite_sent_at ?? 'N/A' }}
                                     </td>
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
                                         {{
-                                            person.dietary_requirements ??
-                                            'None'
+                                            guest.plus_one_allowed
+                                                ? 'Yes'
+                                                : 'No'
                                         }}
                                     </td>
-
                                     <td
                                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     >
-                                        {{ person.code }}
+                                        <StatusBadge
+                                            :status="
+                                                guest.received_invite?.status ??
+                                                'not_sent'
+                                            "
+                                        />
+                                    </td>
+                                    <td
+                                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    >
+                                        {{ guest.unique_code }}
                                     </td>
                                     <td
                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
@@ -128,7 +117,7 @@
                                             href="#"
                                             class="text-indigo-600 hover:text-indigo-900"
                                             >Edit<span class="sr-only"
-                                                >, {{ person.name }}</span
+                                                >, {{ guest.name }}</span
                                             ></a
                                         >
                                     </td>
@@ -140,7 +129,7 @@
                                             class="text-indigo-600 hover:text-indigo-900"
                                             >RSVP<span class="sr-only"
                                                 >, on behalf of
-                                                {{ person.name }}</span
+                                                {{ guest.name }}</span
                                             ></a
                                         >
                                     </td>
@@ -156,8 +145,28 @@
 </template>
 
 <script setup>
+import { UsersIcon } from '@heroicons/vue/24/outline';
 import StatusBadge from '../../Shared/StatusBadge.vue';
 
+const props = defineProps({
+    guests: {
+        type: Array,
+        required: true,
+    },
+});
+
+function getGuestType(guest) {
+    switch (guest.guest_type) {
+        case 'all_day':
+            return 'All Day';
+        case 'evening':
+            return 'Evening';
+        default:
+            return 'Unknown';
+    }
+}
+
+console.log('guests: ', props.guests);
 const people = [
     {
         id: 1,

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
+use Inertia\ResponseFactory as Inertia;
+use Inertia\Response as InertiaResponse;
 
 class HomePageController extends Controller
 {
-    public function __invoke()
+    public function __construct(private Inertia $inertia)
     {
-        return Inertia::render('HomePage');
+        //
+    }
+    public function __invoke(): InertiaResponse
+    {
+        return $this->inertia->render('HomePage');
     }
 }

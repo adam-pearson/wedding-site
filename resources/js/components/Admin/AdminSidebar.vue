@@ -233,13 +233,13 @@ const navigation = reactive([
     },
     {
         name: 'Guest List',
-        href: route('admin.guests.list'),
+        href: route('admin.guests.index'),
         icon: UsersIcon,
         current: false,
     },
     {
         name: 'To Do List',
-        href: route('admin.todo.list'),
+        href: route('admin.todo.index'),
         icon: FolderIcon,
         current: false,
     },

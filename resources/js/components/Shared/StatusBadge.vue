@@ -17,11 +17,11 @@ defineProps({
 });
 
 const typeMap = {
-    notsent: {
+    not_sent: {
         displayName: 'Not Sent',
         classes: ['bg-gray-50', 'text-gray-600', 'ring-gray-500/10'],
     },
-    notresponded: {
+    not_responded: {
         displayName: 'Not Responded',
         classes: ['bg-yellow-50', 'text-yellow-800', 'ring-yellow-600/20'],
     },

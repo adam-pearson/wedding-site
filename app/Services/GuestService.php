@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\AddGuestRequestDto;
 use App\Models\Guest;
 use App\Repositories\GuestRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class GuestService
 {
@@ -30,5 +31,10 @@ class GuestService
         $guest = $this->guestRepository->save($guestDto);
 
         return $guest;
+    }
+
+    public function getGuestsAndReceivedInvites(): Collection
+    {
+        return $this->guestRepository->get(['receivedInvite']);
     }
 }

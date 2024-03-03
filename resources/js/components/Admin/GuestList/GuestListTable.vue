@@ -64,7 +64,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="guest in guests" :key="guest.id">
+                                <tr v-for="guest in guestList" :key="guest.id">
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                     >
@@ -147,13 +147,9 @@
 <script setup>
 import { UsersIcon } from '@heroicons/vue/24/outline';
 import StatusBadge from '../../Shared/StatusBadge.vue';
+import useGuestList from '../../../composables/guestList';
 
-const props = defineProps({
-    guests: {
-        type: Array,
-        required: true,
-    },
-});
+const { guestList } = useGuestList();
 
 function getGuestType(guest) {
     switch (guest.guest_type) {
@@ -165,19 +161,4 @@ function getGuestType(guest) {
             return 'Unknown';
     }
 }
-
-console.log('guests: ', props.guests);
-const people = [
-    {
-        id: 1,
-        name: 'Adam Pearson',
-        type: 'All Day',
-        date_sent: null,
-        has_plus_one: true,
-        status: 'accepted',
-        code: 'A7F9D02',
-        alcohol: true,
-        dietary_requirements: null,
-    },
-];
 </script>

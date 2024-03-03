@@ -321,11 +321,14 @@ import {
     SwitchGroup,
     SwitchLabel,
 } from '@headlessui/vue';
+import useGuestList from '../../../composables/guestList';
 
 const guestTypeOptions = [
     { name: 'All Day', value: 'all_day', checked: true },
     { name: 'Evening Only', value: 'evening', checked: false },
 ];
+
+const { saveNewGuest } = useGuestList();
 
 const emit = defineEmits(['closeForm', 'submitted']);
 
@@ -340,9 +343,7 @@ const form = reactive({
 });
 
 const submit = () => {
-    axios.post(route('admin.guests.store'), form).then((res) => {
-        console.log('res: ', res);
-        emit('submitted');
+    saveNewGuest(form).then(() => {
         emit('closeForm');
     });
 };

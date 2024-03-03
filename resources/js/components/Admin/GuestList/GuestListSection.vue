@@ -7,37 +7,24 @@
         <GuestListForm
             v-if="addGuestFormOpen"
             @close-form="toggleForm"
-            @submitted="loadLatestGuests"
+            @submitted="reloadGuestList"
         />
     </Transition>
-    <GuestListTable :guests="latestGuests" class="py-4" />
+    <GuestListTable class="py-4" />
 </template>
 <script setup>
-import axios from 'axios';
 import { ref } from 'vue';
 import GuestListHeader from './GuestListHeader.vue';
 import GuestListForm from './GuestListForm.vue';
 import GuestListTable from './GuestListTable.vue';
+import useGuestList from '../../../composables/guestList';
 
-const props = defineProps({
-    guests: {
-        type: Array,
-        required: true,
-    },
-});
-
-const latestGuests = ref(props.guests);
+const { reloadGuestList } = useGuestList();
 
 const addGuestFormOpen = ref(false);
 
 const toggleForm = () => {
     addGuestFormOpen.value = !addGuestFormOpen.value;
-};
-
-const loadLatestGuests = () => {
-    axios.get(route('admin.guests.list')).then((res) => {
-        latestGuests.value = res.data.guests;
-    });
 };
 </script>
 

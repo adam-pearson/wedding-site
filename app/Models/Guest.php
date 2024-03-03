@@ -22,6 +22,7 @@ class Guest extends Model
         'plus_one_allowed',
         'guest_type',
         'plus_one_of',
+        'is_child',
         'unique_code',
         'invite_sent_at',
     ];

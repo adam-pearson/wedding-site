@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\DTOs\AddGuestRequestDto;
 use App\Enums\GuestType;
-use App\Services\GuestService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,6 +30,7 @@ class AddGuestRequest extends FormRequest
             'phone' => 'min_digits:7|max_digits:15|nullable',
             'address' => 'string|nullable',
             'plus_one_allowed' => 'boolean',
+            'is_child' => 'boolean',
             'guest_type' => ['required', Rule::enum(GuestType::class)],
         ];
     }
@@ -44,6 +44,7 @@ class AddGuestRequest extends FormRequest
             email: $this->input('email'),
             phone: $this->input('phone'),
             address: $this->input('address'),
+            isChild: $this->input('is_child'),
         );
     }
 }

@@ -109,7 +109,9 @@
                                         'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
                                     ]"
                                 >
-                                    <span class="sr-only">Use setting</span>
+                                    <span class="sr-only"
+                                        >Plus one allowed?</span
+                                    >
                                     <span
                                         :class="[
                                             form.plus_one_allowed
@@ -180,7 +182,7 @@
                             <fieldset class="mt-4">
                                 <legend class="sr-only">Guest Type</legend>
                                 <div
-                                    class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0"
+                                    class="space-y-4 sm:items-center xl:flex xl:space-x-10 xl:space-y-0"
                                 >
                                     <div
                                         v-for="option in guestTypeOptions"
@@ -313,7 +315,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { reactive } from 'vue';
 import {
     Switch,

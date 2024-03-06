@@ -1,4 +1,10 @@
 <template>
+    <GuestDetailsModal
+        v-if="detailsModalOpen && selectedGuest"
+        :open="detailsModalOpen"
+        @close="closeDetailsModal"
+        :guest="selectedGuest"
+    />
     <GuestListHeader
         @open-add-guest-form="toggleForm"
         :form-open="addGuestFormOpen"
@@ -10,10 +16,11 @@
             @submitted="reloadGuestList"
         />
     </Transition>
-    <GuestListTable class="py-4" />
+    <GuestListTable @edit-guest="openDetailsModal" class="py-4" />
 </template>
 <script setup>
 import { ref } from 'vue';
+import GuestDetailsModal from './GuestDetailsModal.vue';
 import GuestListHeader from './GuestListHeader.vue';
 import GuestListForm from './GuestListForm.vue';
 import GuestListTable from './GuestListTable.vue';
@@ -22,9 +29,21 @@ import useGuestList from '../../../composables/guestList';
 const { reloadGuestList } = useGuestList();
 
 const addGuestFormOpen = ref(false);
+const detailsModalOpen = ref(false);
+const selectedGuest = ref(null);
+
+const openDetailsModal = (guest) => {
+    selectedGuest.value = guest;
+    detailsModalOpen.value = true;
+};
 
 const toggleForm = () => {
     addGuestFormOpen.value = !addGuestFormOpen.value;
+};
+
+const closeDetailsModal = () => {
+    selectedGuest.value = null;
+    detailsModalOpen.value = false;
 };
 </script>
 

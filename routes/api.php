@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AddGuestController;
 use App\Http\Controllers\ShowGuestsController;
-use App\Http\Middleware\Authenticated;
+use App\Http\Controllers\UpdateGuestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post(uri: '/guests/store', action: AddGuestController::class)
+    Route::post(uri: '/guests', action: AddGuestController::class)
         ->name('admin.guests.store');
+
+    Route::put(uri: '/guests', action: UpdateGuestController::class)
+    ->name('admin.guests.update');
 
     Route::get(uri: '/guests/list', action: ShowGuestsController::class)
     ->name('admin.guests.list');

@@ -1,6 +1,5 @@
 <template>
     <!-- eslint-disable max-len -->
-
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -53,13 +52,7 @@
                                         scope="col"
                                         class="relative py-3.5 pl-3 pr-4 sm:pr-6"
                                     >
-                                        <span class="sr-only">Edit</span>
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                                    >
-                                        <span class="sr-only">RSVP</span>
+                                        <span class="sr-only">Actions</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -111,27 +104,26 @@
                                         {{ guest.unique_code }}
                                     </td>
                                     <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                                        class="relative flex items-center justify-end gap-4 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
                                     >
-                                        <a
-                                            href="#"
-                                            class="text-indigo-600 hover:text-indigo-900"
-                                            >Edit<span class="sr-only"
-                                                >, {{ guest.name }}</span
-                                            ></a
+                                        <button
+                                            @click="emit('edit-guest', guest)"
+                                            class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
                                         >
-                                    </td>
-                                    <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
-                                    >
-                                        <a
-                                            href="#"
-                                            class="text-indigo-600 hover:text-indigo-900"
-                                            >RSVP<span class="sr-only"
-                                                >, on behalf of
-                                                {{ guest.name }}</span
-                                            ></a
+                                            View
+                                            <span class="sr-only">
+                                                , {{ guest.name }}
+                                            </span>
+                                        </button>
+                                        <button
+                                            @click="emit('edit-guest', guest)"
+                                            class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
                                         >
+                                            RSVP
+                                            <span class="sr-only">
+                                                on behalf of{{ guest.name }}
+                                            </span>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -149,16 +141,7 @@ import { UsersIcon } from '@heroicons/vue/24/outline';
 import StatusBadge from '../../Shared/StatusBadge.vue';
 import useGuestList from '../../../composables/guestList';
 
-const { guestList } = useGuestList();
+const { guestList, getGuestType } = useGuestList();
 
-function getGuestType(guest) {
-    switch (guest.guest_type) {
-        case 'all_day':
-            return 'All Day';
-        case 'evening':
-            return 'Evening';
-        default:
-            return 'Unknown';
-    }
-}
+const emit = defineEmits(['edit-guest']);
 </script>

@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
-use App\DTOs\AddGuestRequestDto;
+use App\DTOs\AddGuestRequestDTO;
+use App\DTOs\EditGuestRequestDTO;
+use App\DTOs\GuestFormRequestDto;
 use App\Models\Guest;
 use App\Repositories\GuestRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,15 +28,25 @@ class GuestService
         return $code;
     }
 
-    public function saveGuest(AddGuestRequestDto $guestDto): Guest
+    public function saveGuest(AddGuestRequestDTO $guestDto): Guest
     {
         $guest = $this->guestRepository->save($guestDto);
 
         return $guest;
     }
 
+    public function updateGuest(EditGuestRequestDTO $guestDto): Guest
+    {
+        $guest = $this->guestRepository->update($guestDto);
+
+        return $guest;
+    }
+
     public function getGuestsAndReceivedInvites(): Collection
     {
-        return $this->guestRepository->get(['receivedInvite']);
+        return $this->guestRepository->getMainGuests([
+            'receivedInvite',
+            'plusOneChild.receivedInvite'
+        ]);
     }
 }

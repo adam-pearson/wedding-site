@@ -3,6 +3,11 @@ import { ref } from 'vue';
 
 const guestList = ref([]);
 
+const GUEST_TYPE_MAP = {
+    all_day: 'All Day',
+    evening: 'Evening',
+};
+
 export default function useGuestList() {
     const setGuestList = (guests) => {
         guestList.value = guests;
@@ -16,10 +21,24 @@ export default function useGuestList() {
         reloadGuestList();
     });
 
+    const updateGuest = async (guestId, guestForm) => axios.put(route('admin.guests.update', { id: guestId }), guestForm).then(() => {
+        reloadGuestList();
+    });
+
+    function getGuestType(guest) {
+        if (Object.keys(GUEST_TYPE_MAP).includes(guest.guest_type)) {
+            return GUEST_TYPE_MAP[guest.guest_type];
+        }
+
+        return 'Unknown';
+    }
+
     return {
         guestList,
         setGuestList,
         reloadGuestList,
         saveNewGuest,
+        getGuestType,
+        updateGuest,
     };
 }

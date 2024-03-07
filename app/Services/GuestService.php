@@ -42,6 +42,16 @@ class GuestService
         return $guest;
     }
 
+    /**
+     * Returns a count of deleted guests
+     */
+    public function deleteGuest(int $guestId): int
+    {        
+        $result = $this->guestRepository->delete($guestId);
+
+        return $result;
+    }
+
     public function getGuestsAndReceivedInvites(): Collection
     {
         return $this->guestRepository->getMainGuests([

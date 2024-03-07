@@ -6,6 +6,7 @@ module.exports = {
     extends: [
         'airbnb-base',
         'plugin:vue/vue3-essential',
+        'plugin:vue/vue3-strongly-recommended',
     ],
     overrides: [
         {
@@ -33,5 +34,22 @@ module.exports = {
         'vue/multi-word-component-names': 'off',
         'import/no-extraneous-dependencies': 'off',
         'import/no-unresolved': 'off',
+        'vue/max-attributes-per-line': 1,
+        'vue/first-attribute-linebreak': ['error', {
+            singleline: 'ignore',
+            multiline: 'below',
+        }],
+        'vue/block-tag-newline': ['error', {
+            singleline: 'consistent',
+            multiline: 'consistent',
+            maxEmptyLines: 0,
+            blocks: {
+                template: {
+                    singleline: 'always',
+                    multiline: 'always',
+                    maxEmptyLines: 0,
+                },
+            },
+        }],
     },
 };

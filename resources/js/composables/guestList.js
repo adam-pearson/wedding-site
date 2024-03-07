@@ -25,6 +25,10 @@ export default function useGuestList() {
         reloadGuestList();
     });
 
+    const deleteGuest = async (guestId) => axios.delete(route('admin.guests.destroy', { id: guestId })).then(() => {
+        reloadGuestList();
+    });
+
     function getGuestType(guest) {
         if (Object.keys(GUEST_TYPE_MAP).includes(guest.guest_type)) {
             return GUEST_TYPE_MAP[guest.guest_type];
@@ -40,5 +44,6 @@ export default function useGuestList() {
         saveNewGuest,
         getGuestType,
         updateGuest,
+        deleteGuest,
     };
 }

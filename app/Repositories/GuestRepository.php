@@ -39,4 +39,15 @@ class GuestRepository
             ->whereNull('plus_one_of')
             ->get();
     }
+
+    public function delete(int $guestId): int
+    {
+        $idsToDelete = [$guestId];
+        
+        if (Guest::find($guestId)->plusOneChild()->exists()) {
+            $idsToDelete[] = Guest::find($guestId)->plusOneChild->id;
+        }
+
+        return Guest::destroy($idsToDelete);
+    }
 }

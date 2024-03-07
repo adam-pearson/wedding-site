@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddGuestController;
 use App\Http\Controllers\ShowGuestsController;
 use App\Http\Controllers\UpdateGuestController;
+use App\Http\Controllers\DeleteGuestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put(uri: '/guests', action: UpdateGuestController::class)
     ->name('admin.guests.update');
+
+    Route::delete(uri: '/guests', action: DeleteGuestController::class)
+        ->name('admin.guests.destroy');
 
     Route::get(uri: '/guests/list', action: ShowGuestsController::class)
     ->name('admin.guests.list');

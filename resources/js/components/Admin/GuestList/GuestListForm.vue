@@ -1,20 +1,19 @@
 <template>
   <form
-    v-if="false"
     class="px-0 pt-8 sm:px-6 lg:px-8"
     @submit.prevent="submit"
   >
     <!-- eslint-disable max-len -->
 
     <div class="bg-white px-4 py-4">
-      <div class="space-y-8">
-        <div class="border-b border-gray-900/10 pb-12">
+      <div class="space-y-4">
+        <div class="border-b border-gray-900/10 pb-8">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
             Guest Information
           </h2>
 
           <div
-            class="mt-10 grid grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6"
+            class="mt-6 grid grid-cols-1 gap-y-4 sm:grid-cols-6 sm:gap-x-6"
           >
             <div class="col-span-full sm:col-span-3">
               <label
@@ -66,7 +65,7 @@
               </div>
             </div>
 
-            <div class="col-span-3 col-span-full">
+            <div class="col-span-3">
               <label
                 for="address"
                 class="block text-sm font-medium leading-6 text-gray-900"

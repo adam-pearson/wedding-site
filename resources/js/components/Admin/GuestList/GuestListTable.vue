@@ -7,8 +7,9 @@
           class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8"
         >
           <div
-            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"
+            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg relative"
           >
+            <LoadingOverlay v-if="loading" />
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
@@ -56,7 +57,10 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 bg-white">
+              <tbody
+                v-if="guestList.length"
+                class="divide-y divide-gray-200 bg-white"
+              >
                 <tr
                   v-for="guest in guestList"
                   :key="guest.id"
@@ -139,6 +143,25 @@
                   </td>
                 </tr>
               </tbody>
+              <tbody
+                v-else
+              >
+                <tr>
+                  <td colspan="6">
+                    <div class="text-center flex items-center justify-center py-8">
+                      <div class="flex flex-col justify-center items-center">
+                        <UserGroupIcon class="h-12 w-12 text-gray-400" />
+                        <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                          No Guests
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                          Add a guest to get started
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -150,12 +173,13 @@
 
 <script setup>
 import {
-    EyeIcon, PaperAirplaneIcon, TrashIcon, UsersIcon,
+    EyeIcon, PaperAirplaneIcon, TrashIcon, UserGroupIcon, UsersIcon,
 } from '@heroicons/vue/24/outline';
 import StatusBadge from '../../Shared/StatusBadge.vue';
 import useGuestList from '../../../composables/guestList';
+import LoadingOverlay from '../../Shared/LoadingOverlay.vue';
 
-const { guestList, getGuestType } = useGuestList();
+const { loading, guestList, getGuestType } = useGuestList();
 
 const emit = defineEmits(['view', 'rsvp', 'delete']);
 </script>

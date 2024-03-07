@@ -8,26 +8,44 @@ const GUEST_TYPE_MAP = {
     evening: 'Evening',
 };
 
+const loading = ref(false);
+
 export default function useGuestList() {
     const setGuestList = (guests) => {
         guestList.value = guests;
     };
 
-    const reloadGuestList = async () => axios.get(route('admin.guests.list')).then((res) => {
-        setGuestList(res.data.guests);
-    });
+    const reloadGuestList = async () => {
+        loading.value = true;
+        axios.get(route('admin.guests.list')).then((res) => {
+            loading.value = false;
+            setGuestList(res.data.guests);
+        });
+    };
 
-    const saveNewGuest = async (guestForm) => axios.post(route('admin.guests.store'), guestForm).then(() => {
-        reloadGuestList();
-    });
+    const saveNewGuest = async (guestForm) => {
+        loading.value = true;
+        axios.post(route('admin.guests.store'), guestForm).then(() => {
+            loading.value = false;
+            reloadGuestList();
+        });
+    };
 
-    const updateGuest = async (guestId, guestForm) => axios.put(route('admin.guests.update', { id: guestId }), guestForm).then(() => {
-        reloadGuestList();
-    });
+    const updateGuest = async (guestId, guestForm) => {
+        loading.value = true;
+        axios.put(route('admin.guests.update', { id: guestId }), guestForm).then(() => {
+            loading.value = false;
+            reloadGuestList();
+        });
+    };
 
-    const deleteGuest = async (guestId) => axios.delete(route('admin.guests.destroy', { id: guestId })).then(() => {
-        reloadGuestList();
-    });
+    const deleteGuest = async (guestId) => {
+        loading.value = true;
+        axios.delete(route('admin.guests.destroy', { id: guestId })).then(() => {
+            loading.value = false;
+            reloadGuestList();
+        });
+    };
 
     function getGuestType(guest) {
         if (Object.keys(GUEST_TYPE_MAP).includes(guest.guest_type)) {
@@ -38,6 +56,7 @@ export default function useGuestList() {
     }
 
     return {
+        loading,
         guestList,
         setGuestList,
         reloadGuestList,

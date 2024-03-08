@@ -77,6 +77,26 @@
             </div>
           </div>
 
+          <div class="flex w-full items-start gap-4">
+            <label
+              for="invite_sent_on"
+              class="block w-[30%] text-sm font-medium leading-6 text-gray-900"
+            >Invite Sent At</label>
+            <div class="w-full">
+              <div
+                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+              >
+                <input
+                  v-model="editForm.invite_sent_on"
+                  type="date"
+                  name="invite_sent_on"
+                  id="invite_sent_on"
+                  class="block flex-1 border-0 bg-transparent px-2 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                >
+              </div>
+            </div>
+          </div>
+
           <div class="col-span-full sm:col-span-3">
             <SwitchGroup
               as="div"
@@ -291,26 +311,6 @@
       <div v-if="guest?.received_invite">
         <div>
           <div class="flex w-full flex-col gap-4">
-            <div class="flex w-full items-start gap-4">
-              <label
-                for="invite_sent_at"
-                class="block w-[30%] text-sm font-medium leading-6 text-gray-900"
-              >Invite Sent At</label>
-              <div class="w-full">
-                <div
-                  class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
-                >
-                  <input
-                    v-model="editForm.invite_sent_at"
-                    type="date"
-                    name="invite_sent_at"
-                    id="invite_sent_at"
-                    class="block flex-1 border-0 bg-transparent px-2 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  >
-                </div>
-              </div>
-            </div>
-
             <div class="col-span-full sm:col-span-3">
               <SwitchGroup
                 as="div"
@@ -524,7 +524,7 @@
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 import {
     SwitchGroup,
     SwitchLabel,
@@ -558,11 +558,13 @@ const editForm = reactive({
     plus_one_allowed: Boolean(props.guest.plus_one_allowed),
     is_child: Boolean(props.guest.is_child),
     guest_type: props.guest.guest_type,
-    invite_sent_at: props.guest.invite_sent_at,
+    invite_sent_on: props.guest.invite_sent_on,
     coming: Boolean(props.guest?.received_invite?.coming),
     alcohol: Boolean(props.guest?.received_invite?.alcohol),
     dietary_requirements: props.guest?.received_invite?.dietary_requirements,
 });
+
+console.log('editForm: ', editForm);
 
 const submit = () => {
     updateGuest(props.guest.id, editForm);

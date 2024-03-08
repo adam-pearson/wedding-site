@@ -24,7 +24,7 @@ class Guest extends Model
         'plus_one_of',
         'is_child',
         'unique_code',
-        'invite_sent_at',
+        'invite_sent_on',
     ];
 
     public function plusOneParent(): BelongsTo

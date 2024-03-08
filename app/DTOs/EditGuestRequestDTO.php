@@ -25,7 +25,7 @@ final readonly class EditGuestRequestDTO implements JsonSerializable, Arrayable,
         public ?bool $coming,
         public ?bool $alcohol,
         public ?string $dietaryRequirements,
-        public ?Carbon $inviteSentAt,
+        public ?Carbon $inviteSentOn,
     ) {
         $this->guestService = app(GuestService::class);
     }
@@ -40,7 +40,7 @@ final readonly class EditGuestRequestDTO implements JsonSerializable, Arrayable,
             'plus_one_allowed' => $this->plusOneAllowed,
             'guest_type' => $this->guestType,
             'is_child' => $this->isChild,
-            'invite_sent_at' => $this->inviteSentAt,
+            'invite_sent_on' => $this->inviteSentOn,
         ];
     }
 
@@ -73,7 +73,7 @@ final readonly class EditGuestRequestDTO implements JsonSerializable, Arrayable,
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
-            'invite_sent_at' => $this->inviteSentAt,
+            'invite_sent_on' => $this->inviteSentOn,
         ];
     }
 

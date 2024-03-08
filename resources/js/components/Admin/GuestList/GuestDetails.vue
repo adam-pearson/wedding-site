@@ -69,6 +69,20 @@
 
         <div class="flex w-full items-start gap-4">
           <label
+            for="invite_sent_on"
+            class="block w-[30%] text-sm font-medium leading-6 text-gray-900"
+          >Invite Sent On</label>
+          <div class="w-full">
+            <div
+              class="block flex-1 border-0 bg-transparent px-2 text-sm text-gray-900 placeholder:text-gray-400 focus:ring-0"
+            >
+              <p>{{ guest.invite_sent_on ?? 'Invite Not Sent' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex w-full items-start gap-4">
+          <label
             for="address"
             class="block w-[30%] text-sm font-medium leading-6 text-gray-900"
           >Unique Code</label>
@@ -278,20 +292,6 @@
     <div v-if="guest?.received_invite">
       <div>
         <div class="flex w-full flex-col gap-4">
-          <div class="flex w-full items-start gap-4">
-            <label
-              for="invite_sent_at"
-              class="block w-[30%] text-sm font-medium leading-6 text-gray-900"
-            >Invite Sent At</label>
-            <div class="w-full">
-              <div
-                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
-              >
-                <p>{{ guest.invite_sent_at }}</p>
-              </div>
-            </div>
-          </div>
-
           <div class="col-span-full sm:col-span-3">
             <div class="flex items-center justify-between">
               <span class="flex flex-grow flex-col">

@@ -84,7 +84,7 @@
                   <td
                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                   >
-                    {{ guest.invite_sent_at ?? 'N/A' }}
+                    {{ guest.invite_sent_on ?? 'N/A' }}
                   </td>
                   <td
                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"

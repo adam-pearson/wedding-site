@@ -36,7 +36,7 @@ class EditGuestRequest extends FormRequest
             'coming' => 'boolean|nullable',
             'alcohol' => 'boolean|nullable',
             'dietary_requirements' => 'string|nullable',
-            'invite_sent_at' => 'date|nullable',
+            'invite_sent_on' => 'date|nullable',
         ];
     }
 
@@ -54,7 +54,7 @@ class EditGuestRequest extends FormRequest
             coming: $this->input('coming'),
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
-            inviteSentAt: $this->input('invite_sent_at') ? Carbon::parse($this->input('invite_sent_at')) : null,
+            inviteSentOn: $this->input('invite_sent_on') ? Carbon::parse($this->input('invite_sent_on')) : null,
         );
     }
 }

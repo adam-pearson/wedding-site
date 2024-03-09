@@ -50,4 +50,9 @@ class GuestRepository
 
         return Guest::destroy($idsToDelete);
     }
+
+    public function codeExists(string $code): bool
+    {
+        return Guest::where('unique_code', $code)->exists();
+    }
 }

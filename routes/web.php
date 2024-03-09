@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminGuestListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticated;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\RsvpController;
+use App\Http\Middleware\RsvpCodeCheckMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,12 @@ use App\Http\Controllers\HomePageController;
 |
 */
 
-Route::get(uri: '/', action: HomePageController::class)->name('home');
+Route::get(uri: '/', action: HomePageController::class)
+    ->name('home');
+
+Route::get(uri: '/rsvp', action: RsvpController::class)
+    ->name('guest.rsvp')
+    ->middleware(RsvpCodeCheckMiddleware::class);
 
 Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/dashboard', action: AdminDashboardController::class)
@@ -38,3 +45,4 @@ Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/settings', action: AdminDashboardController::class)
         ->name('admin.settings');
 });
+

@@ -1,16 +1,16 @@
 <template>
-    <!-- eslint-disable max-len -->
-    <aside
-        class="fixed bottom-0 left-0 top-0 z-[1001] flex w-[270px] flex-col justify-between overflow-y-scroll bg-secondary px-8 py-8 duration-[0.5s] sm:translate-x-[0] md:w-[30%] md:py-16 xl:w-[22%]"
-        :class="navOpen ? 'translate-x-0' : 'translate-x-[-270px]'"
-    >
-        <div class="flex flex-col">
-            <SidebarHeader class="pb-16" />
-            <SidebarNav :nav-items="navItems" />
-        </div>
-        <SidebarFooter />
-    </aside>
-    <!-- eslint-enable max-len -->
+  <!-- eslint-disable max-len -->
+  <aside
+    class="fixed bottom-0 left-0 top-0 z-[1001] flex w-[270px] flex-col justify-between overflow-y-scroll bg-secondary px-8 py-8 duration-[0.5s] sm:translate-x-[0] md:w-[30%] md:py-16 xl:w-[22%]"
+    :class="navOpen ? 'translate-x-0' : 'translate-x-[-270px]'"
+  >
+    <div class="flex flex-col">
+      <SidebarHeader class="pb-16" />
+      <SidebarNav :nav-items="navItems" />
+    </div>
+    <SidebarFooter />
+  </aside>
+  <!-- eslint-enable max-len -->
 </template>
 <script setup>
 import { usePage } from '@inertiajs/vue3';
@@ -27,6 +27,10 @@ const navigationArray = [
     {
         text: 'Our Story',
         route: '#story',
+    },
+    {
+        text: 'RSVP',
+        route: route('guest.rsvp'),
     },
 ];
 

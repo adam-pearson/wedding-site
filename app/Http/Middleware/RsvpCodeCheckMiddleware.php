@@ -23,10 +23,10 @@ class RsvpCodeCheckMiddleware
     {
         $code = $request?->code;
 
-        if ($code && !$this->guestRepository->codeExists($code)) {
+        if ($code && !$this->guestRepository->codeExists(strtoupper($code))) {
             return redirect()
-                ->route('guest.rsvp')
-                ->withErrors(['code' => 'Invalid code']);
+                ->route('guest.rsvp.code')
+                ->withErrors(['Invalid code']);
         }
 
         return $next($request);

@@ -2,13 +2,14 @@
   <div class="flex">
     <input
       v-for="(input, index) in inputs"
-      :key="input.id"
       v-model="input.inputValue.value"
-      @keyup="handleKeyup(index, $event)"
-      :ref="input.templateRef"
       maxlength="1"
-      :value="getCharFromModelValue(index)"
       class="w-12 h-12 text-center border-2 border-gray-300 rounded-md mr-2"
+      :key="input.id"
+      :ref="input.templateRef"
+      :value="getCharFromModelValue(index)"
+      @keypress="handleKeyup(index, $event)"
+      @paste="handlePaste(index, $event)"
     >
   </div>
 </template>
@@ -37,13 +38,24 @@ const emit = defineEmits('update:modelValue');
 const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? '';
 
 const handleKeyup = (index, event) => {
-    const { key } = event;
-    if (key.match(/^[a-zA-Z0-9]$/)) {
+    const { key, ctrlDown } = event;
+    if (key.match(/^[a-zA-Z0-9]$/) && !ctrlDown) {
         inputs[index].inputValue.value = key;
         if (inputs[index].inputValue.value) {
             if (index < inputs.length - 1) {
                 inputs[index + 1].templateRef.value[0].focus();
             }
+        }
+        emit('update:modelValue', completeCode.value);
+    }
+};
+
+const handlePaste = (index, event) => {
+    event.preventDefault();
+    const pastedData = event.clipboardData.getData('text');
+    if (pastedData.length === props.length) {
+        for (let i = 0; i < pastedData.length; i += 1) {
+            inputs[i].inputValue.value = pastedData.charAt(i);
         }
         emit('update:modelValue', completeCode.value);
     }

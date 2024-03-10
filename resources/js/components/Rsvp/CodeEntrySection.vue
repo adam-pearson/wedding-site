@@ -11,11 +11,11 @@
         <div class="flex flex-col justify-center items-center">
           <NotificationBanner
             class="mb-4"
-            :errors="errors"
+            :errors="formattedErrors"
           />
           <CodeInput
-            :length="5"
-            v-model="completeCode"
+            :length="EXPECTED_LENGTH"
+            v-model="code"
           />
           <button
             type="submit"
@@ -30,22 +30,35 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 import NotificationBanner from '@/components/Shared/NotificationBanner.vue';
 import CodeInput from '@/components/Shared/FormComponents/CodeInput.vue';
 
-const EXPECTED_LENGTH = 5;
+const props = defineProps({
+    errors: {
+        type: Object,
+        required: false,
+        default: () => {},
+    },
+});
 
-const errors = ref([]);
+const EXPECTED_LENGTH = 6;
+
+const formattedErrors = ref(
+    props.errors
+    && Object.values(props.errors)
+        .map((err, i) => ({ id: i, message: err })),
+);
 
 const code = ref(null);
 
-const codeIsCorrectLength = () => code.value.length === EXPECTED_LENGTH;
-const codeIsAlphanumeric = () => code.value.match(/^[a-zA-Z0-9]+$/);
+const codeIsCorrectLength = () => code.value?.length === EXPECTED_LENGTH;
+const codeIsAlphanumeric = () => code.value?.match(/^[a-zA-Z0-9]+$/);
 
 const getNextErrorId = () => {
-    if (errors.value.length) {
-        return errors.value[errors.value.length - 1].id + 1;
+    if (formattedErrors.value.length) {
+        return formattedErrors.value[formattedErrors.value.length - 1].id + 1;
     }
 
     return 1;
@@ -53,14 +66,14 @@ const getNextErrorId = () => {
 
 const validate = () => {
     if (!codeIsCorrectLength()) {
-        errors.value.push({ id: getNextErrorId(), message: `Code must be ${EXPECTED_LENGTH} characters long` });
+        formattedErrors.value.push({ id: getNextErrorId(), message: `Code must be ${EXPECTED_LENGTH} characters long` });
     }
 
     if (!codeIsAlphanumeric()) {
-        errors.value.push({ id: getNextErrorId(), message: 'Code must consist of letters and numbers' });
+        formattedErrors.value.push({ id: getNextErrorId(), message: 'Code must consist of letters and numbers' });
     }
 
-    if (errors.value.length) {
+    if (formattedErrors.value.length) {
         return false;
     }
 
@@ -69,7 +82,7 @@ const validate = () => {
 
 const submit = () => {
     // submit RSVP code using completeCode.value
-    errors.value = [];
+    formattedErrors.value = [];
 
     if (!validate()) {
         return false;
@@ -81,6 +94,7 @@ const submit = () => {
     // on back end also validate the code is correct when getting rsvp form
     // if it isn't just redir back to code entry
 
+    router.get(route('guest.rsvp.form', { guest: code.value }));
     return true;
 };
 

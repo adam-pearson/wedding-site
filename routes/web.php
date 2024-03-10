@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticated;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\RsvpController;
+use App\Http\Controllers\RsvpFormController;
 use App\Http\Middleware\RsvpCodeCheckMiddleware;
 
 /*
@@ -23,8 +24,12 @@ Route::get(uri: '/', action: HomePageController::class)
     ->name('home');
 
 Route::get(uri: '/rsvp', action: RsvpController::class)
-    ->name('guest.rsvp')
+    ->name('guest.rsvp.code');
+
+Route::get(uri: '/rsvp/{guest:unique_code}', action: RsvpFormController::class)
+    ->name('guest.rsvp.form')
     ->middleware(RsvpCodeCheckMiddleware::class);
+
 
 Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/dashboard', action: AdminDashboardController::class)

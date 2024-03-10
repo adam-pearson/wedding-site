@@ -30,7 +30,7 @@ const navigationArray = [
     },
     {
         text: 'RSVP',
-        route: route('guest.rsvp'),
+        route: route('guest.rsvp.code'),
     },
 ];
 

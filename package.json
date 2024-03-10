@@ -3,7 +3,10 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "lint": "eslint ./resources/js",
+        "lint:debug": "eslint ./resources/js --debug",
+        "lint:fix": "eslint ./resources/js --fix"
     },
     "devDependencies": {
         "@stylistic/eslint-plugin-js": "^1.5.4",
@@ -13,6 +16,7 @@
         "eslint": "^8.56.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-tailwindcss": "^3.14.3",
         "eslint-plugin-vue": "^9.21.1",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.33",

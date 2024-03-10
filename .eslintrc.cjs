@@ -7,6 +7,7 @@ module.exports = {
         'airbnb-base',
         'plugin:vue/vue3-essential',
         'plugin:vue/vue3-strongly-recommended',
+        'plugin:tailwindcss/recommended',
     ],
     overrides: [
         {
@@ -51,5 +52,6 @@ module.exports = {
                 },
             },
         }],
+        'tailwindcss/no-custom-classname': 'off',
     },
 };

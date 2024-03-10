@@ -13,7 +13,15 @@ export default {
             },
             colors: {
                 white: '#ffffff',
-                primary: '#b87921',
+                'primary-800': '#291B07',
+                'primary-700': '#593A10',
+                'primary-600': '#885A18',
+                'primary-500': '#b87921',
+                'primary-400': '#D98F29',
+                'primary-300': '#DFA14C',
+                'primary-200': '#E5B46E',
+                'primary-100': '#EBC691',
+                'primary-50': '#EECFA2',
                 secondary: '#F6F1F0',
             },
             fontFamily: {

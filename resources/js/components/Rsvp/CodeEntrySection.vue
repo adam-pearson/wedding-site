@@ -1,32 +1,32 @@
 <template>
-  <div class="flex items-center justify-center h-screen">
+  <!-- eslint-disable max-len -->
+  <div class="flex h-screen items-center justify-center">
     <form @submit.prevent="submit">
-      <div class="flex flex-col items-center justify-center">
-        <h1 class="text-3xl font-bold mb-4">
+      <div class="flex flex-col items-center justify-center gap-4">
+        <h1 class="font-serif text-4xl font-bold">
           RSVP
         </h1>
-        <p class="text-center mb-4">
-          Please enter the 5 character code found on your invitation to RSVP.
+        <p class="text-center text-sm sm:text-base">
+          Please enter the {{ EXPECTED_LENGTH }} character code found on your invitation to RSVP.
         </p>
-        <div class="flex flex-col justify-center items-center">
-          <NotificationBanner
-            class="mb-4"
-            :errors="formattedErrors"
-          />
-          <CodeInput
-            :length="EXPECTED_LENGTH"
-            v-model="code"
-          />
-          <button
-            type="submit"
-            class="mt-4 bg-primary text-white font-bold py-2 px-4 rounded-md"
-          >
-            RSVP
-          </button>
-        </div>
+        <NotificationBanner
+          class="max-w-96"
+          :errors="formattedErrors"
+        />
+        <CodeInput
+          :length="EXPECTED_LENGTH"
+          v-model="code"
+        />
+        <button
+          type="submit"
+          class="rounded-md bg-primary-500 px-4 py-2 font-bold text-white transition duration-75 hover:bg-primary-700"
+        >
+          RSVP
+        </button>
       </div>
     </form>
   </div>
+  <!-- eslint-enable max-len -->
 </template>
 
 <script setup>
@@ -94,7 +94,7 @@ const submit = () => {
     // on back end also validate the code is correct when getting rsvp form
     // if it isn't just redir back to code entry
 
-    router.get(route('guest.rsvp.form', { guest: code.value }));
+    router.get(route('guest.rsvp.form', { code: code.value }));
     return true;
 };
 

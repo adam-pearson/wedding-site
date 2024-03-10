@@ -1,15 +1,15 @@
 <template>
-    <!-- eslint-disable max-len -->
-    <button
-        aria-label="Open Nav Button"
-        @click="emit('clicked')"
-        class="hamburger visible fixed left-0 top-0 z-[9999] mx-8 my-4 rounded-full bg-primary px-4 py-3 opacity-100 duration-500 sm:hidden sm:opacity-0"
-    >
-        <i
-            class="relative top-[-4px] inline-block h-[1px] w-[19px] bg-white indent-14 font-[Helvetica] text-sm font-bold uppercase text-white transition-all duration-200"
-        ></i>
-    </button>
-    <!-- eslint-enable max-len -->
+  <!-- eslint-disable max-len -->
+  <button
+    aria-label="Open Nav Button"
+    @click="emit('clicked')"
+    class="hamburger bg-primary-500 visible fixed left-0 top-0 z-[9999] mx-8 my-4 rounded-full px-4 py-3 opacity-100 duration-500 sm:hidden sm:opacity-0"
+  >
+    <i
+      class="relative top-[-4px] inline-block h-[1px] w-[19px] bg-white indent-14 font-[Helvetica] text-sm font-bold uppercase text-white transition-all duration-200"
+    />
+  </button>
+  <!-- eslint-enable max-len -->
 </template>
 
 <script setup>

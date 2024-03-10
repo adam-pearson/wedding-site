@@ -1,10 +1,11 @@
 <template>
-  <div class="flex">
+  <!-- eslint-disable max-len -->
+  <div class="flex gap-1 sm:gap-2">
     <input
       v-for="(input, index) in inputs"
       v-model="input.inputValue.value"
       maxlength="1"
-      class="w-12 h-12 text-center border-2 border-gray-300 rounded-md mr-2"
+      class="size-8 rounded-md border-2 border-gray-300 p-0 text-center text-sm transition duration-75 hover:border-primary-500 focus:border-[3px] focus:border-primary-500 focus:ring-0 sm:size-12 sm:text-base"
       :key="input.id"
       :ref="input.templateRef"
       :value="getCharFromModelValue(index)"
@@ -12,6 +13,7 @@
       @paste="handlePaste(index, $event)"
     >
   </div>
+  <!-- eslint-enable max-len -->
 </template>
 <script setup>
 import {

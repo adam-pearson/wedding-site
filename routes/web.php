@@ -26,7 +26,7 @@ Route::get(uri: '/', action: HomePageController::class)
 Route::get(uri: '/rsvp', action: RsvpController::class)
     ->name('guest.rsvp.code');
 
-Route::get(uri: '/rsvp/{guest:unique_code}', action: RsvpFormController::class)
+Route::get(uri: '/rsvp/form', action: RsvpFormController::class)
     ->name('guest.rsvp.form')
     ->middleware(RsvpCodeCheckMiddleware::class);
 

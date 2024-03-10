@@ -15,7 +15,10 @@ class RsvpFormController extends Controller
 
     public function __invoke(Request $request, Guest $guest)
     {
-        dd($guest);
-        return $this->inertia->render('RsvpPage');
+        return redirect()->back()->withErrors(['Page not yet implemented']);
+        // dd($guest->load(['plusOneChild', 'receivedInvite']));
+        // make this render form page with guest details
+        // add new request class
+        // return $this->inertia->render('RsvpFormPage', ['guest' => $guest]);
     }
 }

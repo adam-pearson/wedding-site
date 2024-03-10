@@ -37,8 +37,8 @@ class Guest extends Model
         return $this->hasOne(self::class, 'plus_one_of');
     }
 
-    public function receivedInvite(): BelongsTo
+    public function receivedInvite(): HasOne
     {
-        return $this->belongsTo(ReceivedInvite::class);
+        return $this->hasOne(ReceivedInvite::class);
     }
 }

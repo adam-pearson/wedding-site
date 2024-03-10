@@ -55,4 +55,9 @@ class GuestRepository
     {
         return Guest::where('unique_code', $code)->exists();
     }
+
+    public function getGuestByCode(string $code): Guest
+    {
+        return Guest::where('unique_code', $code)->first();
+    }
 }

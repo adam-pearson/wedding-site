@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Guest;
 use App\Repositories\GuestRepository;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,12 +24,22 @@ class RsvpCodeCheckMiddleware
     {
         $code = $request?->code;
 
-        if ($code && !$this->guestRepository->codeExists(strtoupper($code))) {
+        $codeExists = $code && $this->guestRepository->codeExists(strtoupper($code));
+
+        if (!$codeExists) {
             return redirect()
                 ->route('guest.rsvp.code')
                 ->withErrors(['Invalid code']);
         }
 
+        $guest = $this->guestRepository->getGuestByCode(strtoupper($code));
+        $inviteAlreadyReceived = $guest->receivedInvite()->exists();
+
+        if ($inviteAlreadyReceived) {
+            return redirect()
+                ->route('guest.rsvp.code')
+                ->withErrors(['Code has already been used. If you think this is an error, or want to amend your details, please contact Adam or Heather.']);
+        }
         return $next($request);
     }
 }

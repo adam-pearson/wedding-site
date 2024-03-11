@@ -9,7 +9,7 @@
       :ref="input.templateRef"
       :value="getCharFromModelValue(index)"
       @input="handleInput(index, $event)"
-      @paste="handlePaste(index, $event)"
+      @paste="handlePaste"
       @keydown.left="handleNavigateInputs(index, 'left')"
       @keydown.right="handleNavigateInputs(index, 'right')"
       @keydown.delete="handleDelete(index)"
@@ -69,17 +69,6 @@ const handleTextInput = (index, data) => {
     emit('update:modelValue', completeCode.value);
 };
 
-const handleInput = (index, event) => {
-    const deleteKeys = ['deleteContentBackward', 'deleteContentForward'];
-    const { data, inputType } = event;
-
-    const inputIsDelete = deleteKeys.includes(inputType);
-
-    if (!inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
-        handleTextInput(index, data);
-    }
-};
-
 const handlePaste = (event) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData('text');
@@ -88,6 +77,19 @@ const handlePaste = (event) => {
             inputs[i].inputValue.value = pastedData.charAt(i);
         }
         emit('update:modelValue', completeCode.value);
+    }
+};
+
+const handleInput = (index, event) => {
+    const deleteKeys = ['deleteContentBackward', 'deleteContentForward'];
+    const pasteInputType = 'insertFromPaste';
+    const { data, inputType } = event;
+
+    const inputIsDelete = deleteKeys.includes(inputType);
+    const inputIsPaste = inputType === pasteInputType;
+
+    if (!inputIsPaste && !inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
+        handleTextInput(index, data);
     }
 };
 

@@ -43,7 +43,6 @@ const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? ' ';
 
 const handleDelete = (index) => {
     inputs[index].inputValue.value = ' ';
-    console.log('index: ', index);
 
     if (index > 0) {
         inputs[index - 1].templateRef.value[0].focus();
@@ -61,9 +60,7 @@ const handleNavigateInputs = (index, direction) => {
 };
 
 const handleTextInput = (index, data) => {
-    console.log('text input index: ', index);
-    console.log('data :', data);
-    inputs[index].inputValue.value = data;
+    inputs[index].inputValue.value = data.toUpperCase();
     if (inputs[index].inputValue.value) {
         if (index < inputs.length - 1) {
             inputs[index + 1].templateRef.value[0].focus();
@@ -78,13 +75,9 @@ const handleInput = (index, event) => {
 
     const inputIsDelete = deleteKeys.includes(inputType);
 
-    // if (inputIsDelete) {
-    //     handleDelete(index);
     if (!inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
         handleTextInput(index, data);
     }
-
-    console.log(completeCode.value);
 };
 
 const handlePaste = (event) => {

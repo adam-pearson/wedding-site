@@ -102,7 +102,7 @@
               as="div"
               class="flex items-center justify-between"
             >
-              <span class="flex flex-grow flex-col">
+              <span class="flex grow flex-col">
                 <SwitchLabel
                   as="span"
                   class="text-sm font-medium leading-6 text-gray-900"
@@ -120,7 +120,7 @@
                   editForm.plus_one_allowed
                     ? 'bg-indigo-600'
                     : 'bg-gray-200',
-                  'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                  'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
                 ]"
               >
                 <span class="sr-only">Use setting</span>
@@ -129,7 +129,7 @@
                     editForm.plus_one_allowed
                       ? 'translate-x-5'
                       : 'translate-x-0',
-                    'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                    'pointer-events-none relative inline-block size-5 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                   ]"
                 >
                   <span
@@ -137,12 +137,12 @@
                       editForm.plus_one_allowed
                         ? 'opacity-0 duration-100 ease-out'
                         : 'opacity-100 duration-200 ease-in',
-                      'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                      'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                     ]"
                     aria-hidden="true"
                   >
                     <svg
-                      class="h-3 w-3 text-gray-400"
+                      class="size-3 text-gray-400"
                       fill="none"
                       viewBox="0 0 12 12"
                     >
@@ -160,12 +160,12 @@
                       editForm.plus_one_allowed
                         ? 'opacity-100 duration-200 ease-in'
                         : 'opacity-0 duration-100 ease-out',
-                      'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                      'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                     ]"
                     aria-hidden="true"
                   >
                     <svg
-                      class="h-3 w-3 text-indigo-600"
+                      class="size-3 text-indigo-600"
                       fill="currentColor"
                       viewBox="0 0 12 12"
                     >
@@ -184,7 +184,7 @@
               as="div"
               class="flex items-center justify-between"
             >
-              <span class="flex flex-grow flex-col">
+              <span class="flex grow flex-col">
                 <SwitchLabel
                   as="span"
                   class="text-sm font-medium leading-6 text-gray-900"
@@ -202,7 +202,7 @@
                   editForm.is_child
                     ? 'bg-indigo-600'
                     : 'bg-gray-200',
-                  'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                  'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
                 ]"
               >
                 <span class="sr-only">Is Child</span>
@@ -211,7 +211,7 @@
                     editForm.is_child
                       ? 'translate-x-5'
                       : 'translate-x-0',
-                    'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                    'pointer-events-none relative inline-block size-5 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                   ]"
                 >
                   <span
@@ -219,12 +219,12 @@
                       editForm.is_child
                         ? 'opacity-0 duration-100 ease-out'
                         : 'opacity-100 duration-200 ease-in',
-                      'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                      'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                     ]"
                     aria-hidden="true"
                   >
                     <svg
-                      class="h-3 w-3 text-gray-400"
+                      class="size-3 text-gray-400"
                       fill="none"
                       viewBox="0 0 12 12"
                     >
@@ -242,12 +242,12 @@
                       editForm.is_child
                         ? 'opacity-100 duration-200 ease-in'
                         : 'opacity-0 duration-100 ease-out',
-                      'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                      'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                     ]"
                     aria-hidden="true"
                   >
                     <svg
-                      class="h-3 w-3 text-indigo-600"
+                      class="size-3 text-indigo-600"
                       fill="currentColor"
                       viewBox="0 0 12 12"
                     >
@@ -290,7 +290,7 @@
                     :value="option.value"
                     name="notification-method"
                     type="radio"
-                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    class="size-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   >
                   <label
                     :for="option.value"
@@ -316,7 +316,7 @@
                 as="div"
                 class="flex items-center justify-between"
               >
-                <span class="flex flex-grow flex-col">
+                <span class="flex grow flex-col">
                   <SwitchLabel
                     as="span"
                     class="text-sm font-medium leading-6 text-gray-900"
@@ -334,7 +334,7 @@
                     editForm.coming
                       ? 'bg-indigo-600'
                       : 'bg-gray-200',
-                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                    'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
                   ]"
                 >
                   <span class="sr-only">Is this guest coming?</span>
@@ -343,7 +343,7 @@
                       editForm.coming
                         ? 'translate-x-5'
                         : 'translate-x-0',
-                      'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                      'pointer-events-none relative inline-block size-5 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                     ]"
                   >
                     <span
@@ -351,12 +351,12 @@
                         editForm.coming
                           ? 'opacity-0 duration-100 ease-out'
                           : 'opacity-100 duration-200 ease-in',
-                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                        'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                       ]"
                       aria-hidden="true"
                     >
                       <svg
-                        class="h-3 w-3 text-gray-400"
+                        class="size-3 text-gray-400"
                         fill="none"
                         viewBox="0 0 12 12"
                       >
@@ -374,12 +374,12 @@
                         editForm.coming
                           ? 'opacity-100 duration-200 ease-in'
                           : 'opacity-0 duration-100 ease-out',
-                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                        'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                       ]"
                       aria-hidden="true"
                     >
                       <svg
-                        class="h-3 w-3 text-indigo-600"
+                        class="size-3 text-indigo-600"
                         fill="currentColor"
                         viewBox="0 0 12 12"
                       >
@@ -398,7 +398,7 @@
                 as="div"
                 class="flex items-center justify-between"
               >
-                <span class="flex flex-grow flex-col">
+                <span class="flex grow flex-col">
                   <SwitchLabel
                     as="span"
                     class="text-sm font-medium leading-6 text-gray-900"
@@ -416,7 +416,7 @@
                     editForm.alcohol
                       ? 'bg-indigo-600'
                       : 'bg-gray-200',
-                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                    'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
                   ]"
                 >
                   <span class="sr-only">Alcohol With Meal</span>
@@ -425,7 +425,7 @@
                       editForm.alcohol
                         ? 'translate-x-5'
                         : 'translate-x-0',
-                      'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                      'pointer-events-none relative inline-block size-5 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                     ]"
                   >
                     <span
@@ -433,12 +433,12 @@
                         editForm.alcohol
                           ? 'opacity-0 duration-100 ease-out'
                           : 'opacity-100 duration-200 ease-in',
-                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                        'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                       ]"
                       aria-hidden="true"
                     >
                       <svg
-                        class="h-3 w-3 text-gray-400"
+                        class="size-3 text-gray-400"
                         fill="none"
                         viewBox="0 0 12 12"
                       >
@@ -456,12 +456,12 @@
                         editForm.alcohol
                           ? 'opacity-100 duration-200 ease-in'
                           : 'opacity-0 duration-100 ease-out',
-                        'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                        'absolute inset-0 flex size-full items-center justify-center transition-opacity',
                       ]"
                       aria-hidden="true"
                     >
                       <svg
-                        class="h-3 w-3 text-indigo-600"
+                        class="size-3 text-indigo-600"
                         fill="currentColor"
                         viewBox="0 0 12 12"
                       >

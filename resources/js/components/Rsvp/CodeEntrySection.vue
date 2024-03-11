@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable max-len -->
-  <div class="flex h-screen items-center justify-center">
+  <div class="flex h-screen items-center justify-center px-4">
     <form @submit.prevent="submit">
       <div class="flex flex-col items-center justify-center gap-4">
         <h1 class="font-serif text-4xl font-bold">

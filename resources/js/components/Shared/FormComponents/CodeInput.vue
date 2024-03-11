@@ -4,13 +4,15 @@
     <input
       v-for="(input, index) in inputs"
       v-model="input.inputValue.value"
-      maxlength="1"
       class="size-8 rounded-md border-2 border-gray-300 p-0 text-center text-sm transition duration-75 hover:border-primary-500 focus:border-[3px] focus:border-primary-500 focus:ring-0 sm:size-12 sm:text-base"
       :key="input.id"
       :ref="input.templateRef"
       :value="getCharFromModelValue(index)"
-      @keypress="handleKeyup(index, $event)"
+      @input="handleInput(index, $event)"
       @paste="handlePaste(index, $event)"
+      @keydown.left="handleNavigateInputs(index, 'left')"
+      @keydown.right="handleNavigateInputs(index, 'right')"
+      @keydown.delete="handleDelete(index)"
     >
   </div>
   <!-- eslint-enable max-len -->
@@ -37,22 +39,55 @@ const completeCode = computed(() => inputs.reduce((acc, input) => acc + (input.i
 
 const emit = defineEmits('update:modelValue');
 
-const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? '';
+const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? ' ';
 
-const handleKeyup = (index, event) => {
-    const { key, ctrlDown } = event;
-    if (key.match(/^[a-zA-Z0-9]$/) && !ctrlDown) {
-        inputs[index].inputValue.value = key;
-        if (inputs[index].inputValue.value) {
-            if (index < inputs.length - 1) {
-                inputs[index + 1].templateRef.value[0].focus();
-            }
-        }
-        emit('update:modelValue', completeCode.value);
+const handleDelete = (index) => {
+    inputs[index].inputValue.value = ' ';
+    console.log('index: ', index);
+
+    if (index > 0) {
+        inputs[index - 1].templateRef.value[0].focus();
+    }
+
+    emit('update:modelValue', completeCode.value);
+};
+
+const handleNavigateInputs = (index, direction) => {
+    if (direction === 'left' && index > 0) {
+        inputs[index - 1].templateRef.value[0].focus();
+    } else if (direction === 'right' && index < inputs.length - 1) {
+        inputs[index + 1].templateRef.value[0].focus();
     }
 };
 
-const handlePaste = (index, event) => {
+const handleTextInput = (index, data) => {
+    console.log('text input index: ', index);
+    console.log('data :', data);
+    inputs[index].inputValue.value = data;
+    if (inputs[index].inputValue.value) {
+        if (index < inputs.length - 1) {
+            inputs[index + 1].templateRef.value[0].focus();
+        }
+    }
+    emit('update:modelValue', completeCode.value);
+};
+
+const handleInput = (index, event) => {
+    const deleteKeys = ['deleteContentBackward', 'deleteContentForward'];
+    const { data, inputType } = event;
+
+    const inputIsDelete = deleteKeys.includes(inputType);
+
+    // if (inputIsDelete) {
+    //     handleDelete(index);
+    if (!inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
+        handleTextInput(index, data);
+    }
+
+    console.log(completeCode.value);
+};
+
+const handlePaste = (event) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData('text');
     if (pastedData.length === props.length) {

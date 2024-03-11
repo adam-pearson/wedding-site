@@ -564,8 +564,6 @@ const editForm = reactive({
     dietary_requirements: props.guest?.received_invite?.dietary_requirements,
 });
 
-console.log('editForm: ', editForm);
-
 const submit = () => {
     updateGuest(props.guest.id, editForm);
     emit('finished-editing');

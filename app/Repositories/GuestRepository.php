@@ -33,7 +33,7 @@ class GuestRepository
         return Guest::where('unique_code', $code)->doesntExist();
     }
 
-    public function getMainGuests(array $relations): Collection
+    public function getMainGuests(array $relations = []): Collection
     {
         return Guest::with($relations)
             ->whereNull('plus_one_of')
@@ -56,8 +56,8 @@ class GuestRepository
         return Guest::where('unique_code', $code)->exists();
     }
 
-    public function getGuestByCode(string $code): Guest
+    public function getGuestByCode(string $code, array $relations = []): Guest
     {
-        return Guest::where('unique_code', $code)->first();
+        return Guest::where('unique_code', $code)->with($relations)->first();
     }
 }

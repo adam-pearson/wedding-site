@@ -59,4 +59,9 @@ class GuestService
             'plusOneChild.receivedInvite'
         ]);
     }
+
+    public function getGuestByCode(string $code): Guest
+    {
+        return $this->guestRepository->getGuestByCode($code);
+    }
 }

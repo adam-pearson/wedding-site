@@ -9,7 +9,7 @@
       :ref="input.templateRef"
       :value="getCharFromModelValue(index)"
       @input="handleInput(index, $event)"
-      @paste="handlePaste(index, $event)"
+      @paste="handlePaste"
       @keydown.left="handleNavigateInputs(index, 'left')"
       @keydown.right="handleNavigateInputs(index, 'right')"
       @keydown.delete="handleDelete(index)"
@@ -43,7 +43,6 @@ const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? ' ';
 
 const handleDelete = (index) => {
     inputs[index].inputValue.value = ' ';
-    console.log('index: ', index);
 
     if (index > 0) {
         inputs[index - 1].templateRef.value[0].focus();
@@ -61,30 +60,13 @@ const handleNavigateInputs = (index, direction) => {
 };
 
 const handleTextInput = (index, data) => {
-    console.log('text input index: ', index);
-    console.log('data :', data);
-    inputs[index].inputValue.value = data;
+    inputs[index].inputValue.value = data.toUpperCase();
     if (inputs[index].inputValue.value) {
         if (index < inputs.length - 1) {
             inputs[index + 1].templateRef.value[0].focus();
         }
     }
     emit('update:modelValue', completeCode.value);
-};
-
-const handleInput = (index, event) => {
-    const deleteKeys = ['deleteContentBackward', 'deleteContentForward'];
-    const { data, inputType } = event;
-
-    const inputIsDelete = deleteKeys.includes(inputType);
-
-    // if (inputIsDelete) {
-    //     handleDelete(index);
-    if (!inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
-        handleTextInput(index, data);
-    }
-
-    console.log(completeCode.value);
 };
 
 const handlePaste = (event) => {
@@ -95,6 +77,19 @@ const handlePaste = (event) => {
             inputs[i].inputValue.value = pastedData.charAt(i);
         }
         emit('update:modelValue', completeCode.value);
+    }
+};
+
+const handleInput = (index, event) => {
+    const deleteKeys = ['deleteContentBackward', 'deleteContentForward'];
+    const pasteInputType = 'insertFromPaste';
+    const { data, inputType } = event;
+
+    const inputIsDelete = deleteKeys.includes(inputType);
+    const inputIsPaste = inputType === pasteInputType;
+
+    if (!inputIsPaste && !inputIsDelete && data.match(/^[a-zA-Z0-9]$/)) {
+        handleTextInput(index, data);
     }
 };
 

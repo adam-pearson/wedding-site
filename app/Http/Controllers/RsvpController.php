@@ -13,6 +13,6 @@ class RsvpController extends Controller
 
     public function __invoke()
     {
-        return $this->inertia->render('RsvpPage');
+        return $this->inertia->render('RsvpCodePage');
     }
 }

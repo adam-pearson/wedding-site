@@ -16,7 +16,7 @@
     :form-open="addGuestFormOpen"
   />
   <Transition>
-    <GuestListForm
+    <AddGuestForm
       v-if="addGuestFormOpen"
       @close-form="toggleForm"
       @submitted="reloadGuestList"
@@ -32,7 +32,7 @@
 import { ref } from 'vue';
 import GuestDetailsModal from './GuestDetailsModal.vue';
 import GuestListHeader from './GuestListHeader.vue';
-import GuestListForm from './GuestListForm.vue';
+import AddGuestForm from './AddGuestForm.vue';
 import GuestListTable from './GuestListTable.vue';
 import useGuestList from '../../../composables/guestList';
 import GuestDeleteConfirmation from './GuestDeleteConfirmation.vue';

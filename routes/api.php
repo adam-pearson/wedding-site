@@ -4,6 +4,7 @@ use App\Http\Controllers\AddGuestController;
 use App\Http\Controllers\ShowGuestsController;
 use App\Http\Controllers\UpdateGuestController;
 use App\Http\Controllers\DeleteGuestController;
+use App\Http\Controllers\RsvpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get(uri: '/guests/list', action: ShowGuestsController::class)
     ->name('admin.guests.list');
 });
+
+Route::post(uri: '/rsvp/{guest:code}', action: RsvpController::class)
+    ->name('guest.rsvp.submit');

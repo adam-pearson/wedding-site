@@ -3,8 +3,7 @@
 namespace App\Repositories;
 
 use App\DTOs\AddGuestRequestDto;
-use App\DTOs\EditGuestRequestDTO;
-use App\DTOs\GuestFormRequestDto;
+use App\DTOs\EditGuestRequestDto;
 use App\Models\Guest;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +14,7 @@ class GuestRepository
         return Guest::create($guestDto->toArray());
     }
 
-    public function update(EditGuestRequestDTO $guestDto): Guest
+    public function update(EditGuestRequestDto $guestDto): Guest
     {
         $guest = Guest::find($guestDto->id);
 

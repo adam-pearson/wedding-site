@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\DTOs\AddGuestRequestDTO;
-use App\DTOs\EditGuestRequestDTO;
-use App\DTOs\GuestFormRequestDto;
+use App\DTOs\AddGuestRequestDto;
+use App\DTOs\EditGuestRequestDto;
 use App\Models\Guest;
 use App\Repositories\GuestRepository;
 use Illuminate\Database\Eloquent\Collection;
+use App\DTOs\RsvpSubmissionDto;
+use App\Models\ReceivedInvite;
 
 class GuestService
 {
@@ -28,14 +29,14 @@ class GuestService
         return $code;
     }
 
-    public function saveGuest(AddGuestRequestDTO $guestDto): Guest
+    public function saveGuest(AddGuestRequestDto $guestDto): Guest
     {
         $guest = $this->guestRepository->save($guestDto);
 
         return $guest;
     }
 
-    public function updateGuest(EditGuestRequestDTO $guestDto): Guest
+    public function updateGuest(EditGuestRequestDto $guestDto): Guest
     {
         $guest = $this->guestRepository->update($guestDto);
 
@@ -63,5 +64,11 @@ class GuestService
     public function getGuestByCode(string $code): Guest
     {
         return $this->guestRepository->getGuestByCode($code);
+    }
+
+    public function submitRsvp(Guest $guest, RsvpSubmissionDto $dto): void
+    {
+        
+        // $this->guestRepository->submitRsvp($guest, $dto);
     }
 }

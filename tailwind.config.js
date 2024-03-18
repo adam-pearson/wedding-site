@@ -5,6 +5,9 @@ export default {
     content: [
         './public/index.php',
         './resources/**/*.{vue,js,ts,jsx,tsx}',
+        './vueform.config.js',
+        './node_modules/@vueform/vueform/themes/tailwind/**/*.vue',
+        './node_modules/@vueform/vueform/themes/tailwind/**/*.js',
     ],
     theme: {
         extend: {
@@ -36,5 +39,6 @@ export default {
     },
     plugins: [
         require('@tailwindcss/forms'),
+        require('@vueform/vueform/tailwind'),
     ],
 };

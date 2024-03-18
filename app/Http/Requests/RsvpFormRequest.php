@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\DTOs\EditGuestRequestDto;
+use App\DTOs\RsvpSubmissionDto;
 use App\Enums\GuestType;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use App\Models\Guest;
 
-class EditGuestRequest extends FormRequest
+class RsvpFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,35 +26,32 @@ class EditGuestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'coming' => 'boolean|required',
             'email' => 'email|nullable',
             'phone' => 'min_digits:7|max_digits:15|nullable',
-            'address' => 'string|nullable',
-            'plus_one_allowed' => 'boolean',
-            'is_child' => 'boolean',
-            'guest_type' => ['required', Rule::enum(GuestType::class)],
-            'coming' => 'boolean|nullable',
-            'alcohol' => 'boolean|nullable',
+            'alcohol' => 'boolean|required',
+            'using_plus_one' => 'boolean|required',
             'dietary_requirements' => 'string|nullable',
-            'invite_sent_on' => 'date|nullable',
+            'plus_one_name' => 'string|nullable',
+            'plus_one_alcohol' => 'boolean|nullable',
+            'plus_one_dietary_requirements' => 'string|nullable',
         ];
     }
 
-    public function getDto(): EditGuestRequestDto
+    public function getDto(): RsvpSubmissionDto
     {
-        return new EditGuestRequestDto(
-            id: $this->query('id'),
+        return new RsvpSubmissionDto(
+            guestId: $this->route('guest')->id,
             name: $this->input('name'),
-            plusOneAllowed: $this->input('plus_one_allowed'),
-            guestType: GuestType::from($this->input('guest_type')),
+            usingPlusOne: $this->input('using_plus_one'),
             email: $this->input('email'),
             phone: $this->input('phone'),
-            address: $this->input('address'),
-            isChild: $this->input('is_child'),
             coming: $this->input('coming'),
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
-            inviteSentOn: $this->input('invite_sent_on') ? Carbon::parse($this->input('invite_sent_on')) : null,
+            plusOneName: $this->input('plus_one_name'),
+            plusOneAlcohol: $this->input('plus_one_alcohol'),
+            plusOneDietaryRequirements: $this->input('plus_one_dietary_requirements'),
         );
     }
 }

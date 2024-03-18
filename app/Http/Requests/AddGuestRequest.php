@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\DTOs\AddGuestRequestDTO;
+use App\DTOs\AddGuestRequestDto;
 use App\Enums\GuestType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -27,7 +27,7 @@ class AddGuestRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'email|nullable',
-            'phone' => 'min_digits:7|max_digits:15|nullable',
+            'phone' => 'min:7|max:15|nullable',
             'address' => 'string|nullable',
             'plus_one_allowed' => 'boolean',
             'is_child' => 'boolean',
@@ -35,9 +35,9 @@ class AddGuestRequest extends FormRequest
         ];
     }
 
-    public function getDto(): AddGuestRequestDTO
+    public function getDto(): AddGuestRequestDto
     {
-        return new AddGuestRequestDTO(
+        return new AddGuestRequestDto(
             name: $this->input('name'),
             plusOneAllowed: $this->input('plus_one_allowed'),
             guestType: GuestType::from($this->input('guest_type')),

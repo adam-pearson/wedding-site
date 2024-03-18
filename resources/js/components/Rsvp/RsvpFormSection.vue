@@ -5,39 +5,14 @@
         appear
         mode="out-in"
       >
-        <div
-          v-if="welcomeCardClosed || welcomeCardSeen"
-          key="form"
-        >
-          <RsvpForm />
-        </div>
-
-        <div
-          v-else
-          key="welcome"
-        >
-          <RsvpWelcomeCard @closed="closeWelcomeCard" />
-        </div>
+        <RsvpFormCard @closed="closeWelcomeCard" />
       </transition>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, computed } from 'vue';
-import RsvpWelcomeCard from '@/components/Rsvp/RsvpWelcomeCard.vue';
-import RsvpForm from '@/components/Rsvp/RsvpForm.vue';
-import useGuest from '../../composables/guest';
+import RsvpFormCard from '@/components/Rsvp/RsvpFormCard.vue';
 
-const { guest } = useGuest();
-
-const welcomeCardClosed = ref(false);
-const welcomeCardSeen = computed(() => localStorage
-    .getItem(`welcomeCardSeen-${guest.value.name}`) === 'true');
-
-const closeWelcomeCard = () => {
-    localStorage.setItem(`welcomeCardSeen-${guest.value.name}`, 'true');
-    welcomeCardClosed.value = true;
-};
 </script>
 
 <style lang="postcss" scoped>

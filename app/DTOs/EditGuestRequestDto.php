@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use Stringable;
 
-final readonly class EditGuestRequestDTO implements JsonSerializable, Arrayable, Stringable
+final readonly class EditGuestRequestDto implements JsonSerializable, Arrayable, Stringable
 {
     private GuestService $guestService;
 

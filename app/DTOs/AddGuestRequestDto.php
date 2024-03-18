@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use Stringable;
 
-final readonly class AddGuestRequestDTO implements JsonSerializable, Arrayable, Stringable
+final readonly class AddGuestRequestDto implements JsonSerializable, Arrayable, Stringable
 {
     private GuestService $guestService;
 
@@ -17,9 +17,10 @@ final readonly class AddGuestRequestDTO implements JsonSerializable, Arrayable, 
         public bool $plusOneAllowed,
         public GuestType $guestType,
         public bool $isChild,
-        public ?string $email,
-        public ?string $phone,
-        public ?string $address,
+        public ?string $email = null,
+        public ?string $phone = null,
+        public ?string $address = null,
+        public ?int $plusOneOf = null,
     ) {
         $this->guestService = app(GuestService::class);
     }
@@ -41,6 +42,7 @@ final readonly class AddGuestRequestDTO implements JsonSerializable, Arrayable, 
             'guest_type' => $this->guestType,
             'is_child' => $this->isChild,
             'unique_code' => $this->guestService->generateUniqueCode(),
+            'plus_one_of' => $this->plusOneOf,
         ];
     }
 

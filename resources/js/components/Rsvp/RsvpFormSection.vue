@@ -5,7 +5,7 @@
         appear
         mode="out-in"
       >
-        <RsvpFormCard @closed="closeWelcomeCard" />
+        <RsvpFormCard />
       </transition>
     </div>
   </div>

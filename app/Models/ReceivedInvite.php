@@ -14,6 +14,12 @@ class ReceivedInvite extends Model
 
     protected $table = 'received_invites';
 
+    protected $fillable = [
+        'coming',
+        'alcohol',
+        'dietary_requirements',
+    ];
+
     public function guest(): HasOne
     {
         return $this->hasOne(Guest::class);

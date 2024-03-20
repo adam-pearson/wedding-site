@@ -25,11 +25,13 @@
   <GuestListTable
     @view="openDetailsModal"
     @delete="openDeleteConfirmation"
+    @rsvp="goToGuestRsvpForm"
     class="py-4"
   />
 </template>
 <script setup>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 import GuestDetailsModal from './GuestDetailsModal.vue';
 import GuestListHeader from './GuestListHeader.vue';
 import AddGuestForm from './AddGuestForm.vue';
@@ -69,6 +71,10 @@ const closeDetailsModal = () => {
 const toggleForm = () => {
     addGuestFormOpen.value = !addGuestFormOpen.value;
 };
+const goToGuestRsvpForm = (guest) => {
+    router.visit(route('guest.rsvp.form', { code: guest.unique_code }));
+};
+
 </script>
 
 <style lang="postcss" scoped>

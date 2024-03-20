@@ -11,11 +11,10 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
 {
 
     public function __construct(
-        public string $name,
-        public bool $usingPlusOne,
         public bool $coming,
-        public bool $alcohol,
         public int $guestId,
+        public ?bool $usingPlusOne,
+        public ?bool $alcohol,
         public ?string $email = null,
         public ?string $phone = null,
         public ?string $dietaryRequirements = null,
@@ -28,7 +27,6 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
     public function getMainGuestFields(): array
     {
         return [
-            'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
         ];
@@ -55,6 +53,7 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
     {
         return [
             'name' => $this->plusOneName,
+            'coming' => $this->coming,
             'alcohol' => $this->plusOneAlcohol,
             'dietary_requirements' => $this->plusOneDietaryRequirements,
         ];
@@ -68,7 +67,6 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
             'using_plus_one' => $this->usingPlusOne,
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,

@@ -29,12 +29,12 @@ class RsvpFormRequest extends FormRequest
             'coming' => 'boolean|required',
             'email' => 'email|nullable',
             'phone' => 'min_digits:7|max_digits:15|nullable',
-            'alcohol' => 'boolean|required',
-            'using_plus_one' => 'boolean|required',
+            'alcohol' => 'sometimes|boolean|required',
+            'using_plus_one' => 'sometimes|boolean|required',
             'dietary_requirements' => 'string|nullable',
-            'plus_one_name' => 'string|nullable',
-            'plus_one_alcohol' => 'boolean|nullable',
-            'plus_one_dietary_requirements' => 'string|nullable',
+            'plus_one_name' => 'sometimes|string|nullable',
+            'plus_one_alcohol' => 'sometimes|boolean|nullable',
+            'plus_one_dietary_requirements' => 'sometimes|string|nullable',
         ];
     }
 
@@ -42,7 +42,6 @@ class RsvpFormRequest extends FormRequest
     {
         return new RsvpSubmissionDto(
             guestId: $this->route('guest')->id,
-            name: $this->input('name'),
             usingPlusOne: $this->input('using_plus_one'),
             email: $this->input('email'),
             phone: $this->input('phone'),

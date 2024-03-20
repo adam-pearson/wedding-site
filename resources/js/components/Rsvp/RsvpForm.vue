@@ -1,18 +1,116 @@
 <template>
   <!-- eslint-disable max-len -->
-  <form @submit.prevent="submit">
+  <p class="font-serif text-2xl font-semibold text-primary-500">
+    {{ guest.name }}
+  </p>
+  <h2 class="font-serif text-2xl font-semibold leading-7 text-primary-500">
+    RSVP
+  </h2>
+  <p class="mt-1 text-sm leading-6 text-gray-500">
+    Please use the form below to RSVP to our wedding.
+  </p>
+  <div class="flex w-full justify-center py-4">
+    <Vueform
+      size="sm"
+      ref="form$"
+      class="w-full"
+      :debounce="500"
+      :endpoint="false"
+      @submit="submit"
+    >
+      <RadiogroupElement
+        name="coming"
+        label="Are you coming?"
+        :rules="['required']"
+        :items="[{value: 1, label: 'Yes'}, {value: 0, label: 'No'}]"
+        view="tabs"
+      />
+      <TextElement
+        name="email"
+        label="Email"
+        input-type="email"
+        :rules="['email', 'nullable']"
+        :value="guest.email"
+        :conditions="[['coming', 1]]"
+      />
+      <TextElement
+        name="phone"
+        label="Phone"
+        :rules="['email', 'nullable']"
+        :value="guest.email"
+        :conditions="[['coming', 1]]"
+      />
+      <RadiogroupElement
+        v-if="guest.guest_type === GUEST_TYPES.ALL_DAY.value && !guest.is_child"
+        name="alcohol"
+        label="Would you like alcohol with your meal?"
+        view="tabs"
+        :rules="['required']"
+        :items="[{value: 1, label: 'Yes'}, {value: 0, label: 'No'}]"
+        :value="guest.is_child ? 0 : 1"
+        :disabled="guest.is_child ? true : false"
+        :conditions="[['coming', 1]]"
+      />
+      <TextareaElement
+        v-if="guest.guest_type === GUEST_TYPES.ALL_DAY.value"
+        name="dietary_requirements"
+        label="Do you have any dietary requirements?"
+        :conditions="[['coming', 1]]"
+      />
+      <RadiogroupElement
+        v-if="guest.plus_one_allowed"
+        name="using_plus_one"
+        label="Would you like to bring a plus one?"
+        :rules="['required']"
+        :items="[{value: 1, label: 'Yes'}, {value: 0, label: 'No'}]"
+        view="tabs"
+        :conditions="[['coming', 1]]"
+      />
+      <TextElement
+        v-if="guest.plus_one_allowed"
+        name="plus_one_name"
+        label="Plus One's Name"
+        :rules="['required']"
+        :value="guest.email"
+        :conditions="[['coming', 1], ['using_plus_one', 1]]"
+      />
+      <RadiogroupElement
+        v-if="guest.plus_one_allowed && guest.guest_type === GUEST_TYPES.ALL_DAY.value"
+        name="plus_one_alcohol"
+        label="Would your plus one like alcohol with their meal?"
+        :rules="['required']"
+        :items="[{value: 1, label: 'Yes'}, {value: 0, label: 'No'}]"
+        view="tabs"
+        :conditions="[['coming', 1], ['using_plus_one', 1]]"
+      />
+      <TextareaElement
+        v-if="guest.plus_one_allowed && guest.guest_type === GUEST_TYPES.ALL_DAY.value"
+        name="plus_one_dietary_requirements"
+        label="Do your plus one have any dietary requirements?"
+        :rules="['required']"
+        :conditions="[['coming', 1], ['using_plus_one', 1]]"
+      />
+      <ButtonElement
+        name="submit"
+        button-label="Submit"
+        full
+        class="mt-4"
+        :submits="true"
+      />
+    <!-- 'coming' => 'boolean|required',
+            'email' => 'email|nullable',
+            'phone' => 'min_digits:7|max_digits:15|nullable',
+            'alcohol' => 'boolean|required',
+            'using_plus_one' => 'boolean|required',
+            'dietary_requirements' => 'string|nullable',
+            'plus_one_name' => 'string|nullable',
+            'plus_one_alcohol' => 'boolean|nullable',
+            'plus_one_dietary_requirements' => 'string|nullable', -->
+    </Vueform>
+  </div>
+  <!-- <form @submit.prevent="submit">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
-        <p class="font-serif text-2xl font-semibold text-primary-500">
-          {{ guest.name }}
-        </p>
-        <h2 class="font-serif text-2xl font-semibold leading-7 text-primary-500">
-          RSVP
-        </h2>
-        <p class="mt-1 text-sm leading-6 text-gray-500">
-          Please use the form below to RSVP to our wedding.
-        </p>
-
         <div class="mt-10 flex flex-col items-center gap-8">
           <div class="flex w-full items-center justify-center gap-4">
             <div />
@@ -408,73 +506,27 @@
         </button>
       </div>
     </div>
-  </form>
+  </form> -->
   <!-- eslint-enable max-len -->
 </template>
 
 <script setup>
-import {
-    Switch, SwitchGroup, SwitchLabel, SwitchDescription,
-} from '@headlessui/vue';
-import axios from 'axios';
-import { reactive } from 'vue';
-import TextInput from '@/components/shared/FormComponents/TextInput.vue';
+import { ref, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
 import useGuest from '../../composables/guest';
+import GUEST_TYPES from '../../constants/guestTypes';
 
 const { guest } = useGuest();
 
-const rsvpForm = reactive({
-    name: {
-        value: guest.name,
-        editable: false,
-    },
-    coming: {
-        value: null,
-        editable: true,
-    },
-    email: {
-        value: guest.email,
-        editable: true,
-    },
-    phone: {
-        value: guest.phone,
-        editable: true,
-    },
-    alcohol: {
-        value: guest.is_child ? false : null,
-        editable: !guest.is_child,
-    },
-    dietary_requirements: {
-        value: guest.dietary_requirements,
-        editable: true,
-    },
-    using_plus_one: {
-        value: false,
-        editable: guest.plus_one_allowed,
-    },
-    plus_one_name: {
-        value: '',
-        editable: true,
-    },
-    plus_one_alcohol: {
-        value: null,
-        editable: true,
-    },
-    plus_one_dietary_requirements: {
-        value: '',
-        editable: true,
-    },
-});
+const form$ = ref(null);
 
 const submit = () => {
-    console.log('submit');
-    axios.post(`${route('rsvp.store')}/${guest.code}`, rsvpForm)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    console.log('submitting: ', form$.value.requestData);
+    router.post(route('guest.rsvp.submit', { guest: guest.value.unique_code }), form$.value.requestData);
 };
+
+watch(() => form$.value?.data, (value) => {
+    console.log(form$.value.data);
+});
 
 </script>

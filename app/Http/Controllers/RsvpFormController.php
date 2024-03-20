@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RsvpFormRequest;
 use App\DTOs\RsvpSubmissionDto;
 use App\DTOs\AddGuestRequestDto;
+use App\Enums\GuestType;
 
 class RsvpFormController extends Controller
 {
@@ -31,7 +32,7 @@ class RsvpFormController extends Controller
     public function submit(RsvpFormRequest $request, Guest $guest)
     {
         $dto = $request->getDto();
-dd($dto);
+        // dd($dto);
 
 // update main guest's details in the guest table
         // create a received_invite record for the main guest
@@ -45,11 +46,11 @@ dd($dto);
             $plusOneDto = new AddGuestRequestDto(
                 plusOneOf: $guest->id,
                 name: $dto->plusOneName,
-                guestType: $guest->guestType,
+                guestType: GuestType::from($guest->guest_type),
                 plusOneAllowed: false,
                 isChild: false,
             );
-            $plusOne = $this->saveGuest($plusOneDto);
+            $plusOne = $this->guestService->saveGuest($plusOneDto);
         
             $plusOneReceivedInvite = $plusOne->receivedInvite()->create($dto->getPlusOneReceivedInviteFields());
         }
@@ -57,6 +58,6 @@ dd($dto);
         // make new rsvp service
         // make new rsvp repository
 
-        return $this->inertia->render('RsvpSuccessPage', ['guest' => $guest->with('receivedInvite', 'plusOne.receivedInvite')->first()]);
+        return $this->inertia->render('RsvpSuccessPage', ['guest' => $guest->with('receivedInvite', 'plusOneChild.receivedInvite')->first()]);
     }
 }

@@ -1,35 +1,37 @@
 <template>
   <!-- eslint-disable max-len -->
   <div>
-    <div class="flex w-full items-center justify-center bg-white">
-      <div class="w-full py-4 sm:px-6 lg:px-8">
+    <div class="flex w-full justify-center bg-white">
+      <div class="flex w-full justify-center py-4 sm:px-6 lg:px-8">
         <div
-          class="relative isolate flex h-full min-h-screen flex-col gap-4 overflow-hidden bg-slate-50 px-6 py-16 text-center shadow-2xl sm:rounded-3xl sm:px-16"
+          class="min-w-1/2 relative isolate flex size-full min-h-[750px] max-w-[650px] flex-col items-center justify-center gap-4 overflow-hidden bg-slate-50 px-6 py-16 text-center shadow-2xl sm:rounded-3xl sm:px-16"
         >
           <Transition
             appear
             mode="out-in"
           >
-            <div v-if="welcomeOpen">
-              <h2 class="small-caps font-serif text-xl tracking-tight text-white">
+            <div
+              v-if="welcomeOpen"
+            >
+              <h2 class="small-caps font-serif text-xl tracking-tight text-black">
                 it is with great pleasure
               </h2>
 
               <div class="flex flex-col gap-2">
-                <span class="my-1 block font-script text-4xl text-white sm:text-4xl lg:text-5xl">
+                <span class="my-1 block font-script text-4xl text-black sm:text-4xl lg:text-5xl">
                   Heather & Adam
                 </span>
-                <div class="small-caps mb-2 flex flex-col font-serif text-lg text-white">
+                <div class="small-caps mb-2 flex flex-col font-serif text-lg text-black">
                   <p>invite</p>
                   <p class="text-4xl font-bold">
                     {{ guest.name }}
                   </p>
                   <p>to join them for their</p>
                 </div>
-                <span class="my-1 block font-script text-4xl text-white sm:text-4xl lg:text-5xl">
+                <span class="my-1 block font-script text-4xl text-black sm:text-4xl lg:text-5xl">
                   {{ inviteType }}
                 </span>
-                <span class="small-caps font-serif text-lg text-white">
+                <span class="small-caps font-serif text-lg text-black">
                   at Beeston Manor,<br>
                   Quaker Brook Ln, Preston <span class="text-nowrap">PR5 0RA</span><br>
                   Sunday the 30th of March, 2025<br>
@@ -88,8 +90,6 @@ const { guest } = useGuest();
 const guestIsEvening = computed(() => guest.value.guest_type === GUEST_TYPES.EVENING.value);
 const inviteTime = computed(() => (guestIsEvening.value ? '7 o\'clock' : '1 o\'clock'));
 const inviteType = computed(() => (guestIsEvening.value ? 'Evening Reception' : 'Wedding Ceremony'));
-
-const emit = defineEmits(['closed']);
 
 const welcomeOpen = ref(true);
 

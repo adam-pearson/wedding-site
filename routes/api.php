@@ -5,6 +5,7 @@ use App\Http\Controllers\ShowGuestsController;
 use App\Http\Controllers\UpdateGuestController;
 use App\Http\Controllers\DeleteGuestController;
 use App\Http\Controllers\RsvpFormController;
+use App\Http\Middleware\RsvpRepeatedSubmissionCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpFormController::class, 'submit'])
-    ->name('guest.rsvp.submit');
+    ->name('guest.rsvp.submit')
+    ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);

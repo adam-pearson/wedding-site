@@ -40,7 +40,6 @@
           autocomplete="current-password"
           classes="w-full"
           :rules="['required']"
-          :debounce="200"
           :columns="{container: 12, label: 12, wrapper: 12}"
         />
         <ButtonElement

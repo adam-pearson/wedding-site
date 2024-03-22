@@ -66,6 +66,7 @@
                   :key="guest.id"
                   :guest="guest"
                   @view="emit('view', guest)"
+                  @view-plus-one="emit('view-plus-one', guest)"
                   @rsvp="emit('rsvp', guest)"
                   @delete="emit('delete', guest)"
                 />
@@ -106,5 +107,5 @@ import GuestListTableRow from './GuestListTableRow.vue';
 
 const { loading, guestList } = useGuestList();
 
-const emit = defineEmits(['view', 'rsvp', 'delete']);
+const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete']);
 </script>

@@ -2,6 +2,7 @@
   <GuestDetailsModal
     v-if="detailsModalOpen && selectedGuest"
     :open="detailsModalOpen"
+    :open-to-plus-one="openDetailsToPlusOne"
     @close="closeDetailsModal"
     :guest="selectedGuest"
   />
@@ -24,6 +25,7 @@
   </Transition>
   <GuestListTable
     @view="openDetailsModal"
+    @view-plus-one="openDetailsModalToPlusOne"
     @delete="openDeleteConfirmation"
     @rsvp="goToGuestRsvpForm"
     class="py-4"
@@ -43,6 +45,7 @@ const { reloadGuestList } = useGuestList();
 
 const addGuestFormOpen = ref(false);
 const detailsModalOpen = ref(false);
+const openDetailsToPlusOne = ref(false);
 const selectedGuest = ref(null);
 
 const deletingGuest = ref(null);
@@ -63,9 +66,16 @@ const openDetailsModal = (guest) => {
     detailsModalOpen.value = true;
 };
 
+const openDetailsModalToPlusOne = (guest) => {
+    selectedGuest.value = guest;
+    detailsModalOpen.value = true;
+    openDetailsToPlusOne.value = true;
+};
+
 const closeDetailsModal = () => {
     selectedGuest.value = null;
     detailsModalOpen.value = false;
+    openDetailsToPlusOne.value = false;
 };
 
 const toggleForm = () => {

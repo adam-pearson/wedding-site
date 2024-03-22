@@ -37,7 +37,7 @@
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6"
+              class="relative overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6"
             >
               <div>
                 <div class="">
@@ -84,7 +84,7 @@
                         @click="deleting = true"
                       >
                         <TrashIcon
-                          class="h-4 w-4"
+                          class="size-4"
                         />
                       </button>
                       <div
@@ -93,7 +93,7 @@
                       >
                         <button
                           @click="confirmDelete"
-                          class="rounded-md px-4 py-2 bg-red-500 text-white transition duration-75 hover:bg-red-900"
+                          class="rounded-md bg-red-500 px-4 py-2 text-white transition duration-75 hover:bg-red-900"
                         >
                           Confirm Delete
                         </button>
@@ -110,19 +110,19 @@
                       >
                         <LockOpenIcon
                           v-if="editing"
-                          class="h-4 w-4"
+                          class="size-4"
                         />
                         <LockClosedIcon
                           v-else
                           ty
-                          class="h-4 w-4"
+                          class="size-4"
                         />
                       </button>
                       <button
                         @click="emit('close')"
                         class="rounded-md p-2 text-amber-500 transition duration-150 hover:bg-amber-500 hover:text-white"
                       >
-                        <XMarkIcon class="h-4 w-4" />
+                        <XMarkIcon class="size-4" />
                       </button>
                     </div>
                   </div>
@@ -148,7 +148,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import {
     Dialog,
     DialogTitle,
@@ -179,6 +179,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    openToPlusOne: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const selectedGuest = ref(props.guest);
@@ -200,6 +204,13 @@ const confirmDelete = () => {
     deleteGuest(selectedGuest.value.id);
     emit('close');
 };
+
+onMounted(() => {
+    if (props.openToPlusOne) {
+        console.log('test: ', props.openToPlusOne);
+        selectedGuest.value = props.guest.plus_one_child;
+    }
+});
 
 </script>
 ./EditGuestForm.vue

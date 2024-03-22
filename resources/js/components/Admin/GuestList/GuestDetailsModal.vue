@@ -207,7 +207,6 @@ const confirmDelete = () => {
 
 onMounted(() => {
     if (props.openToPlusOne) {
-        console.log('test: ', props.openToPlusOne);
         selectedGuest.value = props.guest.plus_one_child;
     }
 });

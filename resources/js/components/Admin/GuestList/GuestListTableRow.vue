@@ -81,14 +81,10 @@
       class=" whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
     >
       <div class="flex items-center gap-2">
-        {{ guest.plus_one_child.name }} (Plus One of {{ guest.name }})
+        {{ guest.plus_one_child.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
       </div>
     </td>
-    <td
-      class="whitespace-nowrap px-3 py-2 text-sm text-gray-500"
-    >
-      {{ getGuestType(guest.plus_one_child) }}
-    </td>
+    <td />
     <td />
     <td />
     <td />

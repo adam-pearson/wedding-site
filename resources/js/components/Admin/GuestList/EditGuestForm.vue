@@ -20,6 +20,7 @@
       label="Name"
       :value="guest.name"
       :rules="['required']"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -29,6 +30,7 @@
       label="Email"
       input-type="email"
       :rules="['email', 'nullable']"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -36,6 +38,7 @@
     <TextElement
       name="phone"
       label="Phone"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -43,6 +46,7 @@
     <TextareaElement
       name="address"
       label="Address"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -50,6 +54,8 @@
     <DateElement
       name="invite_sent_on"
       label="Invite Sent On"
+      placeholder="YYYY-MM-DD"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -58,6 +64,8 @@
       name="plus_one_allowed"
       label="Plus One Allowed"
       info="This guest is allowed to bring one extra guest"
+      view="tabs"
+      :disabled="!editing"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
@@ -65,7 +73,6 @@
         value: 0, label: 'No'
       }]"
       :conditions="[['is_child', 0]]"
-      view="tabs"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -74,13 +81,14 @@
       name="is_child"
       label="Guest is Child"
       info="This guest is a child and will not require an adult meal"
+      view="tabs"
+      :disabled="!editing"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
       }, {
         value: 0, label: 'No'
       }]"
-      view="tabs"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -89,13 +97,14 @@
       name="guest_type"
       label="Guest Type"
       info="Will this guest recieve an all-day or an evening invitation?"
+      view="tabs"
+      :disabled="!editing"
       :rules="['required']"
       :items="[{
         value: 'all_day', label: 'All Day'
       }, {
         value: 'evening', label: 'Evening Only'
       }]"
-      view="tabs"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -124,13 +133,14 @@
       name="coming"
       label="Coming"
       info="Is this guest coming or not?"
+      view="tabs"
+      :disabled="!editing"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
       }, {
         value: 0, label: 'No'
       }]"
-      view="tabs"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -140,15 +150,15 @@
       name="alcohol"
       label="Alcohol with Meal?"
       info="Is this guest having alcohol with their meal?"
+      view="tabs"
+      :disabled="!editing || Boolean(guest.is_child)"
       :rules="['required']"
       :conditions="[['is_child', 0]]"
-      :disabled="Boolean(guest.is_child)"
       :items="[{
         value: 1, label: 'Yes'
       }, {
         value: 0, label: 'No'
       }]"
-      view="tabs"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -157,15 +167,18 @@
       v-if="guest.received_invite"
       name="dietary_requirements"
       label="Dietary Requirements"
+      :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
     />
     <StaticElement
+      v-if="editing"
       name="divider_1"
       tag="hr"
     />
     <ButtonElement
+      v-if="editing"
       name="cancel"
       button-label="Cancel"
       button-type="button"
@@ -176,6 +189,7 @@
       secondary
     />
     <ButtonElement
+      v-if="editing"
       name="submit"
       button-label="Submit"
       button-type="button"
@@ -189,7 +203,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import useGuestList from '../../../composables/guestList';
 
 const { updateGuest } = useGuestList();
@@ -197,6 +211,10 @@ const { updateGuest } = useGuestList();
 const emit = defineEmits(['finished-editing']);
 
 const props = defineProps({
+    editing: {
+        type: Boolean,
+        required: true,
+    },
     guest: {
         type: Object,
         required: true,
@@ -206,15 +224,13 @@ const props = defineProps({
 const form$ = ref(null);
 
 const submit = () => {
-    console.log('submitting: ', form$.value.requestData);
-    // updateGuest(props.guest.id, form$.value.requestData);
-    // emit('finished-editing');
+    updateGuest(props.guest.id, form$.value.requestData);
+    emit('finished-editing');
     /** @TODO - ENSURE FORM ALSO EDITS RECEIVED_INVITES TABLE */
     /** @TODO - ENSURE FORM EDITS MAIN GUEST IF PLUS ONE GUEST TYPE IS EDITED AND VICE VERSA */
 };
 
 onMounted(() => {
-    console.log(props.guest);
     form$.value.update({
         name: props.guest.name,
         email: props.guest.email,
@@ -227,6 +243,22 @@ onMounted(() => {
         coming: props.guest.received_invite?.coming,
         alcohol: props.guest.received_invite?.alcohol,
         dietary_requirements: props.guest.received_invite?.dietary_requirements,
+    });
+});
+
+watch(() => props.guest, (newVal) => {
+    form$.value.update({
+        name: newVal.name,
+        email: newVal.email,
+        phone: newVal.phone,
+        address: newVal.address,
+        plus_one_allowed: newVal.plus_one_allowed,
+        is_child: newVal.is_child,
+        guest_type: newVal.guest_type,
+        invite_sent_on: newVal.invite_sent_on,
+        coming: newVal.received_invite?.coming,
+        alcohol: newVal.received_invite?.alcohol,
+        dietary_requirements: newVal.received_invite?.dietary_requirements,
     });
 });
 </script>

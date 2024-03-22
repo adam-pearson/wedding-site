@@ -42,17 +42,17 @@
               <div>
                 <div class="">
                   <div
-                    class="flex w-full items-center justify-between"
+                    class="flex w-full items-start justify-between"
                   >
                     <DialogTitle
                       as="h3"
-                      class="text-2xl font-semibold leading-6 text-gray-900"
+                      class="flex flex-col gap-2 text-2xl font-semibold leading-6 text-gray-900"
                     >
-                      {{
-                        editing
-                          ? 'Editing Guest'
-                          : 'Guest Details'
-                      }}
+                      {{ selectedGuest.name }}
+                      <span
+                        v-if="selectedGuestIsPlusOne"
+                        class="text-sm text-gray-500"
+                      >Plus One of {{ guest.name }}</span>
                     </DialogTitle>
                     <div class="flex gap-4">
                       <button
@@ -63,7 +63,7 @@
                         View Main Guest
                       </button>
                       <button
-                        v-if="selectedGuestIsMainGuest"
+                        v-if="guestHasPlusOne && selectedGuestIsMainGuest"
                         @click="viewPlusOne"
                         class="rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
@@ -117,15 +117,10 @@
                       </button>
                     </div>
                   </div>
-                  <!-- DONT FORGET TO SWITCH EDITING CONDITION -->
                   <EditGuestForm
-                    v-if="editing"
+                    :editing="editing"
                     :guest="selectedGuest"
                     @finished-editing="emit('close')"
-                  />
-                  <GuestDetails
-                    v-else
-                    :guest="selectedGuest"
                   />
                 </div>
               </div>
@@ -154,7 +149,6 @@ import {
     TrashIcon,
 } from '@heroicons/vue/24/outline';
 import EditGuestForm from './EditGuestForm.vue';
-import GuestDetails from './GuestDetails.vue';
 import useGuestList from '../../../composables/guestList';
 
 const { deleteGuest } = useGuestList();
@@ -176,10 +170,13 @@ const props = defineProps({
     },
 });
 
+const editing = ref(false);
+const deleting = ref(false);
+
 const selectedGuest = ref(props.guest);
 
 const selectedGuestIsPlusOne = computed(
-    () => selectedGuest.value.id === props.guest.plus_one_child.id,
+    () => selectedGuest.value.id === props.guest.plus_one_child?.id,
 );
 
 const selectedGuestIsMainGuest = computed(
@@ -188,8 +185,7 @@ const selectedGuestIsMainGuest = computed(
 
 const guestHasPlusOne = computed(() => Boolean(props.guest?.plus_one_child));
 
-const editing = ref(false);
-const deleting = ref(false);
+const headingText = computed(() => (editing.value ? 'Editing Guest' : 'Guest Details'));
 
 const confirmDelete = () => {
     deleteGuest(selectedGuest.value.id);
@@ -197,11 +193,14 @@ const confirmDelete = () => {
 };
 
 const viewMainGuest = () => {
+    console.log('viewing main guest: ', props.guest);
     selectedGuest.value = props.guest;
     editing.value = false;
 };
 
 const viewPlusOne = () => {
+    console.log('viewing plus one: ', props.guest.plus_one_child);
+
     selectedGuest.value = props.guest.plus_one_child;
     editing.value = false;
 };

@@ -56,25 +56,16 @@
                     </DialogTitle>
                     <div class="flex gap-4">
                       <button
-                        v-if="
-                          guestHasPlusOne &&
-                            selectedGuestIsPlusOne
-                        "
-                        @click="selectedGuest = guest"
-                        class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
+                        v-if="selectedGuestIsPlusOne"
+                        @click="viewMainGuest"
+                        class="rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
                         View Main Guest
                       </button>
                       <button
-                        v-if="
-                          guestHasPlusOne &&
-                            selectedGuestIsMainGuest
-                        "
-                        @click="
-                          selectedGuest =
-                            guest.plus_one_child
-                        "
-                        class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
+                        v-if="selectedGuestIsMainGuest"
+                        @click="viewPlusOne"
+                        class="rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
                         View Plus One
                       </button>
@@ -203,6 +194,16 @@ const deleting = ref(false);
 const confirmDelete = () => {
     deleteGuest(selectedGuest.value.id);
     emit('close');
+};
+
+const viewMainGuest = () => {
+    selectedGuest.value = props.guest;
+    editing.value = false;
+};
+
+const viewPlusOne = () => {
+    selectedGuest.value = props.guest.plus_one_child;
+    editing.value = false;
 };
 
 onMounted(() => {

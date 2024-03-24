@@ -15,6 +15,7 @@ class ReceivedInvite extends Model
     protected $table = 'received_invites';
 
     protected $fillable = [
+        'guest_id',
         'coming',
         'alcohol',
         'dietary_requirements',

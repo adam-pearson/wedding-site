@@ -23,9 +23,9 @@ export default function useGuestList() {
         });
     };
 
-    const saveNewGuest = async (guestForm) => {
+    const saveNewGuest = async (guestForm, parentId = null) => {
         loading.value = true;
-        axios.post(route('admin.guests.store'), guestForm).then(() => {
+        axios.post(route('admin.guests.store', { plus_one_of: parentId }), guestForm).then(() => {
             loading.value = false;
             reloadGuestList();
         });

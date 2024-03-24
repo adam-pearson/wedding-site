@@ -4,7 +4,9 @@ namespace App\Repositories;
 
 use App\DTOs\AddGuestRequestDto;
 use App\DTOs\EditGuestRequestDto;
+use App\Enums\GuestType;
 use App\Models\Guest;
+use App\Models\ReceivedInvite;
 use Illuminate\Database\Eloquent\Collection;
 
 class GuestRepository
@@ -16,7 +18,30 @@ class GuestRepository
 
     public function save(AddGuestRequestDto $guestDto): Guest
     {
-        return Guest::create($guestDto->toArray());
+        $newGuest = Guest::make($guestDto->getGuestColumns());
+
+
+        if ($guestDto->plusOneOf) {
+            $parentGuest = $this->find($guestDto->plusOneOf);
+
+            if (!$parentGuest->plus_one_allowed) {
+                throw new \Exception('Parent guest does not allow plus ones');
+            } else {
+                $newGuest->plusOneParent()->associate($parentGuest);
+                $newGuest->save();
+                
+                try {
+                ReceivedInvite::create(['guest_id' => $newGuest->id, ...$guestDto->getInviteColumns()]);
+                } catch (\Exception $e) {
+                    $newGuest->delete();
+                    throw $e;
+                }
+            }
+        } else {
+            $newGuest->save();
+        }        
+
+        return $newGuest;
     }
 
     public function update(EditGuestRequestDto $guestDto): Guest
@@ -25,11 +50,11 @@ class GuestRepository
 
         $guest->update($guestDto->getGuestColumns());
 
-        if ($guest->receivedInvite->exists()) {
+        if ($guest->receivedInvite?->exists()) {
             $guest->receivedInvite()->update($guestDto->getInviteColumns());
         }
 
-        if ($guest->plusOneChild->exists()) {
+        if ($guest->plusOneChild?->exists()) {
             if ($guest->plus_one_allowed) {
                 $guest->plusOneChild->update($guestDto->getPlusOneSharedGuestFields());
                 $guest->plusOneChild->receivedInvite()->update($guestDto->getPlusOneSharedInviteFields());

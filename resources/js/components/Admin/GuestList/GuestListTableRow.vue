@@ -43,7 +43,7 @@
       class="relative flex items-center justify-end gap-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
     >
       <button
-        @click="emit('view', guest)"
+        @click="emit('view')"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
       >
         <EyeIcon class="size-4" />
@@ -52,7 +52,7 @@
         </span>
       </button>
       <button
-        @click="emit('rsvp', guest)"
+        @click="emit('rsvp')"
         :disabled="hasAlreadyRsvpd"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
         :class="hasAlreadyRsvpd ? 'opacity-50 cursor-not-allowed ' : ''"
@@ -63,7 +63,7 @@
         </span>
       </button>
       <button
-        @click="emit('delete', guest)"
+        @click="emit('delete')"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
       >
         <TrashIcon class="size-4" />
@@ -81,7 +81,7 @@
       class=" whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
     >
       <div class="flex items-center gap-2">
-        {{ guest.plus_one_child.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
+        {{ plusOnechild.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
       </div>
     </td>
     <td />
@@ -93,21 +93,22 @@
       class="relative flex items-center justify-end gap-2 whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
     >
       <button
-        @click="emit('view-plus-one', guest.plus_one_child)"
+        @click="emit('view-plus-one')"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
       >
         <EyeIcon class="size-4" />
         <span class="sr-only">
-          View {{ guest.plus_one_child.name }}
+          View {{ plusOnechild.name }}
         </span>
       </button>
+
       <button
-        @click="emit('delete', guest.plus_one_child)"
+        @click="emit('delete-plus-one')"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
       >
         <TrashIcon class="size-4" />
         <span class="sr-only">
-          Delete {{ guest.plus_one_child.name }}
+          Delete {{ plusOnechild.name }}
         </span>
       </button>
     </td>
@@ -116,7 +117,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import {
     EyeIcon, PaperAirplaneIcon, TrashIcon, UsersIcon,
 } from '@heroicons/vue/24/outline';
@@ -135,7 +136,9 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete']);
+const plusOnechild = ref(props.guest?.plus_one_child);
+
+const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete', 'delete-plus-one']);
 
 const hasAlreadyRsvpd = computed(
     () => getInviteStatus(props.guest) === STATUS_TYPES.accepted.value

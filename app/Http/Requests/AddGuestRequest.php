@@ -32,6 +32,10 @@ class AddGuestRequest extends FormRequest
             'plus_one_allowed' => 'boolean',
             'is_child' => 'boolean',
             'guest_type' => ['required', Rule::enum(GuestType::class)],
+            'plus_one_of' => 'integer|nullable|sometimes',
+            'coming' => 'boolean|nullable|sometimes',
+            'alcohol' => 'boolean|nullable|sometimes',
+            'dietary_requirements' => 'string|nullable|sometimes',
         ];
     }
 
@@ -45,6 +49,10 @@ class AddGuestRequest extends FormRequest
             phone: $this->input('phone'),
             address: $this->input('address'),
             isChild: $this->input('is_child'),
+            plusOneOf: $this->input('plus_one_of'),
+            coming: $this->input('coming'),
+            alcohol: $this->input('alcohol'),
+            dietaryRequirements: $this->input('dietary_requirements'),
         );
     }
 }

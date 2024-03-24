@@ -69,6 +69,7 @@
                   @view-plus-one="emit('view-plus-one', guest)"
                   @rsvp="emit('rsvp', guest)"
                   @delete="emit('delete', guest)"
+                  @delete-plus-one="emit('delete-plus-one', guest.plus_one_child)"
                 />
               </tbody>
               <tbody
@@ -107,5 +108,5 @@ import GuestListTableRow from './GuestListTableRow.vue';
 
 const { loading, guestList } = useGuestList();
 
-const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete']);
+const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete', 'delete-plus-one']);
 </script>

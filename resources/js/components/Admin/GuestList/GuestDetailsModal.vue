@@ -56,11 +56,18 @@
                     </DialogTitle>
                     <div class="flex gap-4">
                       <button
-                        v-if="selectedGuestIsPlusOne"
+                        v-if="selectedGuestIsPlusOne || addingPlusOne"
                         @click="viewMainGuest"
                         class="self-start rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
                         Main Guest
+                      </button>
+                      <button
+                        v-if="!guestHasPlusOne && selectedGuestIsMainGuest && selectedGuest.plus_one_allowed && !addingPlusOne"
+                        @click="addPlusOne"
+                        class="self-start rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
+                      >
+                        Add Plus One
                       </button>
                       <button
                         v-if="guestHasPlusOne && selectedGuestIsMainGuest"
@@ -119,6 +126,7 @@
                   </div>
                   <EditGuestForm
                     :editing="editing"
+                    :adding-plus-one="addingPlusOne"
                     :guest="selectedGuest"
                     @finished-editing="emit('close')"
                   />
@@ -148,6 +156,7 @@ import {
     LockOpenIcon,
     TrashIcon,
 } from '@heroicons/vue/24/outline';
+import { cloneDeep } from 'lodash';
 import EditGuestForm from './EditGuestForm.vue';
 import useGuestList from '../../../composables/guestList';
 
@@ -171,6 +180,7 @@ const props = defineProps({
 });
 
 const editing = ref(false);
+const addingPlusOne = ref(false);
 const deleting = ref(false);
 
 const selectedGuest = ref(props.guest);
@@ -185,7 +195,11 @@ const selectedGuestIsMainGuest = computed(
 
 const guestHasPlusOne = computed(() => Boolean(props.guest?.plus_one_child));
 
-const headingText = computed(() => (editing.value ? 'Editing Guest' : 'Guest Details'));
+const addPlusOne = () => {
+    selectedGuest.value = cloneDeep(props.guest);
+    editing.value = true;
+    addingPlusOne.value = true;
+};
 
 const confirmDelete = () => {
     deleteGuest(selectedGuest.value.id);
@@ -193,16 +207,15 @@ const confirmDelete = () => {
 };
 
 const viewMainGuest = () => {
-    console.log('viewing main guest: ', props.guest);
     selectedGuest.value = props.guest;
     editing.value = false;
+    addingPlusOne.value = false;
 };
 
 const viewPlusOne = () => {
-    console.log('viewing plus one: ', props.guest.plus_one_child);
-
     selectedGuest.value = props.guest.plus_one_child;
     editing.value = false;
+    addingPlusOne.value = false;
 };
 
 onMounted(() => {

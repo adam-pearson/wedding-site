@@ -27,6 +27,7 @@
     @view="openDetailsModal"
     @view-plus-one="openDetailsModalToPlusOne"
     @delete="openDeleteConfirmation"
+    @delete-plus-one="openDeleteConfirmation"
     @rsvp="goToGuestRsvpForm"
     class="py-4"
   />

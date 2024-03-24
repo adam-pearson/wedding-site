@@ -18,7 +18,6 @@
     <TextElement
       name="name"
       label="Name"
-      :value="guest.name"
       :rules="['required']"
       :readonly="!editing"
       :columns="{
@@ -106,7 +105,7 @@
       label="Guest Type"
       info="Will this guest recieve an all-day or an evening invitation?"
       view="tabs"
-      :disabled="!editing || guest.plus_one_of !== null"
+      :disabled="!editing || guestIsPlusOne"
       :rules="['required']"
       :items="[{
         value: 'all_day', label: 'All Day'
@@ -216,11 +215,15 @@ import {
 } from 'vue';
 import useGuestList from '../../../composables/guestList';
 
-const { updateGuest } = useGuestList();
+const { saveNewGuest, updateGuest } = useGuestList();
 
 const emit = defineEmits(['finished-editing']);
 
 const props = defineProps({
+    addingPlusOne: {
+        type: Boolean,
+        required: true,
+    },
     editing: {
         type: Boolean,
         required: true,
@@ -231,47 +234,82 @@ const props = defineProps({
     },
 });
 
-const guestIsPlusOne = computed(() => props.guest.plus_one_of !== null);
+const guestIsPlusOne = computed(() => props.guest.plus_one_of !== null || props.addingPlusOne);
 
 const form$ = ref(null);
 
 const submit = () => {
-    updateGuest(props.guest.id, form$.value.requestData);
+    if (props.addingPlusOne) {
+        saveNewGuest(form$.value.requestData, props.guest.id);
+    } else {
+        updateGuest(props.guest.id, form$.value.requestData);
+    }
     emit('finished-editing');
     /** @TODO - ENSURE FORM ALSO EDITS RECEIVED_INVITES TABLE */
     /** @TODO - ENSURE FORM EDITS MAIN GUEST IF PLUS ONE GUEST TYPE IS EDITED AND VICE VERSA */
 };
 
-onMounted(() => {
+const updateFormValues = (guestVals) => {
     form$.value.update({
-        name: props.guest.name,
-        email: props.guest.email,
-        phone: props.guest.phone,
-        address: props.guest.address,
-        plus_one_allowed: props.guest.plus_one_allowed,
-        is_child: props.guest.is_child,
-        guest_type: props.guest.guest_type,
-        invite_sent_on: props.guest.invite_sent_on,
-        coming: props.guest.received_invite?.coming,
-        alcohol: props.guest.received_invite?.alcohol,
-        dietary_requirements: props.guest.received_invite?.dietary_requirements,
+        name: guestVals.name,
+        email: guestVals.email,
+        phone: guestVals.phone,
+        address: guestVals.address,
+        plus_one_allowed: guestVals.plus_one_allowed,
+        is_child: guestVals.is_child,
+        guest_type: guestVals.guest_type,
+        invite_sent_on: guestVals.invite_sent_on,
+        coming: guestVals.received_invite?.coming,
+        alcohol: guestVals.received_invite?.alcohol,
+        dietary_requirements: guestVals.received_invite?.dietary_requirements,
     });
+};
+
+onMounted(() => {
+    if (props.addingPlusOne) {
+        const newPlusOneVals = {
+            name: null,
+            email: null,
+            phone: null,
+            address: null,
+            plus_one_allowed: false,
+            is_child: false,
+            guest_type: props.guest.guest_type,
+            invite_sent_on: null,
+            coming: props.guest.received_invite?.coming,
+            alcohol: null,
+            dietary_requirements: null,
+        };
+        updateFormValues(newPlusOneVals);
+    } else {
+        updateFormValues(props.guest);
+    }
 });
 
-watch(() => props.guest, (newVal) => {
-    form$.value.update({
-        name: newVal.name,
-        email: newVal.email,
-        phone: newVal.phone,
-        address: newVal.address,
-        plus_one_allowed: newVal.plus_one_allowed,
-        is_child: newVal.is_child,
-        guest_type: newVal.guest_type,
-        invite_sent_on: newVal.invite_sent_on,
-        coming: newVal.received_invite?.coming,
-        alcohol: newVal.received_invite?.alcohol,
-        dietary_requirements: newVal.received_invite?.dietary_requirements,
-    });
-    console.log('form after update: ', form$.value);
+watch(() => props.guest, (guestVals) => {
+    console.log('guestVals: ', guestVals);
+    if (!props.addingPlusOne) {
+        updateFormValues(guestVals);
+    }
+}, { deep: true });
+
+watch(() => props.addingPlusOne, (newVal) => {
+    console.log('adding plus one: ', newVal);
+    if (newVal) {
+        const newPlusOneVals = {
+            name: null,
+            email: null,
+            phone: null,
+            address: null,
+            plus_one_allowed: false,
+            is_child: false,
+            guest_type: props.guest.guest_type,
+            invite_sent_on: null,
+            coming: props.guest.received_invite?.coming,
+            alcohol: null,
+            dietary_requirements: null,
+        };
+        updateFormValues(newPlusOneVals);
+    }
 });
 </script>

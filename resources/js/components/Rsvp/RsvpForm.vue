@@ -103,8 +103,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import useGuest from '../../composables/guest';
 import GUEST_TYPES from '../../constants/guestTypes';
 
@@ -112,13 +111,9 @@ const { guest } = useGuest();
 
 const form$ = ref(null);
 
+const emit = defineEmits(['submit']);
+
 const submit = () => {
-    console.log('submitting: ', form$.value.requestData);
-    router.post(route('guest.rsvp.submit', { guest: guest.value.unique_code }), form$.value.requestData);
+    emit('submit', { guest_code: guest.value.unique_code, formData: form$.value.requestData });
 };
-
-watch(() => form$.value?.data, (value) => {
-    console.log(form$.value.data);
-});
-
 </script>

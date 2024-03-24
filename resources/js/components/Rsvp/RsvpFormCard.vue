@@ -10,45 +10,14 @@
             appear
             mode="out-in"
           >
-            <div
-              v-if="welcomeOpen"
-            >
-              <h2 class="small-caps font-serif text-xl tracking-tight text-black">
-                it is with great pleasure
-              </h2>
-
-              <div class="flex flex-col gap-2">
-                <span class="my-1 block font-script text-4xl text-black sm:text-4xl lg:text-5xl">
-                  Heather & Adam
-                </span>
-                <div class="small-caps mb-2 flex flex-col font-serif text-lg text-black">
-                  <p>invite</p>
-                  <p class="text-4xl font-bold">
-                    {{ guest.name }}
-                  </p>
-                  <p>to join them for their</p>
-                </div>
-                <span class="my-1 block font-script text-4xl text-black sm:text-4xl lg:text-5xl">
-                  {{ inviteType }}
-                </span>
-                <span class="small-caps font-serif text-lg text-black">
-                  at Beeston Manor,<br>
-                  Quaker Brook Ln, Preston <span class="text-nowrap">PR5 0RA</span><br>
-                  Sunday the 30th of March, 2025<br>
-                  at {{ inviteTime }}
-                </span>
-              </div>
-              <div class="mt-10 flex items-center justify-center gap-x-6">
-                <button
-                  @click="welcomeOpen = false"
-                  class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  RSVP
-                </button>
-              </div>
+            <div v-if="welcomeOpen">
+              <RsvpInvite @close-invite="welcomeOpen = false" />
             </div>
-            <div v-else>
-              <RsvpForm />
+            <div v-else-if="!welcomeOpen && !successOpen">
+              <RsvpForm @submit="submit" />
+            </div>
+            <div v-else-if="successOpen">
+              <RsvpSuccess />
             </div>
           </Transition>
           <svg
@@ -81,17 +50,21 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import useGuest from '@/composables/guest';
-import GUEST_TYPES from '../../constants/guestTypes';
+import { ref } from 'vue';
+import axios from 'axios';
 import RsvpForm from './RsvpForm.vue';
-
-const { guest } = useGuest();
-const guestIsEvening = computed(() => guest.value.guest_type === GUEST_TYPES.EVENING.value);
-const inviteTime = computed(() => (guestIsEvening.value ? '7 o\'clock' : '1 o\'clock'));
-const inviteType = computed(() => (guestIsEvening.value ? 'Evening Reception' : 'Wedding Ceremony'));
+import RsvpInvite from './RsvpInvite.vue';
+import RsvpSuccess from './RsvpSuccess.vue';
 
 const welcomeOpen = ref(true);
+const successOpen = ref(false);
+
+const submit = ($event) => {
+    axios.post(route('guest.rsvp.submit', { guest: $event.guest_code }), $event.formData)
+        .then(() => {
+            successOpen.value = true;
+        });
+};
 
 </script>
 

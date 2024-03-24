@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class GuestRepository
 {
+    public function find(int $id, array $relations = []): Guest
+    {
+        return Guest::with($relations)->find($id);
+    }
+
     public function save(AddGuestRequestDto $guestDto): Guest
     {
         return Guest::create($guestDto->toArray());
@@ -16,12 +21,21 @@ class GuestRepository
 
     public function update(EditGuestRequestDto $guestDto): Guest
     {
-        $guest = Guest::find($guestDto->id);
+        $guest = $this->find($guestDto->id, ['receivedInvite', 'plusOneParent.receivedInvite', 'plusOneChild.receivedInvite']);
 
         $guest->update($guestDto->getGuestColumns());
 
-        if ($guest->receivedInvite()->exists()) {
+        if ($guest->receivedInvite->exists()) {
             $guest->receivedInvite()->update($guestDto->getInviteColumns());
+        }
+
+        if ($guest->plusOneChild->exists()) {
+            if ($guest->plus_one_allowed) {
+                $guest->plusOneChild->update($guestDto->getPlusOneSharedGuestFields());
+                $guest->plusOneChild->receivedInvite()->update($guestDto->getPlusOneSharedInviteFields());
+            } else {
+                $guest->plusOneChild->delete();
+            }
         }
 
         return $guest;

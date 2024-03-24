@@ -58,16 +58,16 @@
                       <button
                         v-if="selectedGuestIsPlusOne"
                         @click="viewMainGuest"
-                        class="rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
+                        class="self-start rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
-                        View Main Guest
+                        Main Guest
                       </button>
                       <button
                         v-if="guestHasPlusOne && selectedGuestIsMainGuest"
                         @click="viewPlusOne"
-                        class="rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
+                        class="self-start rounded-md bg-amber-500 px-4 py-2 text-sm text-white transition duration-75 hover:bg-amber-900"
                       >
-                        View Plus One
+                        Plus One
                       </button>
                       <button
                         v-if="!deleting"
@@ -86,7 +86,7 @@
                           @click="confirmDelete"
                           class="rounded-md bg-red-500 px-4 py-2 text-white transition duration-75 hover:bg-red-900"
                         >
-                          Confirm Delete
+                          Confirm
                         </button>
                         <button
                           @click="deleting = false"

@@ -3,6 +3,8 @@
 namespace App\DTOs;
 
 use App\Enums\GuestType;
+use App\Models\Guest;
+use App\Repositories\GuestRepository;
 use App\Services\GuestService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
@@ -12,13 +14,13 @@ use Stringable;
 final readonly class EditGuestRequestDto implements JsonSerializable, Arrayable, Stringable
 {
     private GuestService $guestService;
-
+    
     public function __construct(
         public int $id,
         public string $name,
-        public bool $plusOneAllowed,
-        public GuestType $guestType,
-        public bool $isChild,
+        public ?bool $isChild,
+        public ?bool $plusOneAllowed,
+        public ?GuestType $guestType,
         public ?string $email,
         public ?string $phone,
         public ?string $address,
@@ -50,6 +52,20 @@ final readonly class EditGuestRequestDto implements JsonSerializable, Arrayable,
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
+        ];
+    }
+
+    public function getPlusOneSharedGuestFields(): array
+    {
+        return [
+            'guest_type' => $this->guestType,
+        ];
+    }
+
+    public function getPlusOneSharedInviteFields(): array
+    {
+        return [
+            'coming' => $this->coming,
         ];
     }
 

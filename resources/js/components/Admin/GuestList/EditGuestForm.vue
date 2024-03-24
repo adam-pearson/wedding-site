@@ -30,6 +30,8 @@
       label="Email"
       input-type="email"
       :rules="['email', 'nullable']"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :disabled="guestIsPlusOne"
       :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -38,6 +40,8 @@
     <TextElement
       name="phone"
       label="Phone"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :disabled="guestIsPlusOne"
       :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -46,6 +50,8 @@
     <TextareaElement
       name="address"
       label="Address"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :disabled="guestIsPlusOne"
       :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -54,7 +60,8 @@
     <DateElement
       name="invite_sent_on"
       label="Invite Sent On"
-      placeholder="YYYY-MM-DD"
+      :disabled="guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
       :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -65,7 +72,8 @@
       label="Plus One Allowed"
       info="This guest is allowed to bring one extra guest"
       view="tabs"
-      :disabled="!editing"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :disabled="!editing || guestIsPlusOne"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
@@ -82,7 +90,7 @@
       label="Guest is Child"
       info="This guest is a child and will not require an adult meal"
       view="tabs"
-      :disabled="!editing"
+      :disabled="!editing || guestIsPlusOne"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
@@ -98,7 +106,7 @@
       label="Guest Type"
       info="Will this guest recieve an all-day or an evening invitation?"
       view="tabs"
-      :disabled="!editing"
+      :disabled="!editing || guest.plus_one_of !== null"
       :rules="['required']"
       :items="[{
         value: 'all_day', label: 'All Day'
@@ -134,7 +142,7 @@
       label="Coming"
       info="Is this guest coming or not?"
       view="tabs"
-      :disabled="!editing"
+      :disabled="!editing || guestIsPlusOne"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
@@ -152,8 +160,8 @@
       info="Is this guest having alcohol with their meal?"
       view="tabs"
       :disabled="!editing || Boolean(guest.is_child)"
+      :conditions="[['guest_type', 'all_day']]"
       :rules="['required']"
-      :conditions="[['is_child', 0]]"
       :items="[{
         value: 1, label: 'Yes'
       }, {
@@ -203,7 +211,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import {
+    ref, onMounted, watch, computed,
+} from 'vue';
 import useGuestList from '../../../composables/guestList';
 
 const { updateGuest } = useGuestList();
@@ -220,6 +230,8 @@ const props = defineProps({
         required: true,
     },
 });
+
+const guestIsPlusOne = computed(() => props.guest.plus_one_of !== null);
 
 const form$ = ref(null);
 
@@ -260,5 +272,6 @@ watch(() => props.guest, (newVal) => {
         alcohol: newVal.received_invite?.alcohol,
         dietary_requirements: newVal.received_invite?.dietary_requirements,
     });
+    console.log('form after update: ', form$.value);
 });
 </script>

@@ -41,4 +41,12 @@ class Guest extends Model
     {
         return $this->hasOne(ReceivedInvite::class);
     }
+
+    protected static function booted () {
+        static::deleting(function(Guest $guest) {
+            $guest->receivedInvite?->delete();
+            $guest->plusOneChild?->receivedInvite()->delete();
+            $guest->plusOneChild?->delete();
+        });
+    }
 }

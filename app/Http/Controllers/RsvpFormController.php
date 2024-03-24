@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RsvpFormRequest;
 use App\DTOs\RsvpSubmissionDto;
 use App\DTOs\AddGuestRequestDto;
+use App\DTOs\GuestContactDetailsDto;
 use App\Enums\GuestType;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -37,36 +38,17 @@ class RsvpFormController extends Controller
     public function submit(RsvpFormRequest $request, Guest $guest): JsonResponse
     {
         $dto = $request->getDto();
-        // dd($dto);
-
-// update main guest's details in the guest table
-        // create a received_invite record for the main guest
-        // if the main guest is allowed a plus one, and if they have submitted a true value for using_plus_one, and if they have submitted plus one details, then create a guest record for the plus one
-        // if the main guest is allowed a plus one, and if they have submitted a true value for using_plus_one, and if they have submitted plus one details, then create a received_invite record for the plus one
+        $contactDetails = $request->getContactDetailsDto();
 
         try {
-        $guest->update($dto->getMainGuestFields());
-        $receivedInvite = $guest->receivedInvite()->create($dto->getMainGuestReceivedInviteFields());
-
-        if ($guest->plus_one_allowed && $dto->usingPlusOne) {
-            $plusOneDto = new AddGuestRequestDto(
-                plusOneOf: $guest->id,
-                name: $dto->plusOneName,
-                guestType: GuestType::from($guest->guest_type),
-                plusOneAllowed: false,
-                isChild: false,
-            );
-            $plusOne = $this->guestService->saveGuest($plusOneDto);
-        
-            $plusOneReceivedInvite = $plusOne->receivedInvite()->create($dto->getPlusOneReceivedInviteFields());
+            $this->guestService->updateGuestContactDetails($contactDetails);
+            $this->guestService->createReceivedInvites($guest, $dto);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            $this->logger->error('RSVP failed to submit', ['exception' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'RSVP failed to submit']);
         }
-    } catch (Exception $e) {
-        $this->logger->error('RSVP failed to submit', ['exception' => $e]);
-        return response()->json(['sucecss' => false, 'message' => 'RSVP failed to submit']);
-    }
 
-        // make new rsvp service
-        // make new rsvp repository
-        return response()->json(['sucecss' => true, 'message' => 'RSVP submitted successfully']);
+        return response()->json(['success' => true, 'message' => 'RSVP submitted successfully']);
     }
 }

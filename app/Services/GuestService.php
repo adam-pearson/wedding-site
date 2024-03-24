@@ -8,7 +8,8 @@ use App\Models\Guest;
 use App\Repositories\GuestRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\DTOs\RsvpSubmissionDto;
-use App\Models\ReceivedInvite;
+use App\DTOs\GuestContactDetailsDto;
+use App\Enums\GuestType;
 
 class GuestService
 {
@@ -43,6 +44,12 @@ class GuestService
         return $guest;
     }
 
+    public function updateGuestContactDetails(GuestContactDetailsDto $dto) {
+        $guest = $this->guestRepository->updateContactDetails($dto);
+
+        return $guest;
+    }
+
     /**
      * Returns a count of deleted guests
      */
@@ -66,9 +73,22 @@ class GuestService
         return $this->guestRepository->getGuestByCode($code);
     }
 
-    public function submitRsvp(Guest $guest, RsvpSubmissionDto $dto): void
+    public function createReceivedInvites(Guest $guest, RsvpSubmissionDto $dto): void
     {
+        $this->guestRepository->createReceivedInvite($guest, $dto->getMainGuestReceivedInviteFields());
+
+        if ($guest->plus_one_allowed && $dto->usingPlusOne) {
+            $plusOneDto = new AddGuestRequestDto(
+                plusOneOf: $guest->id,
+                name: $dto->plusOneName,
+                guestType: GuestType::from($guest->guest_type),
+                plusOneAllowed: false,
+                isChild: false,
+            );
+
+            $plusOne = $this->saveGuest($plusOneDto);
         
-        // $this->guestRepository->submitRsvp($guest, $dto);
+            $this->guestRepository->createReceivedInvite($plusOne, $dto->getPlusOneReceivedInviteFields());
     }
+}
 }

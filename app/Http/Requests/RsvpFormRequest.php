@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\DTOs\EditGuestRequestDto;
+use App\DTOs\GuestContactDetailsDto;
 use App\DTOs\RsvpSubmissionDto;
 use App\Enums\GuestType;
 use Illuminate\Foundation\Http\FormRequest;
@@ -51,6 +53,16 @@ class RsvpFormRequest extends FormRequest
             plusOneName: $this->input('plus_one_name'),
             plusOneAlcohol: $this->input('plus_one_alcohol'),
             plusOneDietaryRequirements: $this->input('plus_one_dietary_requirements'),
+        );
+    }
+
+    public function getContactDetailsDto(): GuestContactDetailsDto
+    {
+        return new GuestContactDetailsDto(
+            guestId: $this->route('guest')->id,
+            email: $this->input('email'),
+            phone: $this->input('phone'),
+            address: $this->route('guest')->address,
         );
     }
 }

@@ -61,8 +61,10 @@ const successOpen = ref(false);
 
 const submit = ($event) => {
     axios.post(route('guest.rsvp.submit', { guest: $event.guest_code }), $event.formData)
-        .then(() => {
-            successOpen.value = true;
+        .then((res) => {
+            if (res.data.success) {
+                successOpen.value = true;
+            }
         });
 };
 

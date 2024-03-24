@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post(uri: '/guests', action: AddGuestController::class)
-        ->name('admin.guests.store');
+        ->name('admin.guests.store')
+        ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);;
 
     Route::put(uri: '/guests', action: UpdateGuestController::class)
     ->name('admin.guests.update');

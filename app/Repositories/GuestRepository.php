@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\DTOs\AddGuestRequestDto;
 use App\DTOs\EditGuestRequestDto;
+use App\DTOs\GuestContactDetailsDto;
+use App\DTOs\RsvpSubmissionDto;
 use App\Enums\GuestType;
 use App\Models\Guest;
 use App\Models\ReceivedInvite;
@@ -66,6 +68,15 @@ class GuestRepository
         return $guest;
     }
 
+    public function updateContactDetails(GuestContactDetailsDto $dto): Guest
+    {
+        $guest = $this->find($dto->guestId);
+
+        $guest->update($dto->toArray());
+
+        return $guest;
+    }
+
     public function checkGuestCodeIsUnique(string $code): bool
     {
         return Guest::where('unique_code', $code)->doesntExist();
@@ -97,5 +108,10 @@ class GuestRepository
     public function getGuestByCode(string $code, array $relations = []): Guest
     {
         return Guest::where('unique_code', $code)->with($relations)->first();
+    }
+
+    public function createReceivedInvite(Guest $guest, array $data): ReceivedInvite
+    {
+        return $guest->receivedInvite()->create($data);
     }
 }

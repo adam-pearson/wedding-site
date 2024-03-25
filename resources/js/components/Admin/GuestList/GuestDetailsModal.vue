@@ -186,14 +186,14 @@ const deleting = ref(false);
 const selectedGuest = ref(props.guest);
 
 const selectedGuestIsPlusOne = computed(
-    () => selectedGuest.value.id === props.guest.plus_one_child?.id,
+    () => selectedGuest.value.id === props.guest.plus_one?.id,
 );
 
 const selectedGuestIsMainGuest = computed(
     () => selectedGuest.value.id === props.guest.id,
 );
 
-const guestHasPlusOne = computed(() => Boolean(props.guest?.plus_one_child));
+const guestHasPlusOne = computed(() => Boolean(props.guest?.plus_one));
 
 const addPlusOne = () => {
     selectedGuest.value = cloneDeep(props.guest);
@@ -213,14 +213,14 @@ const viewMainGuest = () => {
 };
 
 const viewPlusOne = () => {
-    selectedGuest.value = props.guest.plus_one_child;
+    selectedGuest.value = props.guest.plus_one;
     editing.value = false;
     addingPlusOne.value = false;
 };
 
 onMounted(() => {
     if (props.openToPlusOne) {
-        selectedGuest.value = props.guest.plus_one_child;
+        selectedGuest.value = props.guest.plus_one;
     }
 });
 

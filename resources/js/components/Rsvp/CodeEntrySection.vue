@@ -9,10 +9,10 @@
         <p class="text-center text-sm sm:text-base">
           Please enter the {{ EXPECTED_LENGTH }} character code found on your invitation to RSVP.
         </p>
-        <NotificationBanner
+        <!-- <NotificationBanner
           class="max-w-96"
           :errors="formattedErrors"
-        />
+        /> -->
         <CodeInput
           :length="EXPECTED_LENGTH"
           v-model="code"
@@ -32,7 +32,7 @@
 <script setup>
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import NotificationBanner from '@/components/Shared/NotificationBanner.vue';
+// import NotificationBanner from '@/components/Shared/NotificationBanner.vue';
 import CodeInput from '@/components/Shared/FormComponents/CodeInput.vue';
 
 const props = defineProps({

@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\AddGuestController;
-use App\Http\Controllers\ShowGuestsController;
-use App\Http\Controllers\UpdateGuestController;
-use App\Http\Controllers\DeleteGuestController;
-use App\Http\Controllers\RsvpFormController;
-use App\Http\Middleware\RsvpRepeatedSubmissionCheckMiddleware;
+use App\Guest\Controllers\API\GuestApiController;
+use App\RsvpResponse\Controllers\API\RsvpResponseApiController;
+use App\RsvpResponse\Middleware\RsvpRepeatedSubmissionCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,20 +17,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post(uri: '/guests', action: AddGuestController::class)
+    Route::post(uri: '/guests', action: [GuestApiController::class, 'store'])
         ->name('admin.guests.store')
-        ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);;
+        ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);
 
-    Route::put(uri: '/guests', action: UpdateGuestController::class)
+    Route::put(uri: '/guests/{guest}', action: [GuestApiController::class, 'update'])
     ->name('admin.guests.update');
 
-    Route::delete(uri: '/guests', action: DeleteGuestController::class)
+    Route::delete(uri: '/guests', action: [GuestApiController::class, 'destroy'])
         ->name('admin.guests.destroy');
 
-    Route::get(uri: '/guests/list', action: ShowGuestsController::class)
+    Route::get(uri: '/guests/list', action: [GuestApiController::class, 'index'])
     ->name('admin.guests.list');
 });
 
-Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpFormController::class, 'submit'])
+Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpResponseApiController::class, 'store'])
     ->name('guest.rsvp.submit')
     ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);

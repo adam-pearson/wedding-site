@@ -74,14 +74,14 @@
     </td>
   </tr>
   <tr
-    v-if="guest.plus_one_child"
+    v-if="guest.plus_one"
     class="ml-40 bg-gray-50"
   >
     <td
       class=" whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
     >
       <div class="flex items-center gap-2">
-        {{ plusOnechild.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
+        {{ plusOne.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
       </div>
     </td>
     <td />
@@ -98,7 +98,7 @@
       >
         <EyeIcon class="size-4" />
         <span class="sr-only">
-          View {{ plusOnechild.name }}
+          View {{ plusOne.name }}
         </span>
       </button>
 
@@ -108,7 +108,7 @@
       >
         <TrashIcon class="size-4" />
         <span class="sr-only">
-          Delete {{ plusOnechild.name }}
+          Delete {{ plusOne.name }}
         </span>
       </button>
     </td>
@@ -136,22 +136,22 @@ const props = defineProps({
     },
 });
 
-const plusOnechild = ref(props.guest?.plus_one_child);
+const plusOne = ref(props.guest?.plus_one);
 
 const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete', 'delete-plus-one']);
 
 const hasAlreadyRsvpd = computed(
-    () => getInviteStatus(props.guest) === STATUS_TYPES.accepted.value
-        || getInviteStatus(props.guest) === STATUS_TYPES.rejected.value,
+    () => getInviteStatus(props.guest) === STATUS_TYPES.ACCEPTED.value
+        || getInviteStatus(props.guest) === STATUS_TYPES.DECLINED.value,
 );
 
 const guestPlusOneStatus = computed(() => {
-    if (props.guest.plus_one_child) {
+    if (props.guest.plus_one) {
         return 'Yes';
     }
 
     if (props.guest.plus_one_allowed) {
-        if (!props.guest.received_invite && props.guest.plus_one_child) {
+        if (!props.guest.rsvp_response && props.guest.plus_one) {
             return 'Chose Not To Use';
         }
 

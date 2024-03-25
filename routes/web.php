@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminGuestListController;
+use App\Dashboard\Controllers\DashboardController;
+use App\Guest\Controllers\GuestController;
+use App\Homepage\Controllers\HomePageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticated;
-use App\Http\Controllers\HomePageController;
-use App\Http\Controllers\RsvpController;
-use App\Http\Controllers\RsvpFormController;
-use App\Http\Middleware\RsvpCodeCheckMiddleware;
+use App\RsvpResponse\Controllers\RsvpResponseCodeController;
+use App\RsvpResponse\Controllers\RsvpResponseFormController;
+use App\RsvpResponse\Middleware\RsvpCodeCheckMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,34 +20,34 @@ use App\Http\Middleware\RsvpCodeCheckMiddleware;
 |
 */
 
-Route::get(uri: '/', action: HomePageController::class)
+Route::get(uri: '/', action: [HomePageController::class, 'show'])
     ->name('home');
 
-Route::get(uri: '/rsvp', action: RsvpController::class)
+Route::get(uri: '/rsvp', action: [RsvpResponseCodeController::class, 'show'])
     ->name('guest.rsvp.code');
 
-Route::get(uri: '/rsvp/form', action: RsvpFormController::class)
+Route::get(uri: '/rsvp/form', action: [RsvpResponseFormController::class, 'show'])
     ->name('guest.rsvp.form')
     ->middleware(RsvpCodeCheckMiddleware::class);
 
 
 Route::middleware([Authenticated::class])->group(function () {
-    Route::get(uri: '/dashboard', action: AdminDashboardController::class)
+    Route::get(uri: '/dashboard', action: [DashboardController::class, 'show'])
         ->name('admin.dashboard');
 
-    Route::get(uri: '/guests', action: AdminGuestListController::class)
+    Route::get(uri: '/guests', action: [GuestController::class, 'index'])
         ->name('admin.guests.index');
 
-    Route::get(uri: '/todo', action: AdminDashboardController::class)
+    Route::get(uri: '/todo', action: [DashboardController::class, 'show'])
         ->name('admin.todo.index');
 
-    Route::get(uri: '/budget', action: AdminDashboardController::class)
+    Route::get(uri: '/budget', action: [DashboardController::class, 'show'])
         ->name('admin.budget');
 
-    Route::get(uri: '/documents', action: AdminDashboardController::class)
+    Route::get(uri: '/documents', action: [DashboardController::class, 'show'])
         ->name('admin.documents');
 
-    Route::get(uri: '/settings', action: AdminDashboardController::class)
+    Route::get(uri: '/settings', action: [DashboardController::class, 'show'])
         ->name('admin.settings');
 });
 

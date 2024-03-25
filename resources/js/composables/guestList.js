@@ -33,7 +33,7 @@ export default function useGuestList() {
 
     const updateGuest = async (guestId, guestForm) => {
         loading.value = true;
-        axios.put(route('admin.guests.update', { id: guestId }), guestForm).then(() => {
+        axios.put(route('admin.guests.update', { guest: guestId }), guestForm).then(() => {
             loading.value = false;
             reloadGuestList();
         });

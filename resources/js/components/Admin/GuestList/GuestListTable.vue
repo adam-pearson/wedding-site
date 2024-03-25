@@ -69,7 +69,7 @@
                   @view-plus-one="emit('view-plus-one', guest)"
                   @rsvp="emit('rsvp', guest)"
                   @delete="emit('delete', guest)"
-                  @delete-plus-one="emit('delete-plus-one', guest.plus_one_child)"
+                  @delete-plus-one="emit('delete-plus-one', guest.plus_one)"
                 />
               </tbody>
               <tbody

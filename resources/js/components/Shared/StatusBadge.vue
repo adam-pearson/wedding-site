@@ -2,8 +2,8 @@
   <!-- eslint-disable max-len -->
   <span
     class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset"
-    :class="STATUS_TYPES[status].classes"
-  >{{ STATUS_TYPES[status].displayName }}</span>
+    :class="STATUS_TYPES[status.toUpperCase()].classes"
+  >{{ STATUS_TYPES[status.toUpperCase()].displayName }}</span>
   <!-- eslint-enable max-len -->
 </template>
 

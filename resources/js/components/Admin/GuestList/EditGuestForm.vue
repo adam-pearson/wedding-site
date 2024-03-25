@@ -131,12 +131,12 @@
     <StaticElement
       name="no_received_invite_div"
       tag="div"
-      v-if="!guest.received_invite"
+      v-if="!guest.rsvp_response"
     >
       This guest has not yet RSVP'd.
     </StaticElement>
     <RadiogroupElement
-      v-if="guest.received_invite"
+      v-if="guest.rsvp_response"
       name="coming"
       label="Coming"
       info="Is this guest coming or not?"
@@ -153,7 +153,7 @@
       }"
     />
     <RadiogroupElement
-      v-if="guest.received_invite"
+      v-if="guest.rsvp_response"
       name="alcohol"
       label="Alcohol with Meal?"
       info="Is this guest having alcohol with their meal?"
@@ -171,7 +171,7 @@
       }"
     />
     <TextareaElement
-      v-if="guest.received_invite"
+      v-if="guest.rsvp_response"
       name="dietary_requirements"
       label="Dietary Requirements"
       :readonly="!editing"
@@ -259,9 +259,9 @@ const updateFormValues = (guestVals) => {
         is_child: guestVals.is_child,
         guest_type: guestVals.guest_type,
         invite_sent_on: guestVals.invite_sent_on,
-        coming: guestVals.received_invite?.coming,
-        alcohol: guestVals.received_invite?.alcohol,
-        dietary_requirements: guestVals.received_invite?.dietary_requirements,
+        coming: guestVals.rsvp_response?.coming,
+        alcohol: guestVals.rsvp_response?.alcohol,
+        dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
     });
 };
 
@@ -276,7 +276,7 @@ onMounted(() => {
             is_child: false,
             guest_type: props.guest.guest_type,
             invite_sent_on: null,
-            coming: props.guest.received_invite?.coming,
+            coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
         };
@@ -305,7 +305,7 @@ watch(() => props.addingPlusOne, (newVal) => {
             is_child: false,
             guest_type: props.guest.guest_type,
             invite_sent_on: null,
-            coming: props.guest.received_invite?.coming,
+            coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
         };

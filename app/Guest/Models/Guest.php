@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Guest\Factories\GuestFactory;
 
 class Guest extends Model
 {
@@ -49,5 +50,10 @@ class Guest extends Model
             $guest->plusOne?->rsvpResponse()->delete();
             $guest->plusOne?->delete();
         });
+    }
+
+    protected static function newFactory(): GuestFactory
+    {
+        return GuestFactory::new();
     }
 }

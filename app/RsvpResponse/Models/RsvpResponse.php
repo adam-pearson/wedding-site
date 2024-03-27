@@ -2,6 +2,7 @@
 
 namespace App\RsvpResponse\Models;
 
+use App\RsvpResponse\Factories\RsvpResponseFactory;
 use App\Guest\Models\Guest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,5 +36,10 @@ class RsvpResponse extends Model
     public function scopeHasDietaryRequirements($query): Builder
     {
         return $query->whereNotNull('dietary_requirements');
+    }
+
+    protected static function newFactory(): RsvpResponseFactory
+    {
+        return RsvpResponseFactory::new();
     }
 }

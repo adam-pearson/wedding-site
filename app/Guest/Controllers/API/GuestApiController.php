@@ -6,6 +6,7 @@ use App\Guest\Actions\StoreGuest;
 use App\Guest\Actions\DestroyGuest;
 use App\Guest\Actions\GetAllGuestData;
 use App\Guest\Actions\UpdateGuest;
+use App\Guest\Models\Guest;
 use App\Guest\Requests\AddGuestRequest;
 use App\Guest\Requests\DeleteGuestRequest;
 use App\Guest\Requests\UpdateGuestRequest;
@@ -44,7 +45,7 @@ class GuestApiController extends Controller
         return response()->json(['success' => true, 'guest' => $guest]);
     }
 
-    public function update(UpdateGuestRequest $request): JsonResponse
+    public function update(UpdateGuestRequest $request, Guest $guest): JsonResponse
     {
         try {
             $guest = $this->updateGuest->execute($request->getGuestDto(), $request->getRsvpDto());

@@ -4,8 +4,6 @@ namespace App\Guest\Requests;
 
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Enums\GuestType;
-use App\Guest\Models\Guest;
-use App\Guest\Repositories\GuestRepository;
 use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -13,12 +11,6 @@ use Carbon\Carbon;
 
 class UpdateGuestRequest extends FormRequest
 {
-    public Guest $guest;
-    public function __construct(private GuestRepository $guestRepository)
-    {
-        $this->guest = $this->guestRepository->find(request()->route('guest'));
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      */

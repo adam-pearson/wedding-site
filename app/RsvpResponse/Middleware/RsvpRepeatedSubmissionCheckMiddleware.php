@@ -2,7 +2,7 @@
 
 namespace App\RsvpResponse\Middleware;
 
-use App\Repositories\GuestRepository;
+use App\Guest\Repositories\GuestRepository;
 use App\RsvpResponse\Models\RsvpResponse;
 use Closure;
 use Illuminate\Http\Request;

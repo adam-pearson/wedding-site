@@ -22,13 +22,13 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);
 
     Route::put(uri: '/guests/{guest}', action: [GuestApiController::class, 'update'])
-    ->name('admin.guests.update');
+        ->name('admin.guests.update');
 
     Route::delete(uri: '/guests', action: [GuestApiController::class, 'destroy'])
         ->name('admin.guests.destroy');
 
     Route::get(uri: '/guests/list', action: [GuestApiController::class, 'index'])
-    ->name('admin.guests.list');
+        ->name('admin.guests.list');
 });
 
 Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpResponseApiController::class, 'store'])

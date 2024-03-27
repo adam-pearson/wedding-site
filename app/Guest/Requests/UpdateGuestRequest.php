@@ -6,7 +6,7 @@ use App\Guest\DTOs\GuestDto;
 use App\Guest\Enums\GuestType;
 use App\Guest\Models\Guest;
 use App\Guest\Repositories\GuestRepository;
-use App\RsvpResponse\DTOs\RsvpResponseDto;
+use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
@@ -58,6 +58,7 @@ class UpdateGuestRequest extends FormRequest
             id: $this->guest->id,
             name: $this->input('name'),
             plusOneAllowed: $this->input('plus_one_allowed') ?? false,
+            plusOneOf: $this->guest->plusOneOwner?->id,
             guestType: GuestType::from($this->input('guest_type') ?? $this->guest->plusOneOwner->guest_type),
             email: $this->input('email'),
             phone: $this->input('phone'),
@@ -67,13 +68,13 @@ class UpdateGuestRequest extends FormRequest
         );
     }
 
-    public function getRsvpDto(): ?RsvpResponseDto
+    public function getRsvpDto(): ?RsvpSubmissionDto
     {
         if ($this->input('coming') === null) {
             return null;
         }
 
-        return new RsvpResponseDto(
+        return new RsvpSubmissionDto(
             guestId: $this->guest->id,
             coming: $this->guest->plusOneOwner?->rsvpResponse?->coming ?? $this->input('coming'),
             alcohol: $this->input('alcohol') ?? false,

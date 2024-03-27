@@ -36,7 +36,7 @@
       <TextElement
         name="phone"
         label="Phone"
-        :rules="['email', 'nullable']"
+        :rules="['nullable']"
         :value="guest.email"
         :conditions="[['coming', 1]]"
       />

@@ -3,7 +3,7 @@
 namespace App\RsvpResponse\Repositories;
 
 use App\Guest\Models\Guest;
-use App\RsvpResponse\DTOs\RsvpResponseDto;
+use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use App\RsvpResponse\Models\RsvpResponse;
 
 class RsvpResponseRepository
@@ -13,9 +13,9 @@ class RsvpResponseRepository
         //
     }
 
-    public function store(RsvpResponseDto $dto)
+    public function store(RsvpSubmissionDto $dto)
     {
-        RsvpResponse::create($dto->getRsvpFields());
+        RsvpResponse::create($dto->getRsvpData());
     }
 
     public function update(int $id, array $updatedDetails): RsvpResponse

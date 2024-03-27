@@ -5,6 +5,7 @@ namespace App\Guest\Actions;
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Models\Guest;
 use App\Guest\Repositories\GuestRepository;
+use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 
 class StoreGuest
 {
@@ -15,7 +16,7 @@ class StoreGuest
 
     public function execute(GuestDto $guestDto): Guest
     {
-        $guest = $this->guestRepository->save($guestDto);
+        $guest = $this->guestRepository->store($guestDto);
 
         return $guest;
     }

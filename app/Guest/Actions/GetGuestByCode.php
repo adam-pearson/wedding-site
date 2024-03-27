@@ -2,6 +2,7 @@
 
 namespace App\Guest\Actions;
 
+use App\Guest\Models\Guest;
 use App\Guest\Repositories\GuestRepository;
 
 class GetGuestByCode
@@ -11,7 +12,7 @@ class GetGuestByCode
         //
     }
 
-    public function execute(string $code): string
+    public function execute(string $code): Guest
     {
         return $this->guestRepository->getGuestByCode($code);
     }

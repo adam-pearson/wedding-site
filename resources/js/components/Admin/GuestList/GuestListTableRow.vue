@@ -81,7 +81,7 @@
       class=" whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
     >
       <div class="flex items-center gap-2">
-        {{ plusOne.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
+        {{ guest.plus_one.name }} <span class="text-xs text-gray-500">(Plus One of {{ guest.name }})</span>
       </div>
     </td>
     <td />
@@ -98,7 +98,7 @@
       >
         <EyeIcon class="size-4" />
         <span class="sr-only">
-          View {{ plusOne.name }}
+          View {{ guest.plus_one.name }}
         </span>
       </button>
 
@@ -108,7 +108,7 @@
       >
         <TrashIcon class="size-4" />
         <span class="sr-only">
-          Delete {{ plusOne.name }}
+          Delete {{ guest.plus_one.name }}
         </span>
       </button>
     </td>
@@ -135,8 +135,6 @@ const props = defineProps({
         required: true,
     },
 });
-
-const plusOne = ref(props.guest?.plus_one);
 
 const emit = defineEmits(['view', 'view-plus-one', 'rsvp', 'delete', 'delete-plus-one']);
 

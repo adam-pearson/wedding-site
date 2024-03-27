@@ -2,7 +2,6 @@
 
 namespace App\Guest\DTOs;
 
-use App\Services\GuestService;
 use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use Stringable;

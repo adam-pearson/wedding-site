@@ -12,7 +12,8 @@ class HomePageController extends Controller
     {
         //
     }
-    public function __invoke(): InertiaResponse
+    
+    public function show(): InertiaResponse
     {
         return $this->inertia->render('HomePage');
     }

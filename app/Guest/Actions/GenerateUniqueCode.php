@@ -16,7 +16,7 @@ class GenerateUniqueCode
     {
         $code = strtoupper(bin2hex(random_bytes(3)));
 
-        while (!$this->guestRepository->checkGuestCodeIsUnique($code)) {
+        while ($this->guestRepository->codeExists($code)) {
             $code = strtoupper(bin2hex(random_bytes(3)));
         }
 

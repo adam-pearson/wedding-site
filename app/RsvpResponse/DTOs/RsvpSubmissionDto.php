@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use Stringable;
 
-final readonly class RsvpResponseDto implements JsonSerializable, Arrayable, Stringable
+final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, Stringable
 {
 
     public function __construct(
@@ -23,7 +23,7 @@ final readonly class RsvpResponseDto implements JsonSerializable, Arrayable, Str
         return $this->usingPlusOne;
     }
 
-    public function getRsvpFields(): array
+    public function getRsvpData(): array
     {
         return [
             'guest_id' => $this->guestId,

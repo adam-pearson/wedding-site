@@ -5,7 +5,7 @@ namespace App\RsvpResponse\Requests;
 use App\Guest\DTOs\GuestContactDetailsDto;
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Enums\GuestType;
-use App\RsvpResponse\DTOs\RsvpResponseDto;
+use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RsvpResponseSubmissionRequest extends FormRequest
@@ -39,14 +39,14 @@ class RsvpResponseSubmissionRequest extends FormRequest
         ];
     }
 
-    public function getRsvpDto(): RsvpResponseDto
+    public function getRsvpDto(): RsvpSubmissionDto
     {
-        return new RsvpResponseDto(
-            guestId: $this->query('id'),
-            coming: $this->input('coming'),
+        return new RsvpSubmissionDto(
+            guestId: $this->guest->id,
+            coming: $this->input('coming') ?? false,
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
-            usingPlusOne: $this->input('using_plus_one'),
+            usingPlusOne: $this->input('using_plus_one') ?? false,
         );
     }
 
@@ -54,7 +54,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
     {
         return new GuestContactDetailsDto(
             id: $this->guest->id,
-            name: $this->input('name'),
+            name: $this->guest->name,
             email: $this->input('email'),
             phone: $this->input('phone'),
             address: $this->input('address'),
@@ -64,7 +64,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function getPlusOneGuestDto(): GuestDto
     {
         return new GuestDto(
-            plusOneOf: $this->route('id'),
+            plusOneOf: $this->guest->id,
             name: $this->input('plus_one_name'),
             guestType: GuestType::from($this->guest->guest_type),
             plusOneAllowed: false,
@@ -72,9 +72,9 @@ class RsvpResponseSubmissionRequest extends FormRequest
         );
     }
 
-    public function getPlusOneRsvpDto(int $plusOneId): RsvpResponseDto
+    public function getPlusOneRsvpDto(int $plusOneId): RsvpSubmissionDto
     {
-        return new RsvpResponseDto(
+        return new RsvpSubmissionDto(
             guestId: $plusOneId,
             coming: $this->input('coming'),
             alcohol: $this->input('plus_one_alcohol'),

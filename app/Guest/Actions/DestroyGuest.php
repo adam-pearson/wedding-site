@@ -14,7 +14,7 @@ class DestroyGuest
 
     public function execute(int $id): int
     {
-        $result = $this->guestRepository->delete($id);
+        $result = $this->guestRepository->destroy($id);
 
         return $result;
     }

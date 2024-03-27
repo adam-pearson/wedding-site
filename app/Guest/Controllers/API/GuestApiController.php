@@ -31,13 +31,6 @@ class GuestApiController extends Controller
         return response()->json(['guests' => $guests]);
     }
 
-    // public function show(int $id): JsonResponse
-    // {
-    //     $guest = $this->guestService->getGuestById($id);
-
-    //     return response()->json(['guest' => $guest]);
-    // }
-
     public function store(AddGuestRequest $request): JsonResponse
     {
         $guestDto = $request->getDto();

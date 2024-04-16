@@ -5,9 +5,9 @@ import Vueform from '@vueform/vueform';
 import vueformConfig from '../../vueform.config';
 
 createInertiaApp({
-    resolve: (name) => {
-        const pages = import.meta.glob('./pages/**/*.vue', { eager: true });
-        return pages[`./pages/${name}.vue`];
+    resolve: async (name) => {
+        const pages = import.meta.glob('./**/views/**/*.vue', { import: 'default' });
+        return pages[`./${name}.vue`]();
     },
     setup({
         el, App, props, plugin,

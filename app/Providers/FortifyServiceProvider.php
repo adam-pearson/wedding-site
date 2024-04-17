@@ -18,6 +18,7 @@ use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
+    protected string $authRoot = 'auth/';
     /**
      * Register any application services.
      */
@@ -32,11 +33,11 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::LoginView(function () {
-            return Inertia::render('auth/login/LoginPage');
+            return Inertia::render($this->authRoot . 'login/views/LoginPage');
         });
 
         Fortify::RegisterView(function () {
-            return Inertia::render('auth/register/RegisterPage');
+            return Inertia::render($this->authRoot . 'register/views/RegisterPage');
         });
 
         Fortify::createUsersUsing(CreateNewUser::class);

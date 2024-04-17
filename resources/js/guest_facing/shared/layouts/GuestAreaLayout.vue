@@ -7,7 +7,6 @@
       :class="navOpen ? 'translate-x-[270px]' : 'translate-x-0'"
     />
     <SidebarSection :nav-open="navOpen" />
-
     <div
       @click="navOpen = false"
       class="flex w-full flex-col transition-all duration-500 sm:w-[calc(100%-270px)] md:w-[70%] xl:w-[78%]"

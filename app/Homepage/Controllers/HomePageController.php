@@ -8,6 +8,8 @@ use Inertia\Response as InertiaResponse;
 
 class HomePageController extends Controller
 {
+    protected string $viewRoot = 'guest_facing/homepage/views/';
+
     public function __construct(private ResponseFactory $inertia)
     {
         //
@@ -15,6 +17,6 @@ class HomePageController extends Controller
     
     public function show(): InertiaResponse
     {
-        return $this->inertia->render('HomePage');
+        return $this->inertia->render($this->viewRoot . 'HomePage');
     }
 }

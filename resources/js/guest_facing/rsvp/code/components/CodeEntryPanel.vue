@@ -1,36 +1,35 @@
 <template>
   <!-- eslint-disable max-len -->
-  <template>
-    <form @submit.prevent="submit">
-      <div class="flex flex-col items-center justify-center gap-4">
-        <h1 class="font-serif text-4xl font-bold">
-          RSVP
-        </h1>
-        <p class="text-center text-sm sm:text-base">
-          Please enter the {{ EXPECTED_LENGTH }} character code found on your invitation to RSVP.
-        </p>
-        <!-- <NotificationBanner
+  <form @submit.prevent="submit">
+    <div class="flex flex-col items-center justify-center gap-4">
+      <h1 class="font-serif text-4xl font-bold">
+        RSVP
+      </h1>
+      <p class="text-center text-sm sm:text-base">
+        Please enter the {{ EXPECTED_LENGTH }} character code found on your invitation to RSVP.
+      </p>
+      <!-- <NotificationBanner
           class="max-w-96"
           :errors="formattedErrors"
         /> -->
-        <CodeInput
-          :length="EXPECTED_LENGTH"
-          v-model="code"
-        />
-        <button
-          type="submit"
-          class="rounded-md bg-primary-500 px-4 py-2 font-bold text-white transition duration-75 hover:bg-primary-700"
-        >
-          RSVP
-        </button>
-      </div>
-    </form>
-  </template>
+      <CodeInput
+        :length="EXPECTED_LENGTH"
+        v-model="code"
+      />
+      <button
+        type="submit"
+        class="rounded-md bg-primary-500 px-4 py-2 font-bold text-white transition duration-75 hover:bg-primary-700"
+      >
+        RSVP
+      </button>
+    </div>
+  </form>
   <!-- eslint-enable max-len -->
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import CodeInput from '../../../../shared/form/components/CodeInput.vue';
 
 const props = defineProps({
     errors: {

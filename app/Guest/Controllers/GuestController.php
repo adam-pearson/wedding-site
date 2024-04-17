@@ -9,6 +9,8 @@ use Inertia\Response as InertiaResponse;
 
 class GuestController extends Controller
 {
+    protected string $viewRoot = 'admin_facing/guest-list/views/';
+
     public function __construct(
         private Inertia $inertia,
         private GetAllGuestData $getAllGuestData,
@@ -20,7 +22,7 @@ class GuestController extends Controller
     {
         $guests = $this->getAllGuestData->execute();
         
-        return $this->inertia->render('admin/GuestListPage')->with(['guests' => $guests]);
+        return $this->inertia->render($this->viewRoot . 'GuestListPage')->with(['guests' => $guests]);
     }
 
 }

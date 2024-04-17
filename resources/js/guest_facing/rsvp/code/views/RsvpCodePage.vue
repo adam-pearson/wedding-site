@@ -1,6 +1,5 @@
 <template>
   <!-- eslint-disable max-len -->
-
   <GuestAreaLayout>
     <div class="flex h-screen items-center justify-center px-4">
       <CodeEntryPanel
@@ -14,6 +13,7 @@
 <script setup>
 import { router } from '@inertiajs/vue3';
 import GuestAreaLayout from '../../../shared/layouts/GuestAreaLayout.vue';
+import CodeEntryPanel from '../components/CodeEntryPanel.vue';
 
 defineProps({
     errors: {

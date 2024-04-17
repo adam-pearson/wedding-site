@@ -7,6 +7,8 @@ use Inertia\ResponseFactory as Inertia;
 
 class RsvpResponseCodeController extends Controller
 {
+    protected string $viewRoot = 'guest_facing/rsvp/code/views/';
+
     public function __construct(private Inertia $inertia)
     {
         //
@@ -14,6 +16,6 @@ class RsvpResponseCodeController extends Controller
 
     public function show()
     {
-        return $this->inertia->render('RsvpCodePage');
+        return $this->inertia->render($this->viewRoot . 'RsvpCodePage');
     }
 }

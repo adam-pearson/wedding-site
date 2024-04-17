@@ -11,6 +11,8 @@ use Psr\Log\LoggerInterface;
 
 class RsvpResponseFormController extends Controller
 {
+    protected string $viewRoot = 'guest_facing/rsvp/form/views/';
+
     public function __construct(
         private ResponseFactory $inertia,
         private GetGuestByCode $getGuestByCode,
@@ -23,6 +25,6 @@ class RsvpResponseFormController extends Controller
     {        
         $guest = $this->getGuestByCode->execute($request->getCode());
 
-        return $this->inertia->render('RsvpFormPage', ['guest' => $guest]);
+        return $this->inertia->render($this->viewRoot . 'RsvpFormPage', ['guest' => $guest]);
     }
 }

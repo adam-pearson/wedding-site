@@ -15,6 +15,7 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
         public ?bool $usingPlusOne = false,
         public ?bool $alcohol = null,
         public ?string $dietaryRequirements = null,
+        public ?string $songRequest = null,
     ) {
     }
 
@@ -30,6 +31,7 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
+            'song_request' => $this->songRequest,
         ];
     }
 
@@ -53,6 +55,7 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
+            'song_request' => $this->songRequest,
         ];
     }
 

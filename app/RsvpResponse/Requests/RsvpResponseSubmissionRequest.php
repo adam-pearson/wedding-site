@@ -33,6 +33,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
             'coming' => 'boolean|required',
             'alcohol' => 'boolean|nullable|sometimes',
             'dietary_requirements' => 'string|nullable',
+            'song_request' => 'string|nullable',
             'plus_one_name' => 'string|nullable',
             'plus_one_alcohol' => 'boolean|nullable|sometimes',
             'plus_one_dietary_requirements' => 'string|nullable',
@@ -47,6 +48,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
             usingPlusOne: $this->input('using_plus_one') ?? false,
+            songRequest: $this->input('song_request'),
         );
     }
 

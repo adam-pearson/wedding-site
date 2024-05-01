@@ -41,6 +41,7 @@ class UpdateGuestRequest extends FormRequest
             'coming' => 'boolean|nullable',
             'alcohol' => 'boolean|nullable',
             'dietary_requirements' => 'string|nullable',
+            'song_request' => 'string|nullable',
         ];
     }
 
@@ -71,6 +72,7 @@ class UpdateGuestRequest extends FormRequest
             coming: $this->guest->plusOneOwner?->rsvpResponse?->coming ?? $this->input('coming'),
             alcohol: $this->input('alcohol') ?? false,
             dietaryRequirements: $this->input('dietary_requirements'),
+            songRequest: $this->input('song_request'),
         );
     }
 

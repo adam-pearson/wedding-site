@@ -57,6 +57,13 @@
         label="Do you have any dietary requirements?"
         :conditions="[['coming', 1]]"
       />
+      <TextElement
+        name="song_request"
+        label="Do you have a song request?"
+        :rules="['nullable']"
+        :value="guest.song_request"
+        :conditions="[['coming', 1]]"
+      />
       <RadiogroupElement
         v-if="guest.plus_one_allowed"
         name="using_plus_one"

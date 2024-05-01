@@ -119,6 +119,7 @@
     <StaticElement
       name="divider_1"
       tag="hr"
+      class="py-2"
     />
     <StaticElement
       name="invite_details_heading"
@@ -174,6 +175,16 @@
       v-if="guest.rsvp_response"
       name="dietary_requirements"
       label="Dietary Requirements"
+      :readonly="!editing"
+      :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+    />
+    <TextElement
+      name="song_request"
+      label="Song Requests?"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :disabled="guestIsPlusOne"
       :readonly="!editing"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -245,8 +256,6 @@ const submit = () => {
         updateGuest(props.guest.id, form$.value.requestData);
     }
     emit('finished-editing');
-    /** @TODO - ENSURE FORM ALSO EDITS RECEIVED_INVITES TABLE */
-    /** @TODO - ENSURE FORM EDITS MAIN GUEST IF PLUS ONE GUEST TYPE IS EDITED AND VICE VERSA */
 };
 
 const updateFormValues = (guestVals) => {
@@ -262,6 +271,7 @@ const updateFormValues = (guestVals) => {
         coming: guestVals.rsvp_response?.coming,
         alcohol: guestVals.rsvp_response?.alcohol,
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
+        song_request: guestVals.rsvp_response?.song_request,
     });
 };
 
@@ -279,6 +289,7 @@ onMounted(() => {
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
+            song_request: null,
         };
         updateFormValues(newPlusOneVals);
     } else {
@@ -287,14 +298,12 @@ onMounted(() => {
 });
 
 watch(() => props.guest, (guestVals) => {
-    console.log('guestVals: ', guestVals);
     if (!props.addingPlusOne) {
         updateFormValues(guestVals);
     }
 }, { deep: true });
 
 watch(() => props.addingPlusOne, (newVal) => {
-    console.log('adding plus one: ', newVal);
     if (newVal) {
         const newPlusOneVals = {
             name: null,
@@ -308,6 +317,7 @@ watch(() => props.addingPlusOne, (newVal) => {
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
+            song_request: null,
         };
         updateFormValues(newPlusOneVals);
     }

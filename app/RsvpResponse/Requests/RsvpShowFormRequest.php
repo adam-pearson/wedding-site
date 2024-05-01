@@ -27,7 +27,7 @@ class RsvpShowFormRequest extends FormRequest
         ];
     }
 
-    public function getCode(): RsvpSubmissionDto
+    public function getCode(): string
     {
         return $this->input('code');
     }

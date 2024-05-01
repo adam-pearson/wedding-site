@@ -103,7 +103,7 @@
 <script setup>
 import { UserGroupIcon } from '@heroicons/vue/24/outline';
 import useGuestList from '../../composables/guestList';
-import LoadingOverlay from '../../../../shared/ui/components/loadingOverlay.vue';
+import LoadingOverlay from '../../../../shared/ui/components/LoadingOverlay.vue';
 import GuestListTableRow from './GuestListTableRow.vue';
 
 const { loading, guestList } = useGuestList();

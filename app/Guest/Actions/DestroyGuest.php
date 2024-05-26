@@ -2,7 +2,6 @@
 
 namespace App\Guest\Actions;
 
-use App\Guest\Models\Guest;
 use App\Guest\Repositories\GuestRepository;
 
 class DestroyGuest
@@ -14,8 +13,6 @@ class DestroyGuest
 
     public function execute(int $id): int
     {
-        $result = $this->guestRepository->destroy($id);
-
-        return $result;
+        return $this->guestRepository->destroy($id);
     }
 }

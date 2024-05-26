@@ -66,16 +66,16 @@
         container: 12, label: 3, wrapper: 12
       }"
     />
-      <DateElement
-          name="save_the_date_sent_on"
-          label="Save the Date Sent On"
-          :disabled="guestIsPlusOne"
-          :placeholder="guestIsPlusOne ? 'N/A' : ''"
-          :readonly="!editing"
-          :columns="{
+    <DateElement
+      name="save_the_date_sent_on"
+      label="Save the Date Sent On"
+      :disabled="guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :readonly="!editing"
+      :columns="{
         container: 12, label: 3, wrapper: 12
       }"
-      />
+    />
     <RadiogroupElement
       name="plus_one_allowed"
       label="Plus One Allowed"
@@ -122,6 +122,31 @@
       }, {
         value: 'evening', label: 'Evening Only'
       }]"
+      :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+    />
+    <TagsElement
+      name="rsvp_on_behalf_of"
+      label="Can RSVP On Behalf Of"
+      :disabled="!editing || guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :readonly="!editing"
+      :search="true"
+      :close-on-select="false"
+      :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
+      :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+    />
+    <TagsElement
+      name="rsvp_for"
+      label="Who Can RSVP For This Guest"
+      :disabled="!editing || guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :readonly="!editing"
+      :search="true"
+      :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -238,7 +263,7 @@ import {
 } from 'vue';
 import useGuestList from '../../composables/guestList';
 
-const { saveNewGuest, updateGuest } = useGuestList();
+const { saveNewGuest, updateGuest, getGuestListForSelectWithoutCurrentGuest } = useGuestList();
 
 const emit = defineEmits(['finished-editing']);
 
@@ -285,6 +310,8 @@ const updateFormValues = (guestVals) => {
         alcohol: guestVals.rsvp_response?.alcohol,
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
         song_request: guestVals.rsvp_response?.song_request,
+        rsvp_on_behalf_of: guestVals.rsvp_on_behalf_of.map((guest) => guest.id),
+        rsvp_for: guestVals.rsvp_for.map((guest) => guest.id),
     });
 };
 
@@ -304,6 +331,8 @@ onMounted(() => {
             alcohol: null,
             dietary_requirements: null,
             song_request: null,
+            rsvp_on_behalf_of: null,
+            rsvp_for: null,
         };
         updateFormValues(newPlusOneVals);
     } else {
@@ -333,6 +362,8 @@ watch(() => props.addingPlusOne, (newVal) => {
             alcohol: null,
             dietary_requirements: null,
             song_request: null,
+            rsvp_on_behalf_of: null,
+            rsvp_for: null,
         };
         updateFormValues(newPlusOneVals);
     }

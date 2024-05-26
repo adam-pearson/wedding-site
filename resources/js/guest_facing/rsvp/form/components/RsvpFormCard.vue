@@ -55,14 +55,18 @@ import axios from 'axios';
 import RsvpForm from './RsvpForm.vue';
 import RsvpInvite from './RsvpInvite.vue';
 import RsvpSuccess from './RsvpSuccess.vue';
+import useGuest from '../../../../shared/composables/guest';
+
+const { guest, removeFromCanRsvpOnBehalfOf } = useGuest();
 
 const welcomeOpen = ref(true);
 const successOpen = ref(false);
-
+console.log('guest', guest);
 const submit = ($event) => {
     axios.post(route('guest.rsvp.submit', { guest: $event.guest_code }), $event.formData)
         .then((res) => {
             if (res.data.success) {
+                removeFromCanRsvpOnBehalfOf(guest.value.id);
                 successOpen.value = true;
             }
         });

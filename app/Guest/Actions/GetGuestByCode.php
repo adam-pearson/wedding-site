@@ -4,8 +4,9 @@ namespace App\Guest\Actions;
 
 use App\Guest\Models\Guest;
 use App\Guest\Repositories\GuestRepository;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class GetGuestByCode
+readonly class GetGuestByCode
 {
     public function __construct(private GuestRepository $guestRepository)
     {
@@ -14,6 +15,8 @@ class GetGuestByCode
 
     public function execute(string $code): Guest
     {
-        return $this->guestRepository->getGuestByCode($code);
+        return $this->guestRepository->getGuestByCode($code, ['rsvpOnBehalfOf' => function (BelongsToMany $query) {
+            $query->whereDoesntHave('rsvpResponse');
+        }]);
     }
 }

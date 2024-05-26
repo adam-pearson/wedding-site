@@ -6,6 +6,7 @@ use App\RsvpResponse\Models\RsvpResponse;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Guest\Factories\GuestFactory;
@@ -39,6 +40,17 @@ class Guest extends Model
     {
         return $this->hasOne(self::class, 'plus_one_of');
     }
+
+    public function rsvpOnBehalfOf(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'guest_rsvp_on_behalf_of', 'guest_id', 'rsvp_on_behalf_of_id');
+    }
+
+    public function rsvpFor(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'guest_rsvp_on_behalf_of', 'rsvp_on_behalf_of_id', 'guest_id');
+    }
+
 
     public function rsvpResponse(): HasOne
     {

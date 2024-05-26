@@ -6,6 +6,7 @@ use App\Guest\DTOs\GuestContactDetailsDto;
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Enums\GuestType;
 use App\RsvpResponse\DTOs\RsvpSubmissionDto;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RsvpResponseSubmissionRequest extends FormRequest
@@ -21,7 +22,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -43,11 +44,11 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function getRsvpDto(): RsvpSubmissionDto
     {
         return new RsvpSubmissionDto(
-            guestId: $this->guest->id,
             coming: $this->input('coming') ?? false,
+            guestId: $this->route('guest')->id,
+            usingPlusOne: $this->input('using_plus_one') ?? false,
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
-            usingPlusOne: $this->input('using_plus_one') ?? false,
             songRequest: $this->input('song_request'),
         );
     }
@@ -55,8 +56,8 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function getGuestContactDetailsDto(): GuestContactDetailsDto
     {
         return new GuestContactDetailsDto(
-            id: $this->guest->id,
-            name: $this->guest->name,
+            id: $this->route('guest')->id,
+            name: $this->route('guest')->name,
             email: $this->input('email'),
             phone: $this->input('phone'),
             address: $this->input('address'),
@@ -66,11 +67,11 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function getPlusOneGuestDto(): GuestDto
     {
         return new GuestDto(
-            plusOneOf: $this->guest->id,
             name: $this->input('plus_one_name'),
-            guestType: GuestType::from($this->guest->guest_type),
             plusOneAllowed: false,
+            guestType: GuestType::from($this->route('guest')->guest_type),
             isChild: false,
+            plusOneOf: $this->route('guest')->id,
         );
     }
 

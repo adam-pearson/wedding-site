@@ -14,15 +14,14 @@ class RsvpResponseFormController extends Controller
     protected string $viewRoot = 'guest_facing/rsvp/form/views/';
 
     public function __construct(
-        private ResponseFactory $inertia,
-        private GetGuestByCode $getGuestByCode,
-        private LoggerInterface $logger,
+        private readonly ResponseFactory $inertia,
+        private readonly GetGuestByCode  $getGuestByCode,
     ) {
         //
     }
 
     public function show(RsvpShowFormRequest $request): Response
-    {        
+    {
         $guest = $this->getGuestByCode->execute($request->getCode());
 
         return $this->inertia->render($this->viewRoot . 'RsvpFormPage', ['guest' => $guest]);

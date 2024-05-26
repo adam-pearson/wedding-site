@@ -9,10 +9,12 @@ use App\Guest\Repositories\GuestRepository;
 use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use App\RsvpResponse\Repositories\RsvpResponseRepository;
 
-class UpdateGuest
+readonly class UpdateGuest
 {
-    public function __construct(private GuestRepository $guestRepository, private RsvpResponseRepository $rsvpResponseRepository)
-    {
+    public function __construct(
+        private GuestRepository        $guestRepository,
+        private RsvpResponseRepository $rsvpResponseRepository
+    ){
         //
     }
 
@@ -20,21 +22,36 @@ class UpdateGuest
     {
         $guest = $this->guestRepository->update($guestDto->id, $guestDto->toArray());
 
-        if ($guest->rsvpResponse?->exists() && $rsvpDto !== null) {
-            $this->rsvpResponseRepository->update($guest->rsvpResponse->id, $rsvpDto->toArray());
+        if ($guestDto instanceof GuestDto) {
+            $this->handleGuestRelationshipUpdates($guest, $guestDto, $rsvpDto);
         }
-    
+
+        return $guest;
+    }
+
+    private function handleGuestRelationshipUpdates(Guest $guest, GuestDto $guestDto, ?RsvpSubmissionDto $rsvpDto = null): void
+    {
+        if ($guestDto->guestCanRsvpForOthers()) {
+            $guest->rsvpOnBehalfOf()->sync($guestDto->rsvpOnBehalfOf);
+        } else {
+            $guest->rsvpOnBehalfOf()->sync([]);
+        }
+
+        if ($guestDto->guestCanBeRsvpdFor()) {
+            $guest->rsvpFor()->sync($guestDto->rsvpFor);
+        } else {
+            $guest->rsvpFor()->sync([]);
+        }
+
         if ($guest->plusOne?->exists()) {
             if ($guest->plus_one_allowed) {
                 $this->guestRepository->update($guest->plusOne->id, $guestDto->getValuesSharedWithPlusOne());
-                    if ($rsvpDto !== null) {
-                        $this->rsvpResponseRepository->update($guest->plusOne->rsvpResponse->id, $rsvpDto->getValuesSharedWithPlusOne());
-                    }
+                if ($rsvpDto !== null) {
+                    $this->rsvpResponseRepository->update($guest->plusOne->rsvpResponse->id, $rsvpDto->getValuesSharedWithPlusOne());
+                }
             } else {
                 $guest->plusOne->delete();
             }
         }
-
-        return $guest;
     }
 }

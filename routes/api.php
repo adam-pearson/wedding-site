@@ -21,8 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('admin.guests.store')
         ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class);
 
-    Route::put(uri: '/guests/{guest}', action: [GuestApiController::class, 'update'])
+    Route::patch(uri: '/guests/{guest}', action: [GuestApiController::class, 'update'])
         ->name('admin.guests.update');
+
 
     Route::delete(uri: '/guests', action: [GuestApiController::class, 'destroy'])
         ->name('admin.guests.destroy');

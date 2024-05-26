@@ -1,7 +1,14 @@
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, computed, readonly } from 'vue';
 
 const guestList = ref([]);
+
+const guestListForSelect = computed(() => guestList.value
+    .filter((guest) => guest.plus_one_of === null)
+    .map((guest) => ({
+        value: guest.id,
+        label: guest.name,
+    })));
 
 const GUEST_TYPE_MAP = {
     all_day: 'All Day',
@@ -33,7 +40,7 @@ export default function useGuestList() {
 
     const updateGuest = async (guestId, guestForm) => {
         loading.value = true;
-        axios.put(route('admin.guests.update', { guest: guestId }), guestForm).then(() => {
+        axios.patch(route('admin.guests.update', { guest: guestId }), guestForm).then(() => {
             loading.value = false;
             reloadGuestList();
         });
@@ -55,14 +62,20 @@ export default function useGuestList() {
         return 'Unknown';
     }
 
+    function getGuestListForSelectWithoutCurrentGuest(currentGuestId) {
+        return guestListForSelect.value.filter((guest) => guest.value !== currentGuestId);
+    }
+
     return {
         loading,
-        guestList,
+        guestList: readonly(guestList),
+        guestListForSelect: readonly(guestListForSelect),
         setGuestList,
         reloadGuestList,
         saveNewGuest,
         getGuestType,
         updateGuest,
         deleteGuest,
+        getGuestListForSelectWithoutCurrentGuest,
     };
 }

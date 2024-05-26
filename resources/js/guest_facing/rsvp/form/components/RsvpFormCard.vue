@@ -61,7 +61,7 @@ const { guest, removeFromCanRsvpOnBehalfOf } = useGuest();
 
 const welcomeOpen = ref(true);
 const successOpen = ref(false);
-console.log('guest', guest);
+
 const submit = ($event) => {
     axios.post(route('guest.rsvp.submit', { guest: $event.guest_code }), $event.formData)
         .then((res) => {

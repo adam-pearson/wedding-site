@@ -133,7 +133,6 @@
       :placeholder="guestIsPlusOne ? 'N/A' : ''"
       :readonly="!editing"
       :search="true"
-      :close-on-select="false"
       :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -146,6 +145,7 @@
       :placeholder="guestIsPlusOne ? 'N/A' : ''"
       :readonly="!editing"
       :search="true"
+      :close-on-select
       :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
       :columns="{
         container: 12, label: 3, wrapper: 12

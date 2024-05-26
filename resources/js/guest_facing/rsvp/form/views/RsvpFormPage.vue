@@ -27,7 +27,6 @@ const props = defineProps({
 });
 
 setGuest(props.guest);
-console.log('canRsvp On behalf of', canRsvpOnBehalfOf);
 if (canRsvpOnBehalfOf.value.length === 0) {
     setCanRsvpOnBehalfOf(props.guest.rsvp_on_behalf_of);
 }

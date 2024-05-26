@@ -38,6 +38,7 @@ class UpdateGuestRequest extends FormRequest
             'alcohol' => 'boolean|nullable',
             'dietary_requirements' => 'string|nullable',
             'invite_sent_on' => 'date|nullable',
+            'save_the_date_sent_on' => 'date|nullable',
             'coming' => 'boolean|nullable',
             'alcohol' => 'boolean|nullable',
             'dietary_requirements' => 'string|nullable',
@@ -48,16 +49,17 @@ class UpdateGuestRequest extends FormRequest
     public function getGuestDto(): GuestDto
     {
         return new GuestDto(
-            id: $this->guest->id,
             name: $this->input('name'),
             plusOneAllowed: $this->input('plus_one_allowed') ?? false,
-            plusOneOf: $this->guest->plusOneOwner?->id,
-            guestType: GuestType::from($this->input('guest_type') ?? $this->guest->plusOneOwner->guest_type),
+            guestType: GuestType::from($this->input('guest_type') ?? $this->route('guest')->plusOneOwner->guest_type),
+            isChild: $this->input('is_child') ?? $this->route('guest')->plusOneOwner->is_child,
             email: $this->input('email'),
             phone: $this->input('phone'),
             address: $this->input('address'),
-            isChild: $this->input('is_child') ?? $this->guest->plusOneOwner->is_child,
+            plusOneOf: $this->route('guest')->plusOneOwner?->id,
+            id: $this->route('guest')->id,
             inviteSentOn: $this->input('invite_sent_on') ? Carbon::parse($this->input('invite_sent_on')) : null,
+            saveTheDateSentOn: $this->input('save_the_date_sent_on') ? Carbon::parse($this->input('save_the_date_sent_on')) : null,
         );
     }
 
@@ -68,8 +70,8 @@ class UpdateGuestRequest extends FormRequest
         }
 
         return new RsvpSubmissionDto(
-            guestId: $this->guest->id,
-            coming: $this->guest->plusOneOwner?->rsvpResponse?->coming ?? $this->input('coming'),
+            coming: $this->route('guest')->plusOneOwner?->rsvpResponse?->coming ?? $this->input('coming'),
+            guestId: $this->route('guest')->id,
             alcohol: $this->input('alcohol') ?? false,
             dietaryRequirements: $this->input('dietary_requirements'),
             songRequest: $this->input('song_request'),

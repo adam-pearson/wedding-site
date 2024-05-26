@@ -27,6 +27,7 @@ class Guest extends Model
         'is_child',
         'unique_code',
         'invite_sent_on',
+        'save_the_date_sent_on'
     ];
 
     public function plusOneOwner(): BelongsTo

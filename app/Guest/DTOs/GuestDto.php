@@ -24,6 +24,7 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
         public ?int $plusOneOf = null,
         public ?int $id = null,
         public ?Carbon $inviteSentOn = null,
+        public ?Carbon $saveTheDateSentOn = null,
     ) {
         $this->generateUniqueCode = app(GenerateUniqueCode::class);
     }
@@ -47,6 +48,7 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'unique_code' => $this->generateUniqueCode->execute(),
             'plus_one_of' => $this->plusOneOf,
             'invite_sent_on' => $this->inviteSentOn,
+            'save_the_date_sent_on' => $this->saveTheDateSentOn,
         ];
     }
 
@@ -56,7 +58,7 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'guest_type' => $this->guestType,
         ];
     }
-    
+
     public function getParentId(): ?int
     {
         return $this->plusOneOf;

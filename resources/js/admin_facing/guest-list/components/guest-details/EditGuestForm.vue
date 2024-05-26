@@ -66,6 +66,16 @@
         container: 12, label: 3, wrapper: 12
       }"
     />
+      <DateElement
+          name="save_the_date_sent_on"
+          label="Save the Date Sent On"
+          :disabled="guestIsPlusOne"
+          :placeholder="guestIsPlusOne ? 'N/A' : ''"
+          :readonly="!editing"
+          :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+      />
     <RadiogroupElement
       name="plus_one_allowed"
       label="Plus One Allowed"
@@ -160,7 +170,7 @@
       info="Is this guest having alcohol with their meal?"
       view="tabs"
       :disabled="!editing || Boolean(guest.is_child)"
-      :conditions="[['guest_type', 'all_day']]"
+      :conditions="[['guest_type', 'all_day'], ['coming', 1], ['is_child', 0]]"
       :rules="['required']"
       :items="[{
         value: 1, label: 'Yes'
@@ -176,6 +186,7 @@
       name="dietary_requirements"
       label="Dietary Requirements"
       :readonly="!editing"
+      :conditions="[['coming', 1]]"
       :columns="{
         container: 12, label: 3, wrapper: 12
       }"
@@ -184,6 +195,7 @@
       name="song_request"
       label="Song Requests?"
       :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :conditions="[['coming', 1]]"
       :disabled="guestIsPlusOne"
       :readonly="!editing"
       :columns="{
@@ -268,6 +280,7 @@ const updateFormValues = (guestVals) => {
         is_child: guestVals.is_child,
         guest_type: guestVals.guest_type,
         invite_sent_on: guestVals.invite_sent_on,
+        save_the_date_sent_on: guestVals.save_the_date_sent_on,
         coming: guestVals.rsvp_response?.coming,
         alcohol: guestVals.rsvp_response?.alcohol,
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
@@ -286,6 +299,7 @@ onMounted(() => {
             is_child: false,
             guest_type: props.guest.guest_type,
             invite_sent_on: null,
+            save_the_date_sent_on: null,
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
@@ -314,6 +328,7 @@ watch(() => props.addingPlusOne, (newVal) => {
             is_child: false,
             guest_type: props.guest.guest_type,
             invite_sent_on: null,
+            save_the_date_sent_on: null,
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,

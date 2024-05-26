@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Dashboard\Controllers;
+namespace App\TodoList\Controllers;
 
 use App\Http\Controllers\Controller;
 use Inertia\ResponseFactory;
 use Inertia\Response as InertiaResponse;
 
-class DashboardController extends Controller
+class TodoListController extends Controller
 {
-    protected string $viewRoot = 'admin_facing/dashboard/views/';
+    protected string $viewRoot = 'admin_facing/todo-list/views/';
 
     public function __construct(private ResponseFactory $inertia)
     {
@@ -17,6 +17,6 @@ class DashboardController extends Controller
 
     public function index(): InertiaResponse
     {
-        return $this->inertia->render($this->viewRoot . 'DashboardPage');
+        return $this->inertia->render($this->viewRoot . 'TodoListPage');
     }
 }

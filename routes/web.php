@@ -8,7 +8,7 @@ use App\Http\Middleware\Authenticated;
 use App\RsvpResponse\Controllers\RsvpResponseCodeController;
 use App\RsvpResponse\Controllers\RsvpResponseFormController;
 use App\RsvpResponse\Middleware\RsvpCodeCheckMiddleware;
-
+use App\TodoList\Controllers\TodoListController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,13 +32,13 @@ Route::get(uri: '/rsvp/form', action: [RsvpResponseFormController::class, 'show'
 
 
 Route::middleware([Authenticated::class])->group(function () {
-    Route::get(uri: '/dashboard', action: [DashboardController::class, 'show'])
+    Route::get(uri: '/dashboard', action: [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 
     Route::get(uri: '/guests', action: [GuestController::class, 'index'])
         ->name('admin.guests.index');
 
-    Route::get(uri: '/todo', action: [DashboardController::class, 'show'])
+    Route::get(uri: '/todo', action: [TodoListController::class, 'index'])
         ->name('admin.todo.index');
 
     Route::get(uri: '/budget', action: [DashboardController::class, 'show'])

@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-readonly class RsvpCodeCheckMiddleware
+readonly class RsvpSuccessMiddleware
 {
     public function __construct(private GuestRepository $guestRepository)
     {
@@ -29,13 +29,6 @@ readonly class RsvpCodeCheckMiddleware
             return redirect()
                 ->route('guest.rsvp.code')
                 ->withErrors(['Invalid code']);
-        }
-
-        $guest = $this->guestRepository->getGuestByCode(strtoupper($code));
-        $inviteAlreadyReceived = $guest->rsvpResponse()->exists();
-
-        if ($inviteAlreadyReceived) {
-            return redirect()->route('guest.rsvp.success', ['code' => $code]);
         }
 
         return $next($request);

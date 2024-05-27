@@ -42,8 +42,12 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import useGuest from '../../../../shared/composables/guest';
 
-const { canRsvpOnBehalfOf } = useGuest();
+defineProps({
+    canRsvpOnBehalfOf: {
+        type: Array,
+        required: true,
+    },
+});
 
 </script>

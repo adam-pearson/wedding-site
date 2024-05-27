@@ -3,6 +3,8 @@
 use App\Dashboard\Controllers\DashboardController;
 use App\Guest\Controllers\GuestController;
 use App\Homepage\Controllers\HomePageController;
+use App\RsvpResponse\Controllers\RsvpSuccessController;
+use App\RsvpResponse\Middleware\RsvpSuccessMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticated;
 use App\RsvpResponse\Controllers\RsvpResponseCodeController;
@@ -30,6 +32,9 @@ Route::get(uri: '/rsvp/form', action: [RsvpResponseFormController::class, 'show'
     ->name('guest.rsvp.form')
     ->middleware(RsvpCodeCheckMiddleware::class);
 
+Route::get(uri: '/rsvp/success', action: [RsvpSuccessController::class, 'show'])
+    ->name('guest.rsvp.success')
+    ->middleware(RsvpSuccessMiddleware::class);;
 
 Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/dashboard', action: [DashboardController::class, 'show'])

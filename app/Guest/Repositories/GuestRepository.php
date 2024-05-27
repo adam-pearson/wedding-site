@@ -30,7 +30,7 @@ class GuestRepository
     }
 
     public function destroy(int $id): int
-    {    
+    {
         return Guest::destroy($id);
     }
 
@@ -40,7 +40,7 @@ class GuestRepository
             ->whereNull('plus_one_of')
             ->get();
     }
-    
+
     public function codeExists(string $code): bool
     {
         return Guest::where('unique_code', $code)->exists();

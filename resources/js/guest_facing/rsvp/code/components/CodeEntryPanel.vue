@@ -8,10 +8,6 @@
       <p class="text-center text-sm sm:text-base">
         Please enter the {{ EXPECTED_LENGTH }} character code found on your invitation to RSVP.
       </p>
-      <!-- <NotificationBanner
-          class="max-w-96"
-          :errors="formattedErrors"
-        /> -->
       <CodeInput
         :length="EXPECTED_LENGTH"
         v-model="code"
@@ -43,7 +39,7 @@ const EXPECTED_LENGTH = 6;
 
 const code = ref(null);
 
-const emit = defineEmits('submit');
+const emit = defineEmits(['submit']);
 
 const codeIsCorrectLength = () => code.value?.length === EXPECTED_LENGTH;
 const codeIsAlphanumeric = () => code.value?.match(/^[a-zA-Z0-9]+$/);

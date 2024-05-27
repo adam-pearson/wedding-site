@@ -24,12 +24,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch(uri: '/guests/{guest}', action: [GuestApiController::class, 'update'])
         ->name('admin.guests.update');
 
-
     Route::delete(uri: '/guests', action: [GuestApiController::class, 'destroy'])
         ->name('admin.guests.destroy');
 
     Route::get(uri: '/guests/list', action: [GuestApiController::class, 'index'])
         ->name('admin.guests.list');
+
+    Route::get('/guests/list/download', [GuestApiController::class, 'download'])
+        ->name('admin.guests.download');
 });
 
 Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpResponseApiController::class, 'store'])

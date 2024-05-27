@@ -2,6 +2,8 @@
 
 namespace App\Guest\Controllers\API;
 
+use App\Guest\Actions\GenerateGuestCsv;
+use App\Guest\Actions\GetGuestCsvData;
 use App\Guest\Actions\StoreGuest;
 use App\Guest\Actions\DestroyGuest;
 use App\Guest\Actions\GetAllGuestData;
@@ -13,14 +15,17 @@ use App\Guest\Requests\UpdateGuestRequest;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class GuestApiController extends Controller
 {
     public function __construct(
-        private StoreGuest $createGuest,
-        private UpdateGuest $updateGuest,
-        private GetAllGuestData $getAllGuestData,
-        private DestroyGuest $destroyGuest,
+        private readonly StoreGuest      $createGuest,
+        private readonly UpdateGuest     $updateGuest,
+        private readonly GetAllGuestData $getAllGuestData,
+        private readonly DestroyGuest    $destroyGuest,
+        private readonly GetGuestCsvData $getGuestCsvData,
+        private readonly GenerateGuestCsv $generateCsv,
     ) {
         //
     }
@@ -67,5 +72,13 @@ class GuestApiController extends Controller
         }
 
         return response()->json(['success' => true, 'deleteCount' => $deleteCount]);
+    }
+
+    public function download(): BinaryFileResponse
+    {
+        $guests = $this->getGuestCsvData->execute();
+        $csv = $this->generateCsv->execute($guests);
+
+        return response()->download($csv)->deleteFileAfterSend();
     }
 }

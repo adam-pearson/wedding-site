@@ -37,6 +37,7 @@
 <script setup>
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+import axios from 'axios';
 import GuestDetailsModal from '../components/guest-details/GuestDetailsModal.vue';
 import GuestListHeader from '../components/header/GuestListHeader.vue';
 import AddGuestForm from '../components/add-guest-form/AddGuestForm.vue';

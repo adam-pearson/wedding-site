@@ -2,8 +2,8 @@
   <!-- eslint-disable max-len -->
 
   <aside
-    class="fixed inset-y-0 left-0 z-[1001] flex w-[270px] flex-col items-center justify-between overflow-y-scroll bg-offwhite-500 p-8 shadow-sm duration-[0.5s] sm:translate-x-[0] md:w-[24%] md:py-8 xl:w-[20%]"
-    :class="navOpen ? 'translate-x-0' : 'translate-x-[-270px]'"
+    class="fixed inset-y-0 left-0 z-[1001] flex w-[270px] flex-col items-center justify-between overflow-y-scroll bg-offwhite-500 p-8 shadow-xl duration-[0.5s] sm:translate-x-[0] md:w-[24%] md:py-8 xl:w-[20%]"
+    :class="navOpen ? 'translate-x-0' : 'translate-x-[-300px]'"
   >
     <div class="flex flex-col items-center">
       <SidebarHeader class="pb-6" />

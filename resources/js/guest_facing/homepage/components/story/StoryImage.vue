@@ -12,9 +12,6 @@
           alt=""
         >
       </div>
-      <div
-        class="story-img-2 story-wedding absolute right-[8%] top-[4%] z-[3] h-[35%] w-[31%] animate-spin-slow bg-[url('/resources/assets/wedding-logo.png')] bg-cover bg-center bg-no-repeat md:right-[15%] md:top-[3%] md:h-[35%] md:w-[31%] lg:right-[10%] lg:top-[3%]"
-      />
     </div>
   </div>
   <!-- eslint-enable max-len -->
@@ -23,22 +20,26 @@
 <style lang="postcss" scoped>
 .story .story-img .img:before {
     content: '';
-    position: absolute;
-    top: 30px;
-    right: 0;
-    left: 45px;
-    bottom: 0;
-    border: 10px solid #bd945a;
+    @apply absolute;
+    @apply top-[30px];
+    @apply right-0;
+    @apply left-[45px];
+    @apply bottom-0;
+    @apply border-[10px] border-secondary-400;
 }
 .story .story-img:after {
     content: '';
-    width: 90%;
-    position: absolute;
-    top: -18%;
-    bottom: -25%;
-    left: 0;
-    background-image: url(/resources/assets/dots.png);
-    background-repeat: repeat;
-    z-index: -1;
+    @apply w-[95%];
+    @apply absolute;
+    @apply top-[-12%];
+    @apply bottom-[-25%];
+    @apply left-[-2%];
+    @apply bg-[url(/resources/assets/dots.svg)];
+    @apply bg-repeat;
+    @apply z-[-1];
+    @apply text-red-500;
+    @apply h-1/2;
+    @apply lg:h-full;
+    @apply text-secondary-500;
 }
 </style>

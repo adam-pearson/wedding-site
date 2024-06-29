@@ -4,7 +4,7 @@
     class="story section-padding"
   >
     <div
-      class="flex w-full flex-col gap-0 px-4 py-16 md:flex-row md:gap-4 md:py-20 lg:px-16"
+      class="flex w-full flex-col gap-0 px-4 py-16 md:flex-row md:gap-4 md:py-16 lg:px-16"
     >
       <StoryImage />
       <StoryText />

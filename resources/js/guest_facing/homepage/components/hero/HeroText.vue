@@ -1,10 +1,10 @@
 <template>
   <div class="text-center">
-    <span class="hero-caption">The wedding of</span>
-    <h1 class="hero-names">
+    <span class="hero-caption drop-shadow-lg">The wedding of</span>
+    <h1 class="my-0 font-script text-2xl text-white drop-shadow-lg md:my-4 md:text-[7.5rem] md:leading-none">
       Heather & Adam
     </h1>
-    <h2 class="hero-caption">
+    <h2 class="hero-caption drop-shadow-lg">
       {{ weddingDate }}
     </h2>
   </div>

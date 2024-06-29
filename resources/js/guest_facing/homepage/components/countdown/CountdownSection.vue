@@ -2,13 +2,13 @@
   <!-- eslint-disable max-len -->
   <div
     id="countdown"
-    class="min-h-96 bg-[url(/resources/assets/countdownBackground_small.webp)] bg-cover bg-fixed bg-center bg-no-repeat py-[100px] text-center"
+    class="flex min-h-96 flex-col items-center justify-center bg-[url(/resources/assets/countdownBackground_small.webp)] bg-cover bg-fixed bg-center bg-no-repeat py-[100px] text-center"
   >
     <div>
       <div>
         <div class="mb-4">
           <h4 class="font-script text-3xl text-white md:text-6xl">
-            We will become a family
+            We will be married
             <span v-if="!weddingHasStarted"> in </span>
           </h4>
         </div>

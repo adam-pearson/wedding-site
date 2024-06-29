@@ -1,22 +1,14 @@
 <template>
+  <!-- eslint-disable max-len -->
   <header
     id="home"
-    class="hero-image flex h-screen items-center justify-center"
+    class="flex h-screen items-center justify-center overflow-hidden bg-[url(/resources/assets/heroImage_small.jpg)]  bg-cover bg-center bg-no-repeat"
   >
     <HeroText />
   </header>
+  <!-- eslint-enable max-len -->
 </template>
 
 <script setup>
 import HeroText from './HeroText.vue';
 </script>
-
-<style lang="postcss" scoped>
-.hero-image {
-    @apply bg-[url(/resources/assets/heroImage_small.webp)];
-    @apply bg-cover;
-    @apply bg-no-repeat;
-    @apply bg-center;
-    @apply overflow-hidden;
-}
-</style>

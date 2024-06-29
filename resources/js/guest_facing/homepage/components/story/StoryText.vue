@@ -6,16 +6,18 @@
     data-animate-effect="fadeInRight"
   >
     <h4
-      class="relative top-3 mb-3 font-script text-3xl leading-3 text-primary-500"
+      class="relative top-3 pb-6 font-script text-3xl leading-3 text-secondary-500"
     >
-      Our love.
+      Our love
     </h4>
     <h3
-      class="oliven-story-title mb-4 font-serif text-3xl font-medium uppercase tracking-wider text-black"
+      class="mb-4 font-serif text-3xl font-medium uppercase tracking-wider text-primary-500"
     >
       Our Story
     </h3>
-    <div class="story-text flex flex-col gap-4">
+    <div
+      class="story-text flex flex-col gap-4"
+    >
       <p>
         Adam and Heather's love story began unexpectedly on April 27th,
         2019, at a wine festival they both attended last-minute after
@@ -26,7 +28,7 @@
         for what was meant to be a short stay during lockdown, but it
         turned into over a year.
       </p>
-      <h4 class="font-serif text-2xl font-medium">
+      <h4 class="font-serif text-2xl font-medium text-primary-500">
         Dec 16th, 2023, she Said Yes!
       </h4>
       <p>

@@ -6,10 +6,10 @@
       class="transition-all duration-500"
       :class="navOpen ? 'translate-x-[270px]' : 'translate-x-0'"
     />
-    <SidebarSection :nav-open="navOpen" />
+    <Sidebar :nav-open="navOpen" />
     <div
       @click="navOpen = false"
-      class="flex w-full flex-col transition-all duration-500 sm:w-[calc(100%-270px)] md:w-[70%] xl:w-[78%]"
+      class="flex w-full flex-col transition-all duration-500 sm:w-[calc(100%-270px)] md:w-[76%] xl:w-[80%]"
       :class="navOpen ? 'translate-x-[270px]' : 'translate-x-0'"
     >
       <slot />
@@ -21,7 +21,7 @@
 <script setup>
 import { ref } from 'vue';
 import HamburgerButton from '../../../shared/ui/components/HamburgerButton.vue';
-import SidebarSection from '../components/sidebar/SidebarSection.vue';
+import Sidebar from '../components/sidebar/Sidebar.vue';
 
 const navOpen = ref(false);
 

@@ -65,6 +65,7 @@ onBeforeUnmount(() => {
     @apply text-6xl;
     @apply block;
     @apply font-bold;
+    @apply drop-shadow-lg;
 }
 
 .countdown-time li {
@@ -77,5 +78,6 @@ onBeforeUnmount(() => {
     @apply tracking-wider;
     @apply text-xs;
     @apply md:text-base;
+    @apply drop-shadow-lg;
 }
 </style>

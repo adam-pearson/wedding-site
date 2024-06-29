@@ -2,7 +2,7 @@
   <!-- eslint-disable max-len -->
   <Link
     :href="item.route"
-    class="border-b border-b-transparent font-serif text-lg leading-6 tracking-wide duration-[0.3s] hover:border-b-primary-500 hover:duration-[0.5s]"
+    class="border-b border-b-transparent font-serif text-lg leading-6 tracking-wide duration-[0.3s] hover:border-b-secondary-500 hover:text-primary-500 hover:duration-[0.5s]"
   >
     {{ item.text }}
   </Link>

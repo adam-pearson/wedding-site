@@ -2,7 +2,7 @@
   <!-- eslint-disable max-len -->
   <header
     id="home"
-    class="flex h-screen items-center justify-center overflow-hidden bg-[url(/resources/assets/heroImage_small.jpg)]  bg-cover bg-center bg-no-repeat"
+    class="flex h-screen items-center justify-center overflow-hidden bg-[url(/resources/assets/heroImage_small.webp)]  bg-cover bg-center bg-no-repeat"
   >
     <HeroText />
   </header>

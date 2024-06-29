@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <span class="hero-caption drop-shadow-lg">The wedding of</span>
-    <h1 class="my-0 font-script text-2xl text-white drop-shadow-lg md:my-4 md:text-[7.5rem] md:leading-none">
+    <h1 class="my-0 font-script text-[2.8rem] leading-[4rem] text-white drop-shadow-lg md:my-4 md:text-[5rem] md:leading-none lg:text-[7.5rem]">
       Heather & Adam
     </h1>
     <h2 class="hero-caption drop-shadow-lg">
@@ -20,16 +20,6 @@ const weddingDate = computed(() => getFormattedWeddingDate('Do MMMM, YYYY'));
 </script>
 
 <style lang="postcss" scoped>
-.hero-names {
-    @apply font-script;
-    @apply my-0;
-    @apply text-[40px];
-    @apply md:text-[7.5rem];
-    @apply text-white;
-    @apply leading-[7.5rem];
-    @apply md:my-4;
-    @apply md:leading-none;
-}
 
 .hero-caption {
     @apply font-sans;

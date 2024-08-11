@@ -4,13 +4,14 @@ namespace App\Guest\Repositories;
 
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Models\Guest;
+use App\Guest\Models\GuestGroup;
 use Illuminate\Database\Eloquent\Collection;
 
 class GuestRepository
 {
-    public function find(int $id, array $relations = []): Guest
+    public function find(int|array $ids, array $relations = []): Guest|Collection
     {
-        return Guest::with($relations)->find($id);
+        return Guest::with($relations)->find($ids);
     }
 
     public function store(GuestDto $guestDto): Guest
@@ -27,6 +28,28 @@ class GuestRepository
         $guest->update($updatedDetails);
 
         return $guest;
+    }
+
+    public function updateGuestGroup(array $groupDetails): void
+    {
+        $guests = $this->find($groupDetails['group_members']);
+
+        if ($groupDetails['group_id'] !== null) {
+            Guest::where('group_id', $groupDetails['group_id'])
+                ->whereNotIn('id', $groupDetails['group_members'])
+                ->update(['group_id' => null]);
+
+            $guests->each(function (Guest $guest) use ($groupDetails) {
+                if ($guest->group_id !== $groupDetails['group_id']) {
+                    $guest->update(['group_id' => $groupDetails['group_id']]);
+                }
+            });
+        } elseif ($groupDetails['group_name'] !== null) {
+            $newGroup = GuestGroup::create(['group_name' => $groupDetails['group_name']]);
+            $guests->each(function (Guest $guest) use ($newGroup) {
+                $guest->update(['group_id' => $newGroup->id]);
+            });
+        }
     }
 
     public function destroy(int $id): int
@@ -49,5 +72,10 @@ class GuestRepository
     public function getGuestByCode(string $code, array $relations = []): Guest
     {
         return Guest::where('unique_code', $code)->with($relations)->first();
+    }
+
+    public function getGuestGroups(): Collection
+    {
+        return GuestGroup::all();
     }
 }

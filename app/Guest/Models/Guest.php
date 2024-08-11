@@ -28,7 +28,8 @@ class Guest extends Model
         'is_child',
         'unique_code',
         'invite_sent_on',
-        'save_the_date_sent_on'
+        'save_the_date_sent_on',
+        'group_id',
     ];
 
     public function plusOneOwner(): BelongsTo
@@ -51,6 +52,10 @@ class Guest extends Model
         return $this->belongsToMany(self::class, 'guest_rsvp_on_behalf_of', 'rsvp_on_behalf_of_id', 'guest_id');
     }
 
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(GuestGroup::class, 'group_id');
+    }
 
     public function rsvpResponse(): HasOne
     {

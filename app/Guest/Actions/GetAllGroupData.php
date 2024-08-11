@@ -5,7 +5,7 @@ namespace App\Guest\Actions;
 use App\Guest\Repositories\GuestRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-readonly class GetAllGuestData
+readonly class GetAllGroupData
 {
     public function __construct(private GuestRepository $guestRepository)
     {
@@ -14,12 +14,6 @@ readonly class GetAllGuestData
 
     public function execute(): Collection
     {
-        return $this->guestRepository->getMainGuests([
-            'rsvpResponse',
-            'plusOne.rsvpResponse',
-            'rsvpOnBehalfOf',
-            'rsvpFor',
-            'group.guests'
-        ]);
+        return $this->guestRepository->getGuestGroups();
     }
 }

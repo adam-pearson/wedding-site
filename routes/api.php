@@ -1,6 +1,7 @@
 <?php
 
 use App\Guest\Controllers\API\GuestApiController;
+use App\Guest\Controllers\API\GuestGroupsApiController;
 use App\RsvpResponse\Controllers\API\RsvpResponseApiController;
 use App\RsvpResponse\Middleware\RsvpRepeatedSubmissionCheckMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/guests/list/download', [GuestApiController::class, 'download'])
         ->name('admin.guests.download');
+
+    Route::get(uri: '/groups/list', action: [GuestGroupsApiController::class, 'index'])
+        ->name('admin.groups.list');
 });
 
 Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpResponseApiController::class, 'store'])

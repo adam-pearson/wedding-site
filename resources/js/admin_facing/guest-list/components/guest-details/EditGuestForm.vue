@@ -127,6 +127,42 @@
       }"
     />
     <TagsElement
+      name="group"
+      label="Group"
+      :disabled="!editing || guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :readonly="!editing"
+      :create="true"
+      :max="1"
+      :format-data="(n, v) => ({[n]: formatGroupData(v) })"
+      :items="async function () {
+        await loadGroups();
+        return groups.map((group) => ({
+          value: group.id,
+          label: group.group_name,
+        }));
+      }"
+      :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+      @change="handleGroupChanged()"
+    />
+    <TagsElement
+      name="group_members"
+      label="Group Members"
+      :disabled="!editing || guestIsPlusOne"
+      :placeholder="guestIsPlusOne ? 'N/A' : ''"
+      :readonly="!editing"
+      :search="true"
+      :items="guestList.map((guest) => ({
+        value: guest.id,
+        label: guest.name,
+      }))"
+      :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+    />
+    <TagsElement
       name="rsvp_on_behalf_of"
       label="Can RSVP On Behalf Of"
       :disabled="!editing || guestIsPlusOne"
@@ -145,7 +181,6 @@
       :placeholder="guestIsPlusOne ? 'N/A' : ''"
       :readonly="!editing"
       :search="true"
-      :close-on-select
       :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
       :columns="{
         container: 12, label: 3, wrapper: 12
@@ -263,7 +298,9 @@ import {
 } from 'vue';
 import useGuestList from '../../composables/guestList';
 
-const { saveNewGuest, updateGuest, getGuestListForSelectWithoutCurrentGuest } = useGuestList();
+const {
+    guestList, saveNewGuest, updateGuest, getGuestListForSelectWithoutCurrentGuest, groups, loadGroups,
+} = useGuestList();
 
 const emit = defineEmits(['finished-editing']);
 
@@ -286,6 +323,17 @@ const guestIsPlusOne = computed(() => props.guest.plus_one_of !== null || props.
 
 const form$ = ref(null);
 
+const formatGroupData = (group) => {
+    if (group[0]) {
+        // check if group[0] is an int - this means we have an existing group
+        if (parseInt(group[0], 10)) {
+            const existingGroup = groups.value?.find((g) => g.id === parseInt(group[0], 10));
+            return { id: existingGroup?.id, group_name: existingGroup?.group_name };
+        }
+        return { id: null, group_name: group[0] };
+    }
+    return null;
+};
 const submit = () => {
     if (props.addingPlusOne) {
         saveNewGuest(form$.value.requestData, props.guest.id);
@@ -293,6 +341,24 @@ const submit = () => {
         updateGuest(props.guest.id, form$.value.requestData);
     }
     emit('finished-editing');
+};
+
+const handleGroupChanged = () => {
+    const newValue = form$.value.el$('group').value[0];
+
+    if (newValue !== undefined) {
+        const ids = guestList.value
+            .filter((guest) => guest.group_id === parseInt(newValue, 10))
+            .map((guest) => guest.id);
+
+        const currentGuestId = props.guest.id;
+
+        const filteredIds = ids.filter((id) => id !== currentGuestId);
+        filteredIds.unshift(currentGuestId);
+        form$.value.el$('group_members').update(filteredIds);
+    } else {
+        form$.value.el$('group_members').update([]);
+    }
 };
 
 const updateFormValues = (guestVals) => {
@@ -311,8 +377,11 @@ const updateFormValues = (guestVals) => {
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
         song_request: guestVals.rsvp_response?.song_request,
         rsvp_on_behalf_of: guestVals.rsvp_on_behalf_of.map((guest) => guest.id),
+        group: [guestVals.group_id],
+        group_members: guestVals.group?.guests?.map((guest) => guest.id),
         rsvp_for: guestVals.rsvp_for.map((guest) => guest.id),
     });
+    console.log('form starting values: ', form$.value.requestData);
 };
 
 onMounted(() => {

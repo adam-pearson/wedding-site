@@ -6,6 +6,7 @@ use App\Guest\Actions\GenerateUniqueCode;
 use App\Guest\Enums\GuestType;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use JsonSerializable;
 use Stringable;
 
@@ -18,6 +19,9 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
         public bool $plusOneAllowed,
         public GuestType $guestType,
         public bool $isChild,
+        public ?int $groupId = null,
+        public ?string $groupName = null,
+        public ?array $groupMembers = null,
         public ?string $email = null,
         public ?string $phone = null,
         public ?string $address = null,
@@ -53,6 +57,7 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'save_the_date_sent_on' => $this->saveTheDateSentOn,
             'rsvp_on_behalf_of' => $this->rsvpOnBehalfOf,
             'rsvp_for' => $this->rsvpFor,
+            'group_id' => $this->groupId,
         ];
     }
 
@@ -60,6 +65,15 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
     {
         return [
             'guest_type' => $this->guestType,
+        ];
+    }
+
+    public function getGroupDetails(): array
+    {
+        return [
+            'group_id' => $this->groupId,
+            'group_name' => $this->groupName,
+            'group_members' => $this->groupMembers,
         ];
     }
 

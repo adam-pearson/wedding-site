@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ref, computed, readonly } from 'vue';
 
 const guestList = ref([]);
+const groups = ref([]);
 
 const guestListForSelect = computed(() => guestList.value
     .filter((guest) => guest.plus_one_of === null)
@@ -22,6 +23,9 @@ export default function useGuestList() {
         guestList.value = guests;
     };
 
+    const loadGroups = async () => axios.get(route('admin.groups.list')).then((res) => {
+        groups.value = res.data.groups;
+    });
     const reloadGuestList = async () => {
         loading.value = true;
         axios.get(route('admin.guests.list')).then((res) => {
@@ -70,12 +74,14 @@ export default function useGuestList() {
         loading,
         guestList: readonly(guestList),
         guestListForSelect: readonly(guestListForSelect),
+        groups: readonly(groups),
         setGuestList,
         reloadGuestList,
         saveNewGuest,
         getGuestType,
         updateGuest,
         deleteGuest,
+        loadGroups,
         getGuestListForSelectWithoutCurrentGuest,
     };
 }

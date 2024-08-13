@@ -162,30 +162,6 @@
         container: 12, label: 3, wrapper: 12
       }"
     />
-    <TagsElement
-      name="rsvp_on_behalf_of"
-      label="Can RSVP On Behalf Of"
-      :disabled="!editing || guestIsPlusOne"
-      :placeholder="guestIsPlusOne ? 'N/A' : ''"
-      :readonly="!editing"
-      :search="true"
-      :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
-      :columns="{
-        container: 12, label: 3, wrapper: 12
-      }"
-    />
-    <TagsElement
-      name="rsvp_for"
-      label="Who Can RSVP For This Guest"
-      :disabled="!editing || guestIsPlusOne"
-      :placeholder="guestIsPlusOne ? 'N/A' : ''"
-      :readonly="!editing"
-      :search="true"
-      :items="getGuestListForSelectWithoutCurrentGuest(guest.id)"
-      :columns="{
-        container: 12, label: 3, wrapper: 12
-      }"
-    />
     <StaticElement
       name="divider_1"
       tag="hr"
@@ -376,10 +352,8 @@ const updateFormValues = (guestVals) => {
         alcohol: guestVals.rsvp_response?.alcohol,
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
         song_request: guestVals.rsvp_response?.song_request,
-        rsvp_on_behalf_of: guestVals.rsvp_on_behalf_of.map((guest) => guest.id),
         group: [guestVals.group_id],
         group_members: guestVals.group?.guests?.map((guest) => guest.id),
-        rsvp_for: guestVals.rsvp_for.map((guest) => guest.id),
     });
     console.log('form starting values: ', form$.value.requestData);
 };
@@ -400,8 +374,6 @@ onMounted(() => {
             alcohol: null,
             dietary_requirements: null,
             song_request: null,
-            rsvp_on_behalf_of: null,
-            rsvp_for: null,
         };
         updateFormValues(newPlusOneVals);
     } else {
@@ -431,8 +403,6 @@ watch(() => props.addingPlusOne, (newVal) => {
             alcohol: null,
             dietary_requirements: null,
             song_request: null,
-            rsvp_on_behalf_of: null,
-            rsvp_for: null,
         };
         updateFormValues(newPlusOneVals);
     }

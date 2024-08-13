@@ -42,16 +42,6 @@ class Guest extends Model
         return $this->hasOne(self::class, 'plus_one_of');
     }
 
-    public function rsvpOnBehalfOf(): BelongsToMany
-    {
-        return $this->belongsToMany(self::class, 'guest_rsvp_on_behalf_of', 'guest_id', 'rsvp_on_behalf_of_id');
-    }
-
-    public function rsvpFor(): BelongsToMany
-    {
-        return $this->belongsToMany(self::class, 'guest_rsvp_on_behalf_of', 'rsvp_on_behalf_of_id', 'guest_id');
-    }
-
     public function group(): BelongsTo
     {
         return $this->belongsTo(GuestGroup::class, 'group_id');

@@ -17,7 +17,7 @@ import GuestAreaLayout from '../../../shared/layouts/GuestAreaLayout.vue';
 import RsvpFormCard from '../components/RsvpFormCard.vue';
 import useGuest from '../../../../shared/composables/guest';
 
-const { setGuest, canRsvpOnBehalfOf, setCanRsvpOnBehalfOf } = useGuest();
+const { setGuest } = useGuest();
 
 const props = defineProps({
     guest: {
@@ -27,9 +27,6 @@ const props = defineProps({
 });
 
 setGuest(props.guest);
-if (canRsvpOnBehalfOf.value.length === 0) {
-    setCanRsvpOnBehalfOf(props.guest.rsvp_on_behalf_of);
-}
 
 </script>
 

@@ -15,8 +15,6 @@ readonly class GetGuestByCode
 
     public function execute(string $code): Guest
     {
-        return $this->guestRepository->getGuestByCode($code, ['rsvpOnBehalfOf' => function (BelongsToMany $query) {
-            $query->whereDoesntHave('rsvpResponse');
-        }]);
+        return $this->guestRepository->getGuestByCode($code);
     }
 }

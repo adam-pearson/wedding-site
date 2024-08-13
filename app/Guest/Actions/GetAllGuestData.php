@@ -17,8 +17,6 @@ readonly class GetAllGuestData
         return $this->guestRepository->getMainGuests([
             'rsvpResponse',
             'plusOne.rsvpResponse',
-            'rsvpOnBehalfOf',
-            'rsvpFor',
             'group.guests'
         ]);
     }

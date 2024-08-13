@@ -43,8 +43,6 @@ class UpdateGuestRequest extends FormRequest
             'invite_sent_on' => 'date|nullable',
             'save_the_date_sent_on' => 'date|nullable',
             'song_request' => 'string|nullable',
-            'rsvp_on_behalf_of' => 'array|nullable',
-            'rsvp_for' => 'array|nullable',
         ];
     }
 
@@ -65,8 +63,6 @@ class UpdateGuestRequest extends FormRequest
             id: $this->route('guest')->id,
             inviteSentOn: $this->input('invite_sent_on') ? Carbon::parse($this->input('invite_sent_on')) : null,
             saveTheDateSentOn: $this->input('save_the_date_sent_on') ? Carbon::parse($this->input('save_the_date_sent_on')) : null,
-            rsvpOnBehalfOf: $this->input('rsvp_on_behalf_of'),
-            rsvpFor: $this->input('rsvp_for'),
         );
     }
 

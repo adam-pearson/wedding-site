@@ -29,8 +29,6 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
         public ?int $id = null,
         public ?Carbon $inviteSentOn = null,
         public ?Carbon $saveTheDateSentOn = null,
-        public ?array $rsvpOnBehalfOf = null,
-        public ?array $rsvpFor = null,
     ) {
         $this->generateUniqueCode = app(GenerateUniqueCode::class);
     }
@@ -55,8 +53,6 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'plus_one_of' => $this->plusOneOf,
             'invite_sent_on' => $this->inviteSentOn,
             'save_the_date_sent_on' => $this->saveTheDateSentOn,
-            'rsvp_on_behalf_of' => $this->rsvpOnBehalfOf,
-            'rsvp_for' => $this->rsvpFor,
             'group_id' => $this->groupId,
         ];
     }
@@ -75,16 +71,6 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'group_name' => $this->groupName,
             'group_members' => $this->groupMembers,
         ];
-    }
-
-    public function guestCanRsvpForOthers(): bool
-    {
-        return !empty($this->rsvpOnBehalfOf);
-    }
-
-    public function guestCanBeRsvpdFor(): bool
-    {
-        return !empty($this->rsvpFor);
     }
 
     public function getParentId(): ?int

@@ -2,7 +2,6 @@ import { ref, readonly } from 'vue';
 import STATUS_TYPES from '../constants/inviteStatuses';
 
 const guest = ref({});
-const canRsvpOnBehalfOf = ref([]);
 
 export default function useGuest() {
     const setGuest = (guestData) => {
@@ -20,23 +19,9 @@ export default function useGuest() {
         return STATUS_TYPES.NOT_SENT.value;
     };
 
-    const setCanRsvpOnBehalfOf = (guestData) => {
-        canRsvpOnBehalfOf.value = guestData;
-    };
-
-    const removeFromCanRsvpOnBehalfOf = (guestId) => {
-        console.log('attempting to filter out guest', guestId);
-        // eslint-disable-next-line no-shadow
-        canRsvpOnBehalfOf.value = canRsvpOnBehalfOf.value.filter((iterableGuest) => iterableGuest.id !== guestId);
-        console.log('canRsvpOnBehalfOf', canRsvpOnBehalfOf.value);
-    };
-
     return {
         guest: readonly(guest),
-        canRsvpOnBehalfOf: readonly(canRsvpOnBehalfOf),
         setGuest,
         getInviteStatus,
-        removeFromCanRsvpOnBehalfOf,
-        setCanRsvpOnBehalfOf,
     };
 }

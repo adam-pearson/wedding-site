@@ -7,28 +7,6 @@
     <p class="font-sans">
       Your RSVP response has been recorded. If you need to edit any details, please contact Adam or Heather.
     </p>
-    <div v-if="canRsvpOnBehalfOf.length">
-      <p>
-        If you wish, you may also RSVP on behalf of the following guests:
-      </p>
-      <ul class="mt-2 flex flex-col overflow-hidden rounded-md bg-white shadow-sm">
-        <li
-          v-for="guest in canRsvpOnBehalfOf"
-          :key="guest.id"
-        >
-          <Link
-            as="a"
-            :href="route('guest.rsvp.form', { code: guest.unique_code })"
-            class="block py-2 hover:bg-blue-50"
-          >
-            {{ guest.name }}
-          </Link>
-        </li>
-      </ul>
-      <p class="mt-4">
-        Or, return to the homepage
-      </p>
-    </div>
     <Link
       as="a"
       :href="route('home')"
@@ -42,12 +20,5 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-
-defineProps({
-    canRsvpOnBehalfOf: {
-        type: Array,
-        required: true,
-    },
-});
 
 </script>

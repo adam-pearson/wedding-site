@@ -31,18 +31,6 @@ readonly class UpdateGuest
 
     private function handleGuestRelationshipUpdates(Guest $guest, GuestDto $guestDto, ?RsvpSubmissionDto $rsvpDto = null): void
     {
-        if ($guestDto->guestCanRsvpForOthers()) {
-            $guest->rsvpOnBehalfOf()->sync($guestDto->rsvpOnBehalfOf);
-        } else {
-            $guest->rsvpOnBehalfOf()->sync([]);
-        }
-
-        if ($guestDto->guestCanBeRsvpdFor()) {
-            $guest->rsvpFor()->sync($guestDto->rsvpFor);
-        } else {
-            $guest->rsvpFor()->sync([]);
-        }
-
         if ($guest->plusOne?->exists()) {
             if ($guest->plus_one_allowed) {
                 $this->guestRepository->update($guest->plusOne->id, $guestDto->getValuesSharedWithPlusOne());

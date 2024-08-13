@@ -2,7 +2,6 @@
 
 namespace App\Guest\DTOs;
 
-use App\Guest\Enums\GuestType;
 use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use Stringable;
@@ -11,13 +10,12 @@ final readonly class GuestCsvDto implements JsonSerializable, Arrayable, Stringa
 {
     public function __construct(
         public string $name,
-        public ?string $email,
-        public ?string $phone,
-        public ?string $address,
-        public string $guestType,
-        public bool $plusOneAllowed,
-        public string $uniqueCode,
-        public string $qrCodeString,
+        public string $code,
+        public string $qrCode,
+        public ?string $plusOneText,
+        public string $inviteTypeText,
+        public ?string $receptionToFollowText,
+        public string $time,
     ) {
         //
     }
@@ -31,13 +29,12 @@ final readonly class GuestCsvDto implements JsonSerializable, Arrayable, Stringa
     {
         return [
             'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'address' => $this->address,
-            'guest_type' => $this->guestType,
-            'plus_one_allowed' => $this->plusOneAllowed,
-            'unique_code' => $this->uniqueCode,
-            'qr_code_string' => $this->qrCodeString,
+            'code' => $this->code,
+            'qr_code' => $this->qrCode,
+            'plus_one_text' => $this->plusOneText,
+            'invite_type_text' => $this->inviteTypeText,
+            'reception_to_follow_text' => $this->receptionToFollowText,
+            'time' => $this->time,
         ];
     }
 

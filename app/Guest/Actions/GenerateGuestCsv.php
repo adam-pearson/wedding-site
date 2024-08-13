@@ -14,11 +14,11 @@ readonly class GenerateGuestCsv
     {
         $filename = 'guests.csv';
         $handle = fopen($filename, 'w+');
-        fputcsv($handle, ['name', 'email', 'phone', 'address', 'guest_type', 'plus_one_allowed', 'unique_code', 'qr_code_string']);
+        fputcsv($handle, ['name', 'code', '#qr_code', 'plus_one_text', 'invite_type_text', 'reception_to_follow_text', 'time']);
 
-        foreach ($guestData as $guest) {
+        $guestData->each(function (GuestCsvDto $guest) use ($handle) {
             fputcsv($handle, $guest->toArray());
-        }
+        });
 
         fclose($handle);
 

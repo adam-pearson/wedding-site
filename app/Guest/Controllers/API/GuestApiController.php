@@ -3,7 +3,7 @@
 namespace App\Guest\Controllers\API;
 
 use App\Guest\Actions\GenerateGuestCsv;
-use App\Guest\Actions\GetGuestCsvData;
+use App\Guest\Actions\GetAllGuestDataForCsv;
 use App\Guest\Actions\StoreGuest;
 use App\Guest\Actions\DestroyGuest;
 use App\Guest\Actions\GetAllGuestData;
@@ -24,7 +24,7 @@ class GuestApiController extends Controller
         private readonly UpdateGuest     $updateGuest,
         private readonly GetAllGuestData $getAllGuestData,
         private readonly DestroyGuest    $destroyGuest,
-        private readonly GetGuestCsvData $getGuestCsvData,
+        private readonly GetAllGuestDataForCsv $getGuestDataForCsv,
         private readonly GenerateGuestCsv $generateCsv,
     ) {
         //
@@ -76,7 +76,7 @@ class GuestApiController extends Controller
 
     public function download(): BinaryFileResponse
     {
-        $guests = $this->getGuestCsvData->execute();
+        $guests = $this->getGuestDataForCsv->execute();
         $csv = $this->generateCsv->execute($guests);
 
         return response()->download($csv)->deleteFileAfterSend();

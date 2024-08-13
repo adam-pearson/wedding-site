@@ -57,6 +57,22 @@ class GuestRepository
         return Guest::destroy($id);
     }
 
+    public function getGroupedMainGuests(array $relations = []): Collection
+    {
+        return Guest::with($relations)
+            ->whereNotNull('group_id')
+            ->whereNull('plus_one_of')
+            ->get();
+    }
+
+    public function getUngroupedMainGuests(array $relations = [])
+    {
+        return Guest::with($relations)
+            ->whereNull('group_id')
+            ->whereNull('plus_one_of')
+            ->get();
+    }
+
     public function getMainGuests(array $relations = []): Collection
     {
         return Guest::with($relations)

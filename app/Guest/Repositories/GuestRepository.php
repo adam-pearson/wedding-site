@@ -77,6 +77,7 @@ class GuestRepository
     {
         return Guest::with($relations)
             ->whereNull('plus_one_of')
+            ->orderBy('name')
             ->get();
     }
 

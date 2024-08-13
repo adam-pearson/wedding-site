@@ -18,6 +18,6 @@ readonly class GetAllGuestData
             'rsvpResponse',
             'plusOne.rsvpResponse',
             'group.guests'
-        ])->sortBy('name');
+        ]);
     }
 }

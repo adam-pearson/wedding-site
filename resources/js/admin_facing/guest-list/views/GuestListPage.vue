@@ -17,6 +17,17 @@
       @open-add-guest-form="toggleForm"
       :form-open="addGuestFormOpen"
     />
+    <div class="flex w-full justify-between px-6 pt-6">
+      <h2 class="text-xl">
+        Total Main Guest Count: {{ totalMainGuestCount }}
+      </h2>
+      <h2 class="text-xl">
+        Total Potential Plus Ones: {{ totalPotentialPlusOnes }}
+      </h2>
+      <h2 class="text-xl">
+        Total Invites Count: {{ totalInvitesCount }}
+      </h2>
+    </div>
     <Transition>
       <AddGuestForm
         v-if="addGuestFormOpen"
@@ -35,9 +46,8 @@
   </AdminAreaLayout>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { router } from '@inertiajs/vue3';
-import axios from 'axios';
 import GuestDetailsModal from '../components/guest-details/GuestDetailsModal.vue';
 import GuestListHeader from '../components/header/GuestListHeader.vue';
 import AddGuestForm from '../components/add-guest-form/AddGuestForm.vue';
@@ -51,6 +61,14 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+});
+
+const totalMainGuestCount = computed(() => props.guests.filter((guest) => !guest.plus_one_of).length);
+const totalPotentialPlusOnes = computed(() => props.guests.filter((guest) => guest.plus_one_allowed).length);
+const totalInvitesCount = computed(() => {
+    const groupIds = props.guests.map((guest) => guest.group_id);
+    const uniqueGroupIds = [...new Set(groupIds)];
+    return uniqueGroupIds.length + props.guests.filter((guest) => !guest.group_id).length;
 });
 
 const { setGuestList, reloadGuestList } = useGuestList();

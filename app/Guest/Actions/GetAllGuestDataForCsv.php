@@ -14,7 +14,7 @@ readonly class GetAllGuestDataForCsv
 {
     const string HAS_PLUS_ONE_TEXT = 'You are also invited to bring along a plus one, if you wish.';
     const string DAY_GUEST_TEXT = 'to join them on their wedding day';
-    const string EVENING_GUEST_TEXT = 'for an evening reception to celebrate their marriage';
+    const string EVENING_GUEST_TEXT = 'to an evening reception to celebrate their marriage';
     const string RECEPTION_TO_FOLLOW_TEXT = 'Reception to follow';
     const string DAY_GUEST_TIME = 'One O\'Clock in the Afternoon';
     const string EVENING_GUEST_TIME = 'Seven O\'Clock in the Evening';

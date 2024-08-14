@@ -27,17 +27,17 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'email|nullable',
-            'phone' => 'min:7|max:15|nullable',
-            'address' => 'string|nullable',
-            'using_plus_one' => 'boolean|required|sometimes',
             'coming' => 'boolean|required',
-            'alcohol' => 'boolean|nullable|sometimes',
+            'email' => 'email|required|sometimes',
+            'phone' => 'min:7|max:15|required|sometimes',
+            'alcohol' => 'boolean|required|sometimes',
             'dietary_requirements' => 'string|nullable',
-            'song_request' => 'string|nullable',
-            'plus_one_name' => 'string|nullable',
-            'plus_one_alcohol' => 'boolean|nullable|sometimes',
-            'plus_one_dietary_requirements' => 'string|nullable',
+            'song_requests' => 'string|nullable',
+            'hated_songs' => 'string|nullable',
+            'bringing_plus_one' => 'boolean|required|sometimes',
+            'plus_one_name' => 'string|required|sometimes',
+            'plus_one_alcohol' => 'boolean|required|sometimes',
+            'plus_one_dietary_requirements' => 'string|nullable|sometimes',
         ];
     }
 
@@ -46,10 +46,11 @@ class RsvpResponseSubmissionRequest extends FormRequest
         return new RsvpSubmissionDto(
             coming: $this->input('coming') ?? false,
             guestId: $this->route('guest')->id,
-            usingPlusOne: $this->input('using_plus_one') ?? false,
+            bringingPlusOne: $this->input('bringing_plus_one') ?? false,
             alcohol: $this->input('alcohol'),
             dietaryRequirements: $this->input('dietary_requirements'),
-            songRequest: $this->input('song_request'),
+            songRequests: $this->input('song_requests'),
+            hatedSongs: $this->input('hated_songs'),
         );
     }
 
@@ -60,7 +61,6 @@ class RsvpResponseSubmissionRequest extends FormRequest
             name: $this->route('guest')->name,
             email: $this->input('email'),
             phone: $this->input('phone'),
-            address: $this->input('address'),
         );
     }
 
@@ -82,7 +82,7 @@ class RsvpResponseSubmissionRequest extends FormRequest
             coming: $this->input('coming'),
             alcohol: $this->input('plus_one_alcohol'),
             dietaryRequirements: $this->input('plus_one_dietary_requirements'),
-            usingPlusOne: false,
+            bringingPlusOne: false,
         );
     }
 }

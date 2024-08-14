@@ -17,16 +17,25 @@
       @open-add-guest-form="toggleForm"
       :form-open="addGuestFormOpen"
     />
-    <div class="flex w-full justify-between px-6 pt-6">
-      <h2 class="text-xl">
-        Total Main Guest Count: {{ totalMainGuestCount }}
-      </h2>
-      <h2 class="text-xl">
-        Total Potential Plus Ones: {{ totalPotentialPlusOnes }}
-      </h2>
-      <h2 class="text-xl">
-        Total Invites Count: {{ totalInvitesCount }}
-      </h2>
+    <div
+      v-for="row in stats"
+      :key="row.id"
+      class="px-6"
+    >
+      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-5">
+        <div
+          v-for="item in row.stats"
+          :key="item.name"
+          class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
+        >
+          <dt class="truncate text-sm font-medium text-gray-500">
+            {{ item.name }}
+          </dt>
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+            {{ item.stat }}
+          </dd>
+        </div>
+      </dl>
     </div>
     <Transition>
       <AddGuestForm
@@ -46,7 +55,7 @@
   </AdminAreaLayout>
 </template>
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import GuestDetailsModal from '../components/guest-details/GuestDetailsModal.vue';
 import GuestListHeader from '../components/header/GuestListHeader.vue';
@@ -63,13 +72,55 @@ const props = defineProps({
     },
 });
 
-const totalMainGuestCount = computed(() => props.guests.filter((guest) => !guest.plus_one_of).length);
-const totalPotentialPlusOnes = computed(() => props.guests.filter((guest) => guest.plus_one_allowed).length);
+const totalMainGuestCount = computed(
+    () => props.guests
+        .filter((guest) => !guest.plus_one_of)
+        .length,
+);
+const totalPotentialPlusOnes = computed(
+    () => props.guests
+        .filter((guest) => guest.plus_one_allowed)
+        .length,
+);
+
 const totalInvitesCount = computed(() => {
     const groupIds = props.guests.map((guest) => guest.group_id);
     const uniqueGroupIds = [...new Set(groupIds)];
     return uniqueGroupIds.length + props.guests.filter((guest) => !guest.group_id).length;
 });
+const dayGuestCount = computed(() => props.guests.filter((guest) => guest.guest_type === 'all_day').length);
+const eveningGuestCount = computed(() => props.guests.filter((guest) => guest.guest_type === 'evening').length);
+
+const potentialDayPlusOnes = computed(() => props.guests.filter((guest) => guest.guest_type === 'all_day' && guest.plus_one_allowed).length);
+const potentialEveningPlusOnes = computed(() => props.guests.filter((guest) => guest.guest_type === 'evening' && guest.plus_one_allowed).length);
+
+const totalRemainingRsvps = computed(() => {
+    const rsvps = props.guests.filter((guest) => guest.rsvp_response === null);
+    return rsvps.length;
+});
+
+const stats = reactive([
+    {
+        id: 1,
+        stats: [
+            { name: 'Day Guests', stat: dayGuestCount.value },
+            { name: 'Evening Guests', stat: eveningGuestCount.value },
+            { name: 'Total Invited Guests', stat: totalMainGuestCount.value },
+            { name: 'RSVPs Received', stat: totalMainGuestCount.value - totalRemainingRsvps.value },
+            { name: 'Remaining RSVPs', stat: totalRemainingRsvps.value },
+
+        ],
+    },
+    {
+        id: 2,
+        stats: [
+            { name: 'Potential Day Plus Ones', stat: potentialDayPlusOnes.value },
+            { name: 'Potential Evening Plus Ones', stat: potentialEveningPlusOnes.value },
+            { name: 'Total Potential Plus Ones', stat: totalPotentialPlusOnes.value },
+            { name: 'Total Invites (grouped guests count as 1)', stat: totalInvitesCount.value },
+        ],
+    },
+]);
 
 const { setGuestList, reloadGuestList } = useGuestList();
 

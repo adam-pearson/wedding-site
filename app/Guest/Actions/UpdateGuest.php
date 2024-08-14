@@ -21,8 +21,9 @@ readonly class UpdateGuest
     public function execute(GuestDto|GuestContactDetailsDto $guestDto, ?RsvpSubmissionDto $rsvpDto = null): Guest
     {
         $guest = $this->guestRepository->update($guestDto->id, $guestDto->toArray());
-        $this->guestRepository->updateGuestGroup($guestDto->getGroupDetails());
+        
         if ($guestDto instanceof GuestDto) {
+            $this->guestRepository->updateGuestGroup($guestDto->getGroupDetails());
             $this->handleGuestRelationshipUpdates($guest, $guestDto, $rsvpDto);
         }
 

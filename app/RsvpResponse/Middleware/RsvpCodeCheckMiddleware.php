@@ -31,13 +31,6 @@ readonly class RsvpCodeCheckMiddleware
                 ->withErrors(['Invalid code']);
         }
 
-        $guest = $this->guestRepository->getGuestByCode(strtoupper($code));
-        $inviteAlreadyReceived = $guest->rsvpResponse()->exists();
-
-        if ($inviteAlreadyReceived) {
-            return redirect()->route('guest.rsvp.success', ['code' => $code]);
-        }
-
         return $next($request);
     }
 }

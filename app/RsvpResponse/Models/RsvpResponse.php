@@ -20,7 +20,8 @@ class RsvpResponse extends Model
         'guest_id',
         'coming',
         'alcohol',
-        'song_request',
+        'song_requests',
+        'hated_songs',
         'dietary_requirements',
     ];
 

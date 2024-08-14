@@ -3,6 +3,7 @@
 namespace App\RsvpResponse\Controllers;
 
 use App\Guest\Actions\GetGuestByCode;
+use App\Guest\Actions\GetGuestsArrayByCode;
 use App\Http\Controllers\Controller;
 use App\RsvpResponse\Requests\RsvpShowFormRequest;
 use Inertia\ResponseFactory;
@@ -15,15 +16,14 @@ class RsvpResponseFormController extends Controller
 
     public function __construct(
         private readonly ResponseFactory $inertia,
-        private readonly GetGuestByCode  $getGuestByCode,
+        private readonly GetGuestsArrayByCode  $getGuestsArrayByCode,
     ) {
         //
     }
 
     public function show(RsvpShowFormRequest $request): Response
     {
-        $guest = $this->getGuestByCode->execute($request->getCode());
-
-        return $this->inertia->render($this->viewRoot . 'RsvpFormPage', ['guest' => $guest]);
+        $guests = $this->getGuestsArrayByCode->execute($request->getCode());
+        return $this->inertia->render($this->viewRoot . 'RsvpFormPage', ['guests' => $guests]);
     }
 }

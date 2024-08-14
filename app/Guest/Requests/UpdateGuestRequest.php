@@ -42,7 +42,8 @@ class UpdateGuestRequest extends FormRequest
             'dietary_requirements' => 'string|nullable',
             'invite_sent_on' => 'date|nullable',
             'save_the_date_sent_on' => 'date|nullable',
-            'song_request' => 'string|nullable',
+            'song_requests' => 'string|nullable',
+            'hated_songs' => 'string|nullable',
         ];
     }
 
@@ -77,7 +78,8 @@ class UpdateGuestRequest extends FormRequest
             guestId: $this->route('guest')->id,
             alcohol: $this->input('alcohol') ?? false,
             dietaryRequirements: $this->input('dietary_requirements'),
-            songRequest: $this->input('song_request'),
+            songRequests: $this->input('song_requests'),
+            hatedSongs: $this->input('hated_songs'),
         );
     }
 

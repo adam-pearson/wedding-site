@@ -16,7 +16,6 @@ use Psr\Log\LoggerInterface;
 class RsvpResponseApiController extends Controller
 {
     public function __construct(
-        private ResponseFactory $inertia,
         private StoreGuest $storeGuest,
         private UpdateGuest $updateGuest,
         private StoreRsvpResponse $storeRsvpResponse,

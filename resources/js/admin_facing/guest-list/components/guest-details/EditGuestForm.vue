@@ -228,7 +228,7 @@
       }"
     />
     <TextElement
-      name="song_request"
+      name="song_requests"
       label="Song Requests?"
       :placeholder="guestIsPlusOne ? 'N/A' : ''"
       :conditions="[['coming', 1]]"
@@ -238,6 +238,17 @@
         container: 12, label: 3, wrapper: 12
       }"
     />
+      <TextElement
+          name="hated_songs"
+          label="Hated Songs?"
+          :placeholder="guestIsPlusOne ? 'N/A' : ''"
+          :conditions="[['coming', 1]]"
+          :disabled="guestIsPlusOne"
+          :readonly="!editing"
+          :columns="{
+        container: 12, label: 3, wrapper: 12
+      }"
+      />
     <StaticElement
       v-if="editing"
       name="divider_1"
@@ -351,7 +362,8 @@ const updateFormValues = (guestVals) => {
         coming: guestVals.rsvp_response?.coming,
         alcohol: guestVals.rsvp_response?.alcohol,
         dietary_requirements: guestVals.rsvp_response?.dietary_requirements,
-        song_request: guestVals.rsvp_response?.song_request,
+        song_requests: guestVals.rsvp_response?.song_requests,
+        hated_songs: guestVals.rsvp_response?.hated_songs,
         group: [guestVals.group_id],
         group_members: guestVals.group?.guests?.map((guest) => guest.id),
     });
@@ -373,7 +385,8 @@ onMounted(() => {
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
-            song_request: null,
+            song_requests: null,
+            hated_songs: null,
         };
         updateFormValues(newPlusOneVals);
     } else {
@@ -402,7 +415,8 @@ watch(() => props.addingPlusOne, (newVal) => {
             coming: props.guest.rsvp_response?.coming,
             alcohol: null,
             dietary_requirements: null,
-            song_request: null,
+            song_requests: null,
+            hated_songs: null,
         };
         updateFormValues(newPlusOneVals);
     }

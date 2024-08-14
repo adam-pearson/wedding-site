@@ -32,10 +32,6 @@ Route::get(uri: '/rsvp/form', action: [RsvpResponseFormController::class, 'show'
     ->name('guest.rsvp.form')
     ->middleware(RsvpCodeCheckMiddleware::class);
 
-Route::get(uri: '/rsvp/success', action: [RsvpSuccessController::class, 'show'])
-    ->name('guest.rsvp.success')
-    ->middleware(RsvpSuccessMiddleware::class);;
-
 Route::middleware([Authenticated::class])->group(function () {
     Route::get(uri: '/dashboard', action: [DashboardController::class, 'show'])
         ->name('admin.dashboard');

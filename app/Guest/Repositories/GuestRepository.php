@@ -5,11 +5,12 @@ namespace App\Guest\Repositories;
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Models\Guest;
 use App\Guest\Models\GuestGroup;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class GuestRepository
 {
-    public function find(int|array $ids, array $relations = []): Guest|Collection
+    public function find(int|array $ids, array $relations = []): Guest|EloquentCollection
     {
         return Guest::with($relations)->find($ids);
     }
@@ -57,7 +58,7 @@ class GuestRepository
         return Guest::destroy($id);
     }
 
-    public function getGroupedMainGuests(array $relations = []): Collection
+    public function getGroupedMainGuests(array $relations = []): EloquentCollection
     {
         return Guest::with($relations)
             ->whereNotNull('group_id')
@@ -73,7 +74,7 @@ class GuestRepository
             ->get();
     }
 
-    public function getMainGuests(array $relations = []): Collection
+    public function getMainGuests(array $relations = []): EloquentCollection
     {
         return Guest::with($relations)
             ->whereNull('plus_one_of')
@@ -91,7 +92,7 @@ class GuestRepository
         return Guest::where('unique_code', $code)->with($relations)->first();
     }
 
-    public function getGuestGroups(): Collection
+    public function getGuestGroups(): EloquentCollection
     {
         return GuestGroup::all();
     }

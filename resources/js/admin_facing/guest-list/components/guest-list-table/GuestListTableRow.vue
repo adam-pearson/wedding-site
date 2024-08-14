@@ -51,15 +51,24 @@
           View {{ guest.name }}
         </span>
       </button>
-      <button
-        @click="emit('rsvp')"
-        :disabled="hasAlreadyRsvpd"
+      <a
+        :href="`/rsvp/form?code=${guest.unique_code}`"
+        v-if="!hasAlreadyRsvpd"
         class="rounded-md bg-amber-500 px-4 py-2 text-white transition duration-75 hover:bg-amber-900"
-        :class="hasAlreadyRsvpd ? 'opacity-50 cursor-not-allowed ' : ''"
       >
         <PaperAirplaneIcon class="size-4" />
         <span class="sr-only">
           RSVP on behalf of{{ guest.name }}
+        </span>
+      </a>
+      <button
+        v-else
+        disabled
+        class="cursor-not-allowed rounded-md bg-amber-500 px-4 py-2 text-white opacity-50 transition duration-75 hover:bg-amber-900"
+      >
+        <PaperAirplaneIcon class="size-4" />
+        <span class="sr-only">
+          Guest has already RSVP'd
         </span>
       </button>
       <button

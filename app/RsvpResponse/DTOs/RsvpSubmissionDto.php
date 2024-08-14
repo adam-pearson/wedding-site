@@ -12,16 +12,17 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
     public function __construct(
         public bool $coming,
         public int $guestId,
-        public ?bool $usingPlusOne = false,
+        public ?bool $bringingPlusOne = false,
         public ?bool $alcohol = null,
         public ?string $dietaryRequirements = null,
-        public ?string $songRequest = null,
+        public ?string $songRequests = null,
+        public ?string $hatedSongs = null,
     ) {
     }
 
     public function isUsingPlusOne(): bool
     {
-        return $this->usingPlusOne;
+        return $this->bringingPlusOne;
     }
 
     public function getRsvpData(): array
@@ -31,7 +32,8 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
-            'song_request' => $this->songRequest,
+            'song_requests' => $this->songRequests,
+            'hated_songs' => $this->hatedSongs,
         ];
     }
 
@@ -55,7 +57,8 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,
-            'song_request' => $this->songRequest,
+            'song_requests' => $this->songRequests,
+            'hated_songs' => $this->hatedSongs,
         ];
     }
 

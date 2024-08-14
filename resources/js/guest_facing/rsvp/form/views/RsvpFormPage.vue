@@ -1,15 +1,15 @@
 <template>
   <!-- eslint-disable max-len -->
   <GuestAreaLayout>
-    <div class="flex w-full flex-col items-center justify-center gap-4 py-20 ">
+    <div class="flex w-full flex-col items-center justify-center gap-4 px-4 py-20">
       <div
         class="flex w-full flex-col items-center justify-center gap-4 "
         v-if="guest && guest.rsvp_response === null"
       >
-        <h2 class="font-serif text-3xl">
+        <h2 class="text-center font-serif text-3xl">
           {{ guest.name }}
         </h2>
-        <p>
+        <p class="text-center">
           This invitation is for {{ guest.guest_type === GUEST_TYPES.ALL_DAY.value ? 'our entire wedding day' : 'our evening reception' }}. Please RSVP below.
         </p>
         <div class="w-full md:w-3/4 xl:w-1/2">
@@ -79,15 +79,19 @@
         v-else
         class="flex w-full flex-col items-center justify-center gap-4"
       >
-        <h2 class="font-serif text-2xl">
+        <h2 class="text-center font-serif text-2xl">
           Thank you!
         </h2>
-        <p class="text-sm">
+        <p class="text-center text-sm">
           You have successfully RSVP'd. If you would like to make any changes, please contact <a
             class="text-primary-400 underline-offset-2 hover:underline"
             href="mailto:heather.adam.wedding.2024@gmail.com"
           >Adam or Heather</a>.
         </p>
+        <a
+          :href="route('home')"
+          class="rounded-md bg-primary-500 px-4 py-1.5 text-white transition duration-150 hover:bg-primary-600"
+        >Return</a>
       </div>
     </div>
   </GuestAreaLayout>

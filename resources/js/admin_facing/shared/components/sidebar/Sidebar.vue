@@ -173,7 +173,7 @@
           <li class="mb-4 mt-auto flex items-center gap-2 text-left">
             <img
               class="size-8 rounded-full bg-gray-50"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              :src="getAvatar(page.props.auth?.user?.name)"
               alt=""
             >
             <span
@@ -237,6 +237,17 @@ import {
     XMarkIcon,
     Cog6ToothIcon,
 } from '@heroicons/vue/24/outline';
+import { createAvatar } from '@dicebear/core';
+import { funEmoji } from '@dicebear/collection';
+
+const getAvatar = (member) => {
+    const avatar = createAvatar(funEmoji, {
+        seed: member.name,
+        width: 64,
+        height: 64,
+    });
+    return `data:image/svg+xml,${encodeURIComponent(avatar)}`;
+};
 
 const navigation = reactive([
     {

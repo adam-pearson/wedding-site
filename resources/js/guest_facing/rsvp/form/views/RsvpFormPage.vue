@@ -36,7 +36,7 @@
             <div class="flex min-w-0 gap-x-4">
               <img
                 class="size-12 flex-none rounded-full bg-gray-50"
-                :src="member.imageUrl"
+                :src="getAvatar(member)"
                 alt=""
               >
               <div class="flex min-w-0 flex-col justify-center">
@@ -101,6 +101,8 @@ import { onMounted, computed, watch } from 'vue';
 import { ChevronRightIcon } from '@heroicons/vue/20/solid';
 import { router } from '@inertiajs/vue3';
 import axios from 'axios';
+import { createAvatar } from '@dicebear/core';
+import { funEmoji } from '@dicebear/collection';
 import GuestAreaLayout from '../../../shared/layouts/GuestAreaLayout.vue';
 import useGuest from '../../../../shared/composables/guest';
 import RsvpForm from '@/guest_facing/rsvp/form/components/RsvpForm.vue';
@@ -118,17 +120,16 @@ const props = defineProps({
 });
 setGuestGroup(props.guests);
 
-const remainingGuests = computed(() => guestGroup.value.filter((g) => g.rsvp_response === null));
+const getAvatar = (member) => {
+    const avatar = createAvatar(funEmoji, {
+        seed: member.name,
+        width: 64,
+        height: 64,
+    });
+    return `data:image/svg+xml,${encodeURIComponent(avatar)}`;
+};
 
-// when a guest opens the form, if they're in a group they should see all group members
-// if they're not in a group they should go directly to the form
-// form should be visible whenever a guest is set in the composable
-// whenever a guest submits the form, unset the guest in the composable
-// reload the page when form is submitted/unset the guest in the composable
-// we should then have a list of guests with up-to-date rsvp responses
-// if they have already responded, we can grey them out
-// once all guests have responded, we can show a message saying "all guests have responded"
-// also add a message saying to contact us with any changes
+const remainingGuests = computed(() => guestGroup.value.filter((g) => g.rsvp_response === null));
 
 onMounted(() => {
     if (props.guests.length === 1) {

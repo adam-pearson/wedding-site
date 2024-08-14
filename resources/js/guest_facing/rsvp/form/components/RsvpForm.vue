@@ -67,8 +67,8 @@
           />
           <TextElement
             name="email"
-            label="Email Address"
-            :rules="['email', 'required']"
+            label="Email Address (optional)"
+            :rules="['nullable', 'email']"
             :debounce="1000"
             :conditions="[
               function () {
@@ -78,8 +78,7 @@
           />
           <TextElement
             name="phone"
-            label="Phone Number"
-            :rules="['required']"
+            label="Phone (optional)"
             :conditions="[
               function () {
                 return !guest.is_child;
@@ -174,7 +173,6 @@ const form$ = ref(null);
 const emit = defineEmits(['submit']);
 
 const handleSubmit = (form) => {
-    console.log('submit: ', form.requestData);
     emit('submit', form.requestData);
 };
 </script>

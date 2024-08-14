@@ -28,8 +28,8 @@ class RsvpResponseSubmissionRequest extends FormRequest
     {
         return [
             'coming' => 'boolean|required',
-            'email' => 'email|required|sometimes',
-            'phone' => 'min:7|max:15|required|sometimes',
+            'email' => 'email|nullable',
+            'phone' => 'min:7|max:15|nullable',
             'alcohol' => 'boolean|required|sometimes',
             'dietary_requirements' => 'string|nullable',
             'song_requests' => 'string|nullable',

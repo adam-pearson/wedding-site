@@ -24,6 +24,11 @@
       :rules="['required']"
       :columns="{container: 12, label: 12, wrapper: 12}"
     />
+    <CheckboxElement
+      name="remember"
+    >
+      Remember Me
+    </CheckboxElement>
     <ButtonElement
       name="submit"
       button-type="button"

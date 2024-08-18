@@ -40,6 +40,10 @@ class FortifyServiceProvider extends ServiceProvider
             return Inertia::render($this->authRoot . 'register/views/RegisterPage');
         });
 
+        Fortify::requestPasswordResetLinkView(function () {
+            return Inertia::render($this->authRoot . 'password-reset/views/RequestPasswordResetPage');
+        });
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

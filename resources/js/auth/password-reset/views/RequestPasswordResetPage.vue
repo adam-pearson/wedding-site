@@ -12,30 +12,22 @@
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        Log in to your account
+        Request Password Reset
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <LoginForm
+      <RequestPasswordResetForm
         @submit="submit"
         :errors="errors"
       />
-      <p class="mt-10 text-center text-sm ">
+
+      <p class="mt-10 text-center text-sm">
         <Link
-          :href="route('password.request')"
+          :href="route('login')"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
         >
-          Forgot Password
-        </Link>
-      </p>
-      <p class="text-center text-sm text-gray-500">
-        Need an Account?
-        <Link
-          :href="route('register')"
-          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-        >
-          Register
+          Back to Login
         </Link>
       </p>
     </div>
@@ -44,10 +36,10 @@
 </template>
 <script setup>
 import { Link, router } from '@inertiajs/vue3';
-import LoginForm from '../components/LoginForm.vue';
+import RequestPasswordResetForm from '@/auth/password-reset/components/RequestPasswordResetForm.vue';
 
 function submit(formData) {
-    router.post(route('login'), formData);
+    router.post(route('password.email'), formData);
 }
 
 </script>

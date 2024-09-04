@@ -1,7 +1,5 @@
 <template>
   <Vueform
-    size="sm"
-    class="space-y-6"
     ref="form$"
     :endpoint="false"
     @submit="submit"
@@ -26,6 +24,7 @@
     />
     <CheckboxElement
       name="remember"
+      add-class="items-center"
     >
       Remember Me
     </CheckboxElement>
@@ -33,7 +32,7 @@
       name="submit"
       button-type="button"
       button-label="Sign In"
-      class="mt-4"
+      class=""
       full
       :submits="true"
     />

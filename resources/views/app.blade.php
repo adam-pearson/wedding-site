@@ -10,9 +10,16 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     @inertiaHead
-    
+
   </head>
   <body>
     @inertia
   </body>
+  <script>
+      if (localStorage.getItem('sidebar-expanded') === 'true') {
+          document.querySelector('body').classList.add('sidebar-expanded');
+      } else {
+          document.querySelector('body').classList.remove('sidebar-expanded');
+      }
+  </script>
 </html>

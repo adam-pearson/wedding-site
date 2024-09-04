@@ -46,6 +46,14 @@
 import { Link, router } from '@inertiajs/vue3';
 import LoginForm from '../components/LoginForm.vue';
 
+const props = defineProps({
+    errors: {
+        type: Object,
+        required: false,
+        default: () => {},
+    },
+});
+
 function submit(formData) {
     router.post(route('login'), formData);
 }

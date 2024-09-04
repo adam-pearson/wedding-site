@@ -17,7 +17,7 @@
       name="email"
       label="Email Address"
       :rules="['email', 'nullable']"
-      :debounce="1000"
+      :debounce="2000"
       :columns="{
         xs: {container: 12, label: 12, wrapper: 12},
         sm: { container: 6, label: 12, wrapper: 12 }

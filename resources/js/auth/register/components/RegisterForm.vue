@@ -12,7 +12,7 @@
       label="Name"
       autocomplete="name"
       :rules="['required']"
-      :debounce="600"
+      :debounce="200"
       :columns="{container: 12, label: 12, wrapper: 12}"
     />
     <TextElement
@@ -21,7 +21,7 @@
       label="Email Address"
       autocomplete="email"
       :rules="['email', 'required']"
-      :debounce="600"
+      :debounce="200"
       :columns="{container: 12, label: 12, wrapper: 12}"
     />
     <TextElement

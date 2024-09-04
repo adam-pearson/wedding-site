@@ -69,7 +69,7 @@
             name="email"
             label="Email Address (optional)"
             :rules="['nullable', 'email']"
-            :debounce="1000"
+            :debounce="200"
             :conditions="[
               function () {
                 return !guest.is_child;

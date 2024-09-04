@@ -5,6 +5,7 @@
     ref="form$"
     :endpoint="false"
     @submit="submit"
+    sync
   >
     <TextElement
       input-type="email"
@@ -12,8 +13,25 @@
       label="Email Address"
       autocomplete="email"
       :rules="['email', 'required']"
-      :debounce="600"
+      :debounce="200"
       :columns="{container: 12, label: 12, wrapper: 12}"
+      :disabled="true"
+    />
+    <TextElement
+      input-type="password"
+      name="password"
+      label="New Password"
+      :columns="{container: 12, label: 12, wrapper: 12}"
+    />
+    <TextElement
+      input-type="password"
+      name="password_confirmation"
+      label="Confirm New Password"
+      :columns="{container: 12, label: 12, wrapper: 12}"
+    />
+
+    <HiddenElement
+      name="token"
     />
     <ButtonElement
       name="submit"
@@ -27,13 +45,21 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 
 const props = defineProps({
     errors: {
         type: Object,
         required: false,
         default: () => {},
+    },
+    token: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
     },
 });
 
@@ -53,4 +79,12 @@ watch(() => props.errors, () => {
         form$.value.el$(error[0]).messageBag.append(error[1]);
     });
 });
+
+onMounted(() => {
+    form$.value.update({
+        email: props.email,
+        token: props.token,
+    });
+});
+
 </script>

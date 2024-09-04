@@ -16,11 +16,20 @@
       </h2>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div
+      class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm"
+    >
       <RequestPasswordResetForm
         @submit="submit"
         :errors="errors"
+        v-if="!submitted"
       />
+      <div
+        v-else
+        class="text-center"
+      >
+        {{ message }}
+      </div>
 
       <p class="mt-10 text-center text-sm">
         <Link
@@ -35,11 +44,30 @@
   <!-- eslint-enable max-len -->
 </template>
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import axios from 'axios';
 import RequestPasswordResetForm from '@/auth/password-reset/components/RequestPasswordResetForm.vue';
 
+const HTTP_OK = 200;
+const UNPROCESSABLE = 422;
+
+const submitted = ref(false);
+const message = ref(null);
+const errors = ref({});
 function submit(formData) {
-    router.post(route('password.email'), formData);
+    axios.post(route('password.email'), formData).then((res) => {
+        if (res.status === HTTP_OK) {
+            submitted.value = true;
+            message.value = 'Please check your email for your password reset link.';
+        }
+    }).catch((err) => {
+        if (err.response.status === UNPROCESSABLE) {
+            errors.value = err.response.data.errors;
+        } else {
+            errors.value = { email: 'An error occurred. Please try again.' };
+        }
+    });
 }
 
 </script>

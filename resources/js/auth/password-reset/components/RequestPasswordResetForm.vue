@@ -6,19 +6,22 @@
     :endpoint="false"
     @submit="submit"
   >
+    <template #empty>
+      <FormErrors v-if="errors.length" />
+    </template>
     <TextElement
       input-type="email"
       name="email"
       label="Email Address"
       autocomplete="email"
       :rules="['email', 'required']"
-      :debounce="600"
+      :debounce="200"
       :columns="{container: 12, label: 12, wrapper: 12}"
     />
     <ButtonElement
       name="submit"
       button-type="button"
-      button-label="Sign In"
+      button-label="Request Reset"
       class="mt-4"
       full
       :submits="true"
@@ -46,6 +49,7 @@ const submit = () => {
 };
 
 watch(() => props.errors, () => {
+    console.log(props.errors);
     if (Object.keys(props.errors).length === 0) return;
 
     Object.entries(props.errors).forEach((error) => {

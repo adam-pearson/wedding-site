@@ -17,8 +17,10 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <RequestPasswordResetForm
+      <ResetPasswordForm
         @submit="submit"
+        :email="email"
+        :token="token"
         :errors="errors"
       />
 
@@ -35,11 +37,27 @@
   <!-- eslint-enable max-len -->
 </template>
 <script setup>
+import axios from 'axios';
 import { Link, router } from '@inertiajs/vue3';
-import RequestPasswordResetForm from '@/auth/password-reset/components/RequestPasswordResetForm.vue';
+import { ref } from 'vue';
+import ResetPasswordForm from '@/auth/password-reset/components/ResetPasswordForm.vue';
+
+const token = window.location.pathname.split('/').pop();
+const email = decodeURIComponent(window.location.search.split('?email=')[1]);
+const errors = ref({});
 
 function submit(formData) {
-    router.post(route('password.reset'), formData);
+    axios.post(route('password.update'), formData).then((res) => {
+        if (res.status === 200) {
+            router.visit(route('login'));
+        }
+    }).catch((err) => {
+        if (err.response.status === 422) {
+            errors.value = err.response.data.errors;
+        } else {
+            errors.value = { error: 'An error occurred. Please try again later.' };
+        }
+    });
 }
 
 </script>

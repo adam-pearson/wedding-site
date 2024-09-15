@@ -1,16 +1,68 @@
 <template>
   <div class="countdown-time">
     <ul>
-      <li>
+      <li
+        v-motion
+        :initial="{opacity: 0, y: 50}"
+        :visible-once="
+          {
+            y: 0,
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 1200,
+              delay: 200,
+            }
+          } "
+      >
         <span id="days">{{ timeRemaining?.days }}</span>Days
       </li>
-      <li>
+      <li
+        v-motion
+        :initial="{opacity: 0, y: 50}"
+        :visible-once="
+          {
+            y: 0,
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 1200,
+              delay: 400,
+            }
+          } "
+      >
         <span id="hours">{{ timeRemaining?.hours }}</span>Hours
       </li>
-      <li>
+      <li
+        v-motion
+        :initial="{opacity: 0, y: 50}"
+        :visible-once="
+          {
+            y: 0,
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 1200,
+              delay: 600,
+            }
+          } "
+      >
         <span id="minutes">{{ timeRemaining?.minutes }}</span>Minutes
       </li>
-      <li>
+      <li
+        v-motion
+        :initial="{opacity: 0, y: 50}"
+        :visible-once="
+          {
+            y: 0,
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 1200,
+              delay: 800,
+            }
+          } "
+      >
         <span id="seconds">{{ timeRemaining?.seconds }}</span>Seconds
       </li>
     </ul>

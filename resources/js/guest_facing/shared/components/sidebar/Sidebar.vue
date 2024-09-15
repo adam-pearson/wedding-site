@@ -31,6 +31,10 @@ const navigationArray = [
         route: '#story',
     },
     {
+        text: 'Wedding Party',
+        route: '#wedding-party',
+    },
+    {
         text: 'RSVP',
         route: route('guest.rsvp.code'),
     },

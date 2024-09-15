@@ -1,11 +1,12 @@
 <template>
-  <!-- eslint-disable max-len -->
   <GuestAreaLayout>
     <HeroSection />
-    <OurStorySection />
+    <InfoSection />
     <CountdownSection />
+    <OurStorySection />
+    <WeddingPartySection />
+    <FooterSection />
   </GuestAreaLayout>
-  <!-- eslint-enable max-len -->
 </template>
 
 <script setup>
@@ -13,5 +14,8 @@ import GuestAreaLayout from '../../shared/layouts/GuestAreaLayout.vue';
 import HeroSection from '../components/hero/HeroSection.vue';
 import OurStorySection from '../components/story/OurStorySection.vue';
 import CountdownSection from '../components/countdown/CountdownSection.vue';
+import InfoSection from '../components/welcome/WelcomeSection.vue';
+import FooterSection from '../components/footer/FooterSection.vue';
+import WeddingPartySection from '@/guest_facing/homepage/components/wedding-party/WeddingPartySection.vue';
 
 </script>

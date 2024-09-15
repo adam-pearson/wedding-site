@@ -5,10 +5,22 @@
     class="flex min-h-96 flex-col items-center justify-center bg-[url(/resources/assets/countdownBackground_small.webp)] bg-cover bg-fixed bg-center bg-no-repeat py-[100px] text-center"
   >
     <div>
-      <div>
+      <div
+        v-motion
+        :initial="{opacity: 0}"
+        :visible-once="
+          {
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 1200,
+              delay: 200,
+            }
+          } "
+      >
         <div class="mb-4">
           <h4 class="font-script text-3xl text-white md:text-6xl">
-            We will be married
+            We will become a family
             <span v-if="!weddingHasStarted"> in </span>
           </h4>
         </div>

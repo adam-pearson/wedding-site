@@ -1,15 +1,14 @@
 <template>
   <!-- eslint-disable max-len -->
-  <Link
+  <a
     :href="item.route"
     class="border-b border-b-transparent font-serif text-lg leading-6 tracking-wide duration-[0.3s] hover:border-b-secondary-500 hover:text-primary-500 hover:duration-[0.5s]"
   >
     {{ item.text }}
-  </Link>
+  </a>
   <!-- eslint-enable max-len -->
 </template>
 <script setup>
-import { Link } from '@inertiajs/vue3';
 
 defineProps({
     item: {

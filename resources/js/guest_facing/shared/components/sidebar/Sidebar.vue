@@ -48,10 +48,10 @@ const navLinks = [
         text: 'Accommodation',
         route: getHomepageSectionRoute('accommodation'),
     },
-    {
-        text: 'FAQ',
-        route: getHomepageSectionRoute('faq'),
-    },
+    // {
+    //     text: 'FAQ',
+    //     route: getHomepageSectionRoute('faq'),
+    // },
 
 ];
 

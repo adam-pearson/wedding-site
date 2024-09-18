@@ -6,7 +6,7 @@
     <OurStorySection />
     <WeddingPartySection />
     <AccommodationSection />
-    <FaqSection />
+    <!--    <FaqSection />-->
     <FooterSection />
   </GuestAreaLayout>
 </template>

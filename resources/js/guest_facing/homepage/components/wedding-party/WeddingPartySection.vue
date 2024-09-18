@@ -26,6 +26,7 @@
         class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
       >
         <li
+          class="group"
           v-for="(person, index) in people"
           :key="person.name"
           v-motion
@@ -41,10 +42,10 @@
               }
             } "
         >
-          <div class="mx-auto size-36 overflow-hidden rounded-full">
+          <div class="mx-auto size-36 overflow-hidden rounded-2xl shadow-md transition duration-300 group-hover:scale-105">
             <img
-              :src="person.imageUrl"
-              alt=""
+              :src="person.imageUrl ?? getRandomisedAvatar()"
+              :alt="`${person.role} - ${person.name}`"
             >
           </div>
 
@@ -61,56 +62,90 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { createAvatar } from '@dicebear/core';
+import { lorelei } from '@dicebear/collection';
 
-const people = [
+function getAlexanderImage() {
+    return Math.floor(Math.random() * 100) === 0
+        ? '/images/alexander_alt.webp'
+        : '/images/alexander.webp';
+}
+
+const getRandomisedAvatar = () => {
+    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
+    const avatar = createAvatar(lorelei, {
+        seed: Math.floor(Math.random() * 16777215).toString(16),
+        width: 300,
+        height: 300,
+        scale: 125,
+        backgroundColor: [randomColor],
+        backgroundType: ['gradientLinear', 'solid'],
+    });
+    return `data:image/svg+xml,${encodeURIComponent(avatar)}`;
+};
+
+const maidOfHonor = [
+
     {
         name: 'Megan Kong',
         role: 'Maid of Honour',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: null,
     },
+];
+
+const bestMan = [
     {
         name: 'Craig Pearson',
         role: 'Best Man',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: '/images/craig.webp',
     },
+];
+
+const bridesmaids = [
     {
         name: 'Nahui Wilson',
         role: 'Bridesmaid',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        name: 'Matthew Robinson',
-        role: 'Groomsman',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: '/images/nahui.webp',
     },
     {
         name: 'Sarah Pearson',
         role: 'Bridesmaid',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        name: 'Andrew Kong',
-        role: 'Groomsman',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: '/images/sarah.webp',
     },
     {
         name: 'Suzanne Pearson',
         role: 'Bridesmaid',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: '/images/suzanne.webp',
+    },
+];
+
+const groomsmen = [
+    {
+        name: 'Matthew Robinson',
+        role: 'Groomsman',
+        imageUrl: '/images/matthew.webp',
+    },
+    {
+        name: 'Andrew Kong',
+        role: 'Groomsman',
+        imageUrl: null,
     },
     {
         name: 'Alexander Wilson',
         role: 'Groomsman',
-        imageUrl:
-            'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+        imageUrl: getAlexanderImage(),
     },
 ];
+
+const people = computed(() => {
+    const firstGroup = [...maidOfHonor, ...bestMan];
+
+    // combine bridesmaids and groomsmen, randomise order, then combine with maid of honor and best man
+    // this is to keep the MOH and BM in the first positions, then everyone else in a randomised spot
+    const secondGroup = [...bridesmaids, ...groomsmen].sort(() => Math.random() - 0.5);
+    return [...firstGroup, ...secondGroup];
+});
+
 </script>

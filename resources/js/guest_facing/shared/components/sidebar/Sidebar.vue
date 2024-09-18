@@ -33,6 +33,10 @@ const navLinks = [
         route: route(HOME_ROUTE),
     },
     {
+        text: 'RSVP',
+        route: route('guest.rsvp.code'),
+    },
+    {
         text: 'Our Story',
         route: getHomepageSectionRoute('story'),
     },
@@ -41,9 +45,14 @@ const navLinks = [
         route: getHomepageSectionRoute('wedding-party'),
     },
     {
-        text: 'RSVP',
-        route: route('guest.rsvp.code'),
+        text: 'Accommodation',
+        route: getHomepageSectionRoute('accommodation'),
     },
+    {
+        text: 'FAQ',
+        route: getHomepageSectionRoute('faq'),
+    },
+
 ];
 
 const page = usePage();
@@ -58,7 +67,6 @@ defineProps({
 const isLoggedIn = computed(() => Boolean(page?.props?.auth?.user));
 
 const navItems = computed(() => {
-    console.log(navLinks);
     if (isLoggedIn.value) {
         return [
             ...navLinks,

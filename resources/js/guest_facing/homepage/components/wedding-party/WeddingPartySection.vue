@@ -2,28 +2,44 @@
   <!-- eslint-disable max-len -->
   <div
     id="wedding-party"
-    class="flex w-full flex-col gap-0 px-4 py-16 md:flex-row md:gap-4 md:py-16 lg:px-32"
+    class="flex w-full flex-col items-center justify-center gap-0 bg-offwhite-500 px-4 py-16 md:gap-4 md:py-16 lg:px-32 "
   >
-    <div class="flex w-full flex-col ">
-      <h3
-        class="text-center font-script text-4xl text-primary-500"
-        v-motion
-        :initial="{opacity: 0}"
-        :visible-once="
-          {
-            opacity: 1,
-            transition: {
-              ease: 'easeInOut',
-              duration: 1200,
-              delay: 200,
-            }
-          } "
-      >
-        Our Wedding Party
-      </h3>
+    <h3
+      class="text-center font-script text-4xl text-primary-500"
+      v-motion
+      :initial="{opacity: 0}"
+      :visible-once="
+        {
+          opacity: 1,
+          transition: {
+            ease: 'easeInOut',
+            duration: 1200,
+            delay: 200,
+          }
+        } "
+    >
+      Our Wedding Party
+    </h3>
+    <p
+      class="w-3/5 text-center font-serif text-gray-600"
+      v-motion
+      :initial="{opacity: 0}"
+      :visible-once="
+        {
+          opacity: 1,
+          transition: {
+            ease: 'easeInOut',
+            duration: 1200,
+            delay: 400,
+          }
+        } "
+    >
+      We'd like to introduce you to the people who will be standing by our side on our special day.
+    </p>
+    <div class="w-full">
       <ul
         role="list"
-        class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
+        class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-8 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4"
       >
         <li
           class="group"
@@ -142,8 +158,6 @@ const groomsmen = [
 const people = computed(() => {
     const firstGroup = [...maidOfHonor, ...bestMan];
 
-    // combine bridesmaids and groomsmen, randomise order, then combine with maid of honor and best man
-    // this is to keep the MOH and BM in the first positions, then everyone else in a randomised spot
     const secondGroup = [...bridesmaids, ...groomsmen].sort(() => Math.random() - 0.5);
     return [...firstGroup, ...secondGroup];
 });

@@ -13,7 +13,7 @@
           opacity: 1,
           transition: {
             ease: 'easeInOut',
-            duration: 1200,
+            duration: 800,
             delay: 200,
           }
         } "
@@ -21,7 +21,7 @@
       Our Wedding Party
     </h3>
     <p
-      class="w-3/5 text-center font-serif text-gray-600"
+      class="w-full text-center font-serif text-gray-600 md:w-3/5"
       v-motion
       :initial="{opacity: 0}"
       :visible-once="
@@ -29,8 +29,8 @@
           opacity: 1,
           transition: {
             ease: 'easeInOut',
-            duration: 1200,
-            delay: 400,
+            duration: 600,
+            delay: 200,
           }
         } "
     >
@@ -53,8 +53,8 @@
               opacity: 1,
               transition: {
                 ease: 'easeInOut',
-                duration: 1200,
-                delay: 200 + (index * 100),
+                duration: 600,
+                delay: 100 + (index * 100),
               }
             } "
         >

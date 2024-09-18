@@ -21,7 +21,7 @@
       Accommodation Suggestions
     </h3>
     <p
-      class="w-3/5 text-center font-serif text-gray-600"
+      class="w-full text-center font-serif text-gray-600 md:w-3/5"
       v-motion
       :initial="{opacity: 0}"
       :visible-once="
@@ -58,7 +58,7 @@
       >
         <div class="overflow-hidden">
           <img
-            class="object-cover transition duration-300 group-hover:scale-110"
+            class="w-full object-cover transition duration-300 group-hover:scale-110"
             :src="hotel.imageUrl"
             :alt="hotel.name"
           >

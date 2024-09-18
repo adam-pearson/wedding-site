@@ -18,7 +18,7 @@
               y: 0,
               transition: {
                 ease: 'easeInOut',
-                duration: 1200,
+                duration: 800,
               }
             } "
         >
@@ -34,7 +34,7 @@
                 y: 0,
                 transition: {
                   ease: 'easeInOut',
-                  duration: 1200,
+                  duration: 800,
                   delay: 200,
                 }
               } "
@@ -51,7 +51,7 @@
                 y: 0,
                 transition: {
                   ease: 'easeInOut',
-                  duration: 1200,
+                  duration: 800,
                   delay: 600,
                 }
               } "
@@ -67,7 +67,7 @@
                 y: 0,
                 transition: {
                   ease: 'easeInOut',
-                  duration: 1200,
+                  duration: 800,
                   delay: 800,
                 }
               } "

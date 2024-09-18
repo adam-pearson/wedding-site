@@ -21,7 +21,7 @@
           } "
       >
         <h4
-          class="relative top-3 pb-6 font-script text-3xl leading-3 text-secondary-500"
+          class="relative top-3 pb-6 font-script text-3xl leading-3 text-primary-300"
         >
           Our love
         </h4>

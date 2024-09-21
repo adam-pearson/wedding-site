@@ -4,7 +4,20 @@
     id="timeline"
     class="flex w-full flex-col items-center justify-center gap-0 bg-white px-4 py-16 md:gap-4 md:py-16 lg:px-16 xl:px-32"
   >
-    <div class="group relative flex min-h-80 w-full flex-col divide-x-0 divide-y divide-secondary-600/30 bg-[url(/resources/assets/heroImageAlt_small.webp)] bg-cover bg-center bg-no-repeat shadow-md lg:flex-row lg:divide-x lg:divide-y-0">
+    <div
+      class="group relative flex min-h-80 w-full flex-col divide-x-0 divide-y divide-secondary-600/30 bg-[url(/resources/assets/heroImageAlt_small.webp)] bg-cover bg-center bg-no-repeat shadow-md lg:flex-row lg:divide-x lg:divide-y-0"
+      v-motion
+      :initial="{opacity: 0}"
+      :visible-once="
+        {
+          opacity: 1,
+          transition: {
+            ease: 'easeInOut',
+            duration: 1200,
+            delay: 200,
+          }
+        } "
+    >
       <div
         v-for="(event, index) in timelineEvents"
         :key="event.name"
@@ -17,7 +30,7 @@
           <span class="font-sans text-sm text-gray-700 transition duration-300 group-hover/event:text-white">{{ event.description }}</span>
         </div>
       </div>
-      <div class="absolute z-0 size-full bg-none backdrop-saturate-0" />
+      <div class="absolute z-0 size-full bg-gray-500/70 backdrop-saturate-0" />
     </div>
   </div>
   <!-- eslint-enable max-len -->

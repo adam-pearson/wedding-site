@@ -37,7 +37,7 @@
             opacity: 1,
             transition: {
               ease: 'easeInOut',
-              duration: 1200,
+              duration: 800,
             }
           } "
       >
@@ -65,7 +65,7 @@
               opacity: 1,
               transition: {
                 ease: 'easeInOut',
-                duration: 1200,
+                duration: 800,
                 delay: 200,
               }
             } "
@@ -82,7 +82,7 @@
               opacity: 1,
               transition: {
                 ease: 'easeInOut',
-                duration: 1200,
+                duration: 800,
                 delay: 200,
               }
             } "
@@ -165,12 +165,34 @@
         >Return</a>
       </div>
     </div>
+    <div
+      v-if="guest && guests.length > 0"
+      class="flex w-full items-center justify-center"
+    >
+      <button
+        @click="handleReload"
+        class="border border-transparent px-4 py-1.5 text-sm text-gray-700 transition duration-300 hover:border-gray-300"
+        v-motion
+        :initial="{opacity: 0}"
+        :visible-once="
+          {
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 800,
+              delay: 200,
+            }
+          } "
+      >
+        Back to List
+      </button>
+    </div>
   </GuestAreaLayout>
 </template>
 <script setup>
 import { onMounted, computed, watch } from 'vue';
 import { ChevronRightIcon } from '@heroicons/vue/20/solid';
-import { router } from '@inertiajs/vue3';
+import { router, Link } from '@inertiajs/vue3';
 import axios from 'axios';
 import { createAvatar } from '@dicebear/core';
 import { initials } from '@dicebear/collection';
@@ -219,6 +241,11 @@ const handleSubmit = (formData) => {
             unsetGuest();
             router.reload({ only: ['guests'] });
         });
+};
+
+const handleReload = () => {
+    unsetGuest();
+    // router.reload({ only: ['guests'] });
 };
 
 </script>

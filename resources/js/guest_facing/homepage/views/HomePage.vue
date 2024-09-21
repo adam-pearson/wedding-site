@@ -4,9 +4,10 @@
     <InfoSection />
     <CountdownSection />
     <OurStorySection />
+    <TimelineSection />
     <WeddingPartySection />
     <AccommodationSection />
-    <!--    <FaqSection />-->
+    <FaqSection />
     <FooterSection />
   </GuestAreaLayout>
 </template>
@@ -21,5 +22,6 @@ import FooterSection from '../components/footer/FooterSection.vue';
 import WeddingPartySection from '@/guest_facing/homepage/components/wedding-party/WeddingPartySection.vue';
 import AccommodationSection from '@/guest_facing/homepage/components/accommodation/AccommodationSection.vue';
 import FaqSection from '@/guest_facing/homepage/components/faq/FaqSection.vue';
+import TimelineSection from '@/guest_facing/homepage/components/timeline/TimelineSection.vue';
 
 </script>

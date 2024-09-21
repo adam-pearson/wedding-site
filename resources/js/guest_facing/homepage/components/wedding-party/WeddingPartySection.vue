@@ -2,7 +2,7 @@
   <!-- eslint-disable max-len -->
   <div
     id="wedding-party"
-    class="flex w-full flex-col items-center justify-center gap-0 bg-offwhite-500 px-4 py-16 md:gap-4 md:py-16 lg:px-32 "
+    class="flex w-full flex-col items-center justify-center gap-0 bg-offwhite-500 px-4 py-16 md:gap-4 md:py-16 lg:px-16 xl:px-32 "
   >
     <h3
       class="text-center font-script text-4xl text-primary-500"

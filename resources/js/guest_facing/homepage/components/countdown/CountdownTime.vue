@@ -1,6 +1,6 @@
 <template>
   <div class="countdown-time">
-    <ul>
+    <ul class="flex flex-col md:flex-row">
       <li
         v-motion
         :initial="{opacity: 0, y: 50}"

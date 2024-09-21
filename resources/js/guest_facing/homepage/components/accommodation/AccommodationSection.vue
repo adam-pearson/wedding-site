@@ -2,7 +2,7 @@
   <!-- eslint-disable max-len -->
   <div
     id="accommodation"
-    class="flex w-full flex-col items-center justify-center gap-0 bg-white px-4 py-16 md:gap-4 md:py-16 lg:px-32 "
+    class="flex w-full flex-col items-center justify-center gap-0 bg-white px-4 py-16 md:gap-4 md:py-16 lg:px-16 xl:px-32"
   >
     <h3
       class="text-center font-script text-4xl text-primary-500"
@@ -36,11 +36,11 @@
     >
       As the venue only has limited rooms, these have already been allocated to close family & guests travelling from afar. If you would like lodging for the night, below are a few suggestions for hotels nearby, all within a short taxi ride from the venue.
     </p>
-    <div class="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-8 md:grid-cols-2 lg:mx-0 lg:max-w-none xl:grid-cols-4">
+    <div class="mx-auto mt-8 grid max-w-sm grid-cols-1 gap-8 md:max-w-xl md:grid-cols-2 lg:mx-0 lg:max-w-none xl:grid-cols-4">
       <a
         target="_blank"
         :href="hotel.website"
-        class="group block divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow transition-all duration-300 hover:translate-y-1/2 hover:shadow-lg"
+        class="group flex flex-col divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/20"
         v-for="(hotel, index) in hotels"
         :key="hotel.name"
         v-motion
@@ -50,32 +50,40 @@
             opacity: 1,
             y: 0,
             transition: {
-              ease: 'easeInOut',
-              duration: 1200,
-              delay: 200 + (index * 100),
+              ease: 'easeOut',
+              duration: 800,
+              delay: (index * 100),
             }
           } "
       >
-        <div class="overflow-hidden">
+        <div class="relative h-3/4 overflow-hidden">
           <img
-            class="w-full object-cover transition duration-300 group-hover:scale-110"
+            class="size-full min-h-full object-cover transition-transform duration-300 group-hover:scale-110"
             :src="hotel.imageUrl"
             :alt="hotel.name"
           >
+          <div class="absolute top-0 flex size-full items-center justify-center bg-gray-500/40 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+            <div class="flex items-center gap-2 text-white">
+              <EyeIcon class="size-4" />
+              <span class="font-sans font-semibold">Visit Website</span>
+            </div>
+          </div>
         </div>
-        <div class="items-between flex flex-col justify-between gap-2 p-4 text-left sm:px-6">
-          <div class="h-full">
+        <div class="items-between flex size-full flex-col justify-between gap-2 p-4 text-left sm:px-6">
+
+          <div class="flex h-full flex-col gap-1">
             <h3 class="font-serif text-xl text-gray-700">
               {{ hotel.name }}
             </h3>
-            <p class="text-xs text-gray-600">
+            <div class="flex items-center gap-2 text-xs text-gray-600">
               {{ hotel.address }}
-            </p>
+            </div>
           </div>
-          <div>
-            <p class="text-sm text-gray-600">
-              {{ hotel.distance }}
-            </p>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <PhoneIcon class="size-3" /> {{ hotel.phone }}
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <MapPinIcon class="size-3" /> {{ hotel.distance }} from venue
           </div>
         </div>
       </a>
@@ -85,6 +93,10 @@
 </template>
 
 <script setup>
+
+import {
+    EyeIcon, PhoneIcon, MapPinIcon, MapIcon,
+} from '@heroicons/vue/24/outline/index.js';
 
 const hotels = [
     {
@@ -104,7 +116,7 @@ const hotels = [
         distance: '2.4 miles',
     },
     {
-        name: 'Holiday Inn Express Preston South',
+        name: 'Holiday Inn Express',
         address: 'Reedfield Place, Walton Summit, Bamber Bridge, Preston, PR5 8AA',
         phone: '00800 80 80 0800',
         website: 'https://www.ihg.com/holidayinnexpress/hotels/gb/en/preston/xptps/hoteldetail',
@@ -112,7 +124,7 @@ const hotels = [
         distance: '4.0 miles',
     },
     {
-        name: 'Premier Inn Preston South',
+        name: 'Premier Inn',
         address: 'Craven Drive, Bamber Bridge, Preston, PR5 6BZ',
         phone: '0333 321 8339',
         website: 'https://www.premierinn.com/gb/en/hotels/england/lancashire/preston/preston-south-craven-drive.html?cid=GLBC_PREBAR',

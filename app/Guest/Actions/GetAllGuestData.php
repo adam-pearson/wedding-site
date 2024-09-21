@@ -18,6 +18,7 @@ readonly class GetAllGuestData
             'rsvpResponse',
             'plusOne.rsvpResponse',
             'group.guests'
-        ]);
+        ])
+            ->groupBy('group_id');
     }
 }

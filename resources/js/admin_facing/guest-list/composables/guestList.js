@@ -30,7 +30,7 @@ export default function useGuestList() {
         loading.value = true;
         axios.get(route('admin.guests.list')).then((res) => {
             loading.value = false;
-            setGuestList(res.data.guests);
+            setGuestList(Object.values(res.data.guests).flat());
         });
     };
 

@@ -37,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Feature::resolveScopeUsing(fn ($driver) => null);
 
         Feature::define('user-registration', fn (): bool => config('features.user_registration.enabled'));
+        Feature::for(null)->deactivate('user-registration');
     }
 }

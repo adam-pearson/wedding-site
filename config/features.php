@@ -2,6 +2,6 @@
 
 return [
     'user_registration' => [
-        'enabled' => true,
+        'enabled' => false,
     ],
 ];

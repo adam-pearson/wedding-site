@@ -3,6 +3,12 @@
   <div
     class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
   >
+    <Link
+      :href="route('home')"
+      class="flex items-center gap-1 text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+    >
+      <ChevronLeftIcon class="size-4" /> Back
+    </Link>
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
         class="mx-auto h-10 w-auto"
@@ -37,6 +43,7 @@
 </template>
 <script setup>
 import { Link, router } from '@inertiajs/vue3';
+import { ChevronLeftIcon } from '@heroicons/vue/20/solid/index.js';
 import RegisterForm from '../components/RegisterForm.vue';
 
 function submit(formData) {

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        Fortify::ignoreRoutes();
     }
 
     /**
@@ -75,6 +76,22 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 return redirect()->route('admin.dashboard');
             }
+        });
+
+        $this->configureRoutes();
+    }
+
+    /**
+     * Configure the routes offered by the application.
+     */
+    protected function configureRoutes(): void
+    {
+        Route::group([
+            'namespace' => 'Laravel\Fortify\Http\Controllers',
+            'domain' => config('fortify.domain', null),
+            'prefix' => config('fortify.prefix'),
+        ], function () {
+            $this->loadRoutesFrom(base_path('routes/fortify.php'));
         });
     }
 }

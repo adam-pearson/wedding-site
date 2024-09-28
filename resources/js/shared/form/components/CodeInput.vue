@@ -1,17 +1,16 @@
 <template>
   <!-- eslint-disable max-len -->
-  <div class="flex gap-1 sm:gap-2">
+  <div class="flex w-full items-center justify-center gap-1 sm:gap-2">
     <input
       v-for="(input, index) in inputs"
       v-model="input.inputValue.value"
-      class="size-8 rounded-md border-2 border-gray-300 p-0 text-center text-sm transition duration-75 hover:border-primary-500 focus:border-[3px] focus:border-primary-500 focus:ring-0 sm:size-12 sm:text-base"
+      class="border-1 size-10 rounded-md border-transparent p-0 text-center shadow-md shadow-primary-500/30 transition duration-75 hover:border-primary-500/40 hover:text-sm focus:border-primary-500 focus:ring-0 sm:size-14 sm:text-base"
       :key="input.id"
       :ref="input.templateRef"
       :value="getCharFromModelValue(index)"
+      @focus="handleFocus()"
       @input="handleInput(index, $event)"
       @paste="handlePaste"
-      @keydown.left="handleNavigateInputs(index, 'left')"
-      @keydown.right="handleNavigateInputs(index, 'right')"
       @keydown.delete="handleDelete(index)"
     >
   </div>
@@ -37,26 +36,43 @@ const inputs = [];
 
 const completeCode = computed(() => inputs.reduce((acc, input) => acc + (input.inputValue.value ?? ''), ''));
 
-const emit = defineEmits('update:modelValue');
+const emit = defineEmits(['update:modelValue']);
 
 const getCharFromModelValue = (index) => props.modelValue?.charAt(index) ?? ' ';
 
+const handleFocus = () => {
+    let focused = false;
+    // Focus on the next empty input
+    inputs.forEach((input) => {
+        if (focused) {
+            return;
+        }
+        if (!input.inputValue.value.trim()) {
+            input.templateRef.value[0].focus();
+            focused = true;
+        }
+    });
+    // If all inputs are filled, focus on the last input
+    if (!focused) {
+        inputs[inputs.length - 1].templateRef.value[0].focus();
+    }
+};
 const handleDelete = (index) => {
-    inputs[index].inputValue.value = ' ';
+    if (inputs[index].inputValue.value.trim()) {
+        inputs[index].inputValue.value = ' ';
+    } else if (index > 0) {
+        inputs[index - 1].inputValue.value = ' ';
+    }
 
     if (index > 0) {
         inputs[index - 1].templateRef.value[0].focus();
     }
 
-    emit('update:modelValue', completeCode.value);
-};
-
-const handleNavigateInputs = (index, direction) => {
-    if (direction === 'left' && index > 0) {
-        inputs[index - 1].templateRef.value[0].focus();
-    } else if (direction === 'right' && index < inputs.length - 1) {
-        inputs[index + 1].templateRef.value[0].focus();
+    if (index === 0) {
+        inputs[index].templateRef.value[0].focus();
     }
+
+    emit('update:modelValue', completeCode.value);
 };
 
 const handleTextInput = (index, data) => {
@@ -78,6 +94,8 @@ const handlePaste = (event) => {
         }
         emit('update:modelValue', completeCode.value);
     }
+
+    handleFocus();
 };
 
 const handleInput = (index, event) => {

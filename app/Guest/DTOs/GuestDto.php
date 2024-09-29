@@ -61,7 +61,7 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
     public function getGuestUniqueCode(): string
     {
         $guest = Guest::find($this->id);
-        if ($guest->unique_code) {
+        if ($guest?->unique_code) {
             return $guest->unique_code;
         }
         return $this->generateUniqueCode->execute();

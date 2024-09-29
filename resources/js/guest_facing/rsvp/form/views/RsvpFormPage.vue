@@ -166,7 +166,7 @@
       </div>
     </div>
     <div
-      v-if="guest && guests.length > 0"
+      v-if="guest && guestCount > 1"
       class="flex w-full items-center justify-center"
     >
       <button
@@ -192,7 +192,7 @@
 <script setup>
 import { onMounted, computed, watch } from 'vue';
 import { ChevronRightIcon } from '@heroicons/vue/20/solid';
-import { router, Link } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import axios from 'axios';
 import { createAvatar } from '@dicebear/core';
 import { initials } from '@dicebear/collection';
@@ -204,6 +204,8 @@ import GUEST_TYPES from '../../../../shared/constants/guestTypes';
 const {
     guest, guestGroup, setGuest, unsetGuest, setGuestGroup,
 } = useGuest();
+
+const guestCount = guestGroup.value?.length ?? 1;
 
 const props = defineProps({
     guests: {
@@ -245,7 +247,6 @@ const handleSubmit = (formData) => {
 
 const handleReload = () => {
     unsetGuest();
-    // router.reload({ only: ['guests'] });
 };
 
 </script>

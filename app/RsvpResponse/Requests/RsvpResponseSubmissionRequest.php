@@ -64,6 +64,19 @@ class RsvpResponseSubmissionRequest extends FormRequest
         );
     }
 
+    public function getMainGuestDto(): GuestDto
+    {
+        return new GuestDto(
+            name: $this->route('guest')->name,
+            plusOneAllowed: $this->route('guest')->plus_one_allowed,
+            guestType: GuestType::from($this->route('guest')->guest_type),
+            isChild: $this->route('guest')->is_child,
+            id: $this->route('guest')->id,
+            inviteSentOn: $this->route('guest')->invite_sent_on,
+            saveTheDateSentOn: $this->route('guest')->save_the_date_sent_on,
+        );
+    }
+
     public function getPlusOneGuestDto(): GuestDto
     {
         return new GuestDto(
@@ -78,11 +91,11 @@ class RsvpResponseSubmissionRequest extends FormRequest
     public function getPlusOneRsvpDto(int $plusOneId): RsvpSubmissionDto
     {
         return new RsvpSubmissionDto(
-            guestId: $plusOneId,
             coming: $this->input('coming'),
+            guestId: $plusOneId,
+            bringingPlusOne: false,
             alcohol: $this->input('plus_one_alcohol'),
             dietaryRequirements: $this->input('plus_one_dietary_requirements'),
-            bringingPlusOne: false,
         );
     }
 }

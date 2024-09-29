@@ -6,6 +6,8 @@ use App\Guest\Actions\StoreGuest;
 use App\Guest\Actions\UpdateGuest;
 use App\Guest\Models\Guest;
 use App\Http\Controllers\Controller;
+use App\Mail\RsvpResponseEmail;
+use Illuminate\Mail\Mailer;
 use Inertia\ResponseFactory;
 use App\RsvpResponse\Actions\StoreRsvpResponse;
 use App\RsvpResponse\Requests\RsvpResponseSubmissionRequest;
@@ -20,6 +22,7 @@ class RsvpResponseApiController extends Controller
         private UpdateGuest $updateGuest,
         private StoreRsvpResponse $storeRsvpResponse,
         private LoggerInterface $logger,
+        private Mailer $mailer,
     ) {
         //
     }
@@ -51,6 +54,18 @@ class RsvpResponseApiController extends Controller
             }
         }
 
+        $guestDto = $request->getMainGuestDto();
+        
+        try {
+            $this->mailer->to(config('mail.from.address'))->send(new RsvpResponseEmail(
+                guestDto: $guestDto,
+                rsvpDto: $rsvpDto,
+                plusOneGuestDto: $plusOneGuestDto ?? null,
+                plusOneRsvpDto: $plusOneRsvpDto ?? null
+            ));
+        } catch (Exception $e) {
+            $this->logger->error('RSVP submitted successfully but email failed to send', ['exception' => $e->getMessage()]);
+        }
         return response()->json(['success' => true, 'message' => 'RSVP submitted successfully']);
     }
 }

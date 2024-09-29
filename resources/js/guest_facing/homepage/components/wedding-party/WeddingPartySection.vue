@@ -44,7 +44,7 @@
         <li
           class="group"
           v-for="(person, index) in people"
-          :key="person.name"
+          :key="person.id"
           v-motion
           :initial="{opacity: 0, y: 50}"
           :visible-once="
@@ -88,6 +88,13 @@ function getAlexanderImage() {
         : '/images/alexander.webp';
 }
 
+function getImageUrl(name) {
+    if (name === 'alexander') {
+        return getAlexanderImage();
+    }
+    return `/images/${name}.webp`;
+}
+
 const getRandomisedAvatar = () => {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
@@ -105,53 +112,61 @@ const getRandomisedAvatar = () => {
 const maidOfHonor = [
 
     {
+        id: 'megan',
         name: 'Megan Kong',
         role: 'Maid of Honour',
-        imageUrl: null,
+        imageUrl: getImageUrl('megan'),
     },
 ];
 
 const bestMan = [
     {
+        id: 'craig',
         name: 'Craig Pearson',
         role: 'Best Man',
-        imageUrl: '/images/craig.webp',
+        imageUrl: getImageUrl('craig'),
     },
 ];
 
 const bridesmaids = [
     {
+        id: 'nahui',
         name: 'Nahui Wilson',
         role: 'Bridesmaid',
-        imageUrl: '/images/nahui.webp',
+        imageUrl: getImageUrl('nahui'),
     },
     {
+        id: 'sarah',
         name: 'Sarah Pearson',
         role: 'Bridesmaid',
-        imageUrl: '/images/sarah.webp',
+        imageUrl: getImageUrl('sarah'),
     },
     {
+        id: 'suzanne',
         name: 'Suzanne Pearson',
         role: 'Bridesmaid',
-        imageUrl: '/images/suzanne.webp',
+        imageUrl: getImageUrl('suzanne'),
     },
 ];
 
 const groomsmen = [
     {
+        id: 'matthew',
         name: 'Matthew Robinson',
         role: 'Groomsman',
-        imageUrl: '/images/matthew.webp',
+        imageUrl: getImageUrl('matthew'),
     },
     {
+        id: 'andrew',
         name: 'Andrew Kong',
         role: 'Groomsman',
-        imageUrl: null,
+        imageUrl: getImageUrl('andrew'),
     },
     {
+        id: 'alexander',
         name: 'Alexander Wilson',
         role: 'Groomsman',
-        imageUrl: getAlexanderImage(),
+        imageUrl: getImageUrl('alexander'),
     },
 ];
 

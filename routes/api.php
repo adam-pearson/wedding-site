@@ -39,4 +39,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post(uri: '/rsvp/{guest:unique_code}', action: [RsvpResponseApiController::class, 'store'])
+    ->middleware(RsvpRepeatedSubmissionCheckMiddleware::class)
     ->name('guest.rsvp.submit');

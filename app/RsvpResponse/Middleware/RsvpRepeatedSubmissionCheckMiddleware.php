@@ -21,9 +21,7 @@ class RsvpRepeatedSubmissionCheckMiddleware
         $guestAlreadySubmitted = $guest && RsvpResponse::where('guest_id', $guest->id)->exists();
 
         if ($guestAlreadySubmitted) {
-            return redirect()
-                ->back()
-                ->withErrors(['You have already submitted your RSVP. If you think this is an error, or want to amend your details, please contact Adam or Heather.']);
+            return response()->json(['success' => false, 'message' => 'RSVP already submitted'], 400);
         }
 
         return $next($request);

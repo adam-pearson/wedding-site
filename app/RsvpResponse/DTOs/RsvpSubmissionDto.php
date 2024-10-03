@@ -53,7 +53,7 @@ final readonly class RsvpSubmissionDto implements JsonSerializable, Arrayable, S
     {
         return [
             'guest_id' => $this->guestId,
-            'using_plus_one' => $this->usingPlusOne,
+            'bringing_plus_one' => $this->bringingPlusOne,
             'coming' => $this->coming,
             'alcohol' => $this->alcohol,
             'dietary_requirements' => $this->dietaryRequirements,

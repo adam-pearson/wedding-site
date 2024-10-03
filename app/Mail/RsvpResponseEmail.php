@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Guest\DTOs\GuestContactDetailsDto;
 use App\Guest\DTOs\GuestDto;
 use App\RsvpResponse\DTOs\RsvpSubmissionDto;
 use Illuminate\Bus\Queueable;

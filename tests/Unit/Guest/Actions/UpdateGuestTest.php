@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Guest\Actions;
 
 use App\Guest\Actions\UpdateGuest;
 use App\Guest\DTOs\GuestDto;

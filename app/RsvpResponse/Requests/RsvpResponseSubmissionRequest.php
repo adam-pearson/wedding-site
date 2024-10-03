@@ -6,6 +6,7 @@ use App\Guest\DTOs\GuestContactDetailsDto;
 use App\Guest\DTOs\GuestDto;
 use App\Guest\Enums\GuestType;
 use App\RsvpResponse\DTOs\RsvpSubmissionDto;
+use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -72,8 +73,8 @@ class RsvpResponseSubmissionRequest extends FormRequest
             guestType: GuestType::from($this->route('guest')->guest_type),
             isChild: $this->route('guest')->is_child,
             id: $this->route('guest')->id,
-            inviteSentOn: $this->route('guest')->invite_sent_on,
-            saveTheDateSentOn: $this->route('guest')->save_the_date_sent_on,
+            inviteSentOn: Carbon::parse($this->route('guest')->invite_sent_on),
+            saveTheDateSentOn: Carbon::parse($this->route('guest')->save_the_date_sent_on),
         );
     }
 

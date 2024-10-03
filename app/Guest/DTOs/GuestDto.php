@@ -48,12 +48,12 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'phone' => $this->phone,
             'address' => $this->address,
             'plus_one_allowed' => $this->plusOneAllowed,
-            'guest_type' => $this->guestType,
+            'guest_type' => $this->guestType->value,
             'is_child' => $this->isChild,
             'unique_code' => $this->getGuestUniqueCode(),
             'plus_one_of' => $this->plusOneOf,
-            'invite_sent_on' => $this->inviteSentOn,
-            'save_the_date_sent_on' => $this->saveTheDateSentOn,
+            'invite_sent_on' => $this->inviteSentOn->toString(),
+            'save_the_date_sent_on' => $this->saveTheDateSentOn->toString(),
             'group_id' => $this->groupId,
         ];
     }

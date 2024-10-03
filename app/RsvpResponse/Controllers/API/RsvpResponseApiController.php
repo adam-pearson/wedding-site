@@ -7,6 +7,7 @@ use App\Guest\Actions\UpdateGuest;
 use App\Guest\Models\Guest;
 use App\Http\Controllers\Controller;
 use App\Mail\RsvpResponseEmail;
+use App\RsvpResponse\Jobs\SendRsvpNotificationEmailJob;
 use Illuminate\Mail\Mailer;
 use Inertia\ResponseFactory;
 use App\RsvpResponse\Actions\StoreRsvpResponse;
@@ -18,11 +19,10 @@ use Psr\Log\LoggerInterface;
 class RsvpResponseApiController extends Controller
 {
     public function __construct(
-        private StoreGuest $storeGuest,
-        private UpdateGuest $updateGuest,
-        private StoreRsvpResponse $storeRsvpResponse,
-        private LoggerInterface $logger,
-        private Mailer $mailer,
+        private StoreGuest                   $storeGuest,
+        private UpdateGuest                  $updateGuest,
+        private StoreRsvpResponse            $storeRsvpResponse,
+        private LoggerInterface              $logger,
     ) {
         //
     }
@@ -55,17 +55,13 @@ class RsvpResponseApiController extends Controller
         }
 
         $guestDto = $request->getMainGuestDto();
-        
-        try {
-            $this->mailer->to(config('mail.from.address'))->send(new RsvpResponseEmail(
-                guestDto: $guestDto,
-                rsvpDto: $rsvpDto,
-                plusOneGuestDto: $plusOneGuestDto ?? null,
-                plusOneRsvpDto: $plusOneRsvpDto ?? null
-            ));
-        } catch (Exception $e) {
-            $this->logger->error('RSVP submitted successfully but email failed to send', ['exception' => $e->getMessage()]);
-        }
+
+        SendRsvpNotificationEmailJob::dispatch($guestDto,
+            $rsvpDto,
+            $plusOneGuestDto ?? null,
+            $plusOneRsvpDto ?? null
+        )->onQueue('emails');
+
         return response()->json(['success' => true, 'message' => 'RSVP submitted successfully']);
     }
 }

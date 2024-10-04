@@ -72,7 +72,7 @@
                 }
               } "
           >
-            <em>Also, please remember that clocks go back on the 30th of March 2025!</em>
+            <em>Also, please remember that clocks go forward on the 30th of March 2025!</em>
           </p>
         </div>
       </div>

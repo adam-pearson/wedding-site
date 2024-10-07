@@ -49,7 +49,6 @@ const submit = () => {
 };
 
 watch(() => props.errors, () => {
-    console.log(props.errors);
     if (Object.keys(props.errors).length === 0) return;
 
     Object.entries(props.errors).forEach((error) => {

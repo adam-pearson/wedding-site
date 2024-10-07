@@ -28,7 +28,7 @@ readonly class RsvpCodeCheckMiddleware
         if (!$codeExists) {
             return redirect()
                 ->route('guest.rsvp.code')
-                ->withErrors(['Invalid code']);
+                ->withErrors(['The code you entered is invalid. Please try again.']);
         }
 
         return $next($request);

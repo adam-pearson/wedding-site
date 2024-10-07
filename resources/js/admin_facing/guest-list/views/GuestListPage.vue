@@ -67,35 +67,37 @@ import AdminAreaLayout from '../../shared/layouts/AdminAreaLayout.vue';
 
 const props = defineProps({
     guests: {
-        type: Array,
+        type: Object,
         required: true,
     },
 });
 
+const flattenedGuests = ref(Object.values(props.guests).flat());
+
 const totalMainGuestCount = computed(
-    () => props.guests
+    () => flattenedGuests.value
         .filter((guest) => !guest.plus_one_of)
         .length,
 );
 const totalPotentialPlusOnes = computed(
-    () => props.guests
+    () => flattenedGuests.value
         .filter((guest) => guest.plus_one_allowed)
         .length,
 );
 
 const totalInvitesCount = computed(() => {
-    const groupIds = props.guests.map((guest) => guest.group_id);
+    const groupIds = flattenedGuests.value.map((guest) => guest.group_id);
     const uniqueGroupIds = [...new Set(groupIds)];
-    return uniqueGroupIds.length + props.guests.filter((guest) => !guest.group_id).length;
+    return uniqueGroupIds.length + flattenedGuests.value.filter((guest) => !guest.group_id).length;
 });
-const dayGuestCount = computed(() => props.guests.filter((guest) => guest.guest_type === 'all_day').length);
-const eveningGuestCount = computed(() => props.guests.filter((guest) => guest.guest_type === 'evening').length);
+const dayGuestCount = computed(() => flattenedGuests.value.filter((guest) => guest.guest_type === 'all_day').length);
+const eveningGuestCount = computed(() => flattenedGuests.value.filter((guest) => guest.guest_type === 'evening').length);
 
-const potentialDayPlusOnes = computed(() => props.guests.filter((guest) => guest.guest_type === 'all_day' && guest.plus_one_allowed).length);
-const potentialEveningPlusOnes = computed(() => props.guests.filter((guest) => guest.guest_type === 'evening' && guest.plus_one_allowed).length);
+const potentialDayPlusOnes = computed(() => flattenedGuests.value.filter((guest) => guest.guest_type === 'all_day' && guest.plus_one_allowed).length);
+const potentialEveningPlusOnes = computed(() => flattenedGuests.value.filter((guest) => guest.guest_type === 'evening' && guest.plus_one_allowed).length);
 
 const totalRemainingRsvps = computed(() => {
-    const rsvps = props.guests.filter((guest) => guest.rsvp_response === null);
+    const rsvps = flattenedGuests.value.filter((guest) => guest.rsvp_response === null);
     return rsvps.length;
 });
 
@@ -124,7 +126,7 @@ const stats = reactive([
 
 const { setGuestList, reloadGuestList } = useGuestList();
 
-setGuestList(props.guests);
+setGuestList(flattenedGuests.value);
 
 const addGuestFormOpen = ref(false);
 const detailsModalOpen = ref(false);

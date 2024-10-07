@@ -5,7 +5,18 @@
       @submit="handleSubmit"
       ref="form$"
       :endpoint="false"
+      v-motion
+      :initial="{opacity: 0}"
+      :visible-once="
+        {
+          opacity: 1,
+          transition: {
+            ease: 'easeInOut',
+            duration: 600,
+          }
+        } "
     >
+      >
       <template #empty>
         <FormSteps class="hidden">
           <FormStep
@@ -154,7 +165,19 @@
             :rules="['nullable']"
           />
         </FormElements>
-        <FormStepsControls v-if="form$?.requestData.coming !== null" />
+        <FormStepsControls
+          v-if="form$?.requestData.coming !== null"
+          v-motion
+          :initial="{opacity: 0}"
+          :visible-once="
+            {
+              opacity: 1,
+              transition: {
+                ease: 'easeInOut',
+                duration: 600,
+              }
+            } "
+        />
       </template>
     </Vueform>
   </div>

@@ -10,6 +10,7 @@
         "inertiajs/inertia-laravel": "^0.6.11",
         "laravel/fortify": "^1.20",
         "laravel/framework": "^10.10",
+        "laravel/pennant": "^1.11",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "tightenco/ziggy": "^1.8"

@@ -17,9 +17,7 @@ class GuestRepository
 
     public function store(GuestDto $guestDto): Guest
     {
-        $newGuest = Guest::create($guestDto->toArray());
-
-        return $newGuest;
+        return Guest::create($guestDto->toArray());
     }
 
     public function update(int $id, array $updatedDetails): Guest

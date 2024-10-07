@@ -1,6 +1,21 @@
 <template>
   <!-- eslint-disable max-len -->
-  <div class="story-img md:mb-30 relative w-full md:w-[30%]">
+  <div
+    class="story-img md:mb-30 relative w-full md:w-[30%]"
+    v-motion
+    :initial="{opacity: 0, x: -100}"
+    :visible-once="
+      {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        transition: {
+          ease: 'easeInOut',
+          delay: 600,
+          duration: 800,
+        }
+      } "
+  >
     <div
       class="animate-box relative"
       data-animate-effect="fadeInLeft"

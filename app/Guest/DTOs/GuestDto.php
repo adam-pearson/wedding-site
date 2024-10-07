@@ -4,6 +4,7 @@ namespace App\Guest\DTOs;
 
 use App\Guest\Actions\GenerateUniqueCode;
 use App\Guest\Enums\GuestType;
+use App\Guest\Models\Guest;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -47,14 +48,23 @@ final readonly class GuestDto implements JsonSerializable, Arrayable, Stringable
             'phone' => $this->phone,
             'address' => $this->address,
             'plus_one_allowed' => $this->plusOneAllowed,
-            'guest_type' => $this->guestType,
+            'guest_type' => $this->guestType->value,
             'is_child' => $this->isChild,
-            'unique_code' => $this->generateUniqueCode->execute(),
+            'unique_code' => $this->getGuestUniqueCode(),
             'plus_one_of' => $this->plusOneOf,
-            'invite_sent_on' => $this->inviteSentOn,
-            'save_the_date_sent_on' => $this->saveTheDateSentOn,
+            'invite_sent_on' => $this->inviteSentOn?->toDateString(),
+            'save_the_date_sent_on' => $this->saveTheDateSentOn?->toDateString(),
             'group_id' => $this->groupId,
         ];
+    }
+
+    public function getGuestUniqueCode(): string
+    {
+        $guest = Guest::find($this->id);
+        if ($guest?->unique_code) {
+            return $guest->unique_code;
+        }
+        return $this->generateUniqueCode->execute();
     }
 
     public function getValuesSharedWithPlusOne(): array

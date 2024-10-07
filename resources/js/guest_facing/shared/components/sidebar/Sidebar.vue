@@ -21,19 +21,42 @@ import SidebarHeader from './SidebarHeader.vue';
 import SidebarNav from './SidebarNav.vue';
 import SidebarFooter from './SidebarFooter.vue';
 
-const navigationArray = [
+const HOME_ROUTE = 'home';
+
+function getHomepageSectionRoute(sectionName) {
+    return route().current() === HOME_ROUTE ? `#${sectionName}` : `${route(HOME_ROUTE)}#${sectionName}`;
+}
+
+const navLinks = [
     {
         text: 'Home',
-        route: route('home'),
-    },
-    {
-        text: 'Our Story',
-        route: '#story',
+        route: route(HOME_ROUTE),
     },
     {
         text: 'RSVP',
         route: route('guest.rsvp.code'),
     },
+    {
+        text: 'Our Story',
+        route: getHomepageSectionRoute('story'),
+    },
+    {
+        text: 'Timeline',
+        route: getHomepageSectionRoute('timeline'),
+    },
+    {
+        text: 'Wedding Party',
+        route: getHomepageSectionRoute('wedding-party'),
+    },
+    {
+        text: 'Accommodation',
+        route: getHomepageSectionRoute('accommodation'),
+    },
+    {
+        text: 'FAQ',
+        route: getHomepageSectionRoute('faq'),
+    },
+
 ];
 
 const page = usePage();
@@ -50,12 +73,12 @@ const isLoggedIn = computed(() => Boolean(page?.props?.auth?.user));
 const navItems = computed(() => {
     if (isLoggedIn.value) {
         return [
-            ...navigationArray,
+            ...navLinks,
             { text: 'Admin Dashboard', route: route('admin.dashboard') },
         ];
     }
 
-    return navigationArray;
+    return navLinks;
 });
 
 </script>

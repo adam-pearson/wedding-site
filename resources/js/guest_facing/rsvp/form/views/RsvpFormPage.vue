@@ -5,6 +5,17 @@
       <div
         class="flex w-full flex-col items-center justify-center gap-4 "
         v-if="guest && guest.rsvp_response === null"
+        v-motion
+        :initial="{opacity: 0}"
+        :visible-once="
+          {
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 600,
+              delay: 200,
+            }
+          } "
       >
         <h2 class="text-center font-serif text-3xl">
           {{ guest.name }}
@@ -18,20 +29,80 @@
       </div>
       <div
         v-else-if="remainingGuests.length > 0"
-        class="md:w-3/4 xl:w-1/2"
+        class="flex flex-col md:w-3/4 xl:w-1/2"
+        v-motion
+        :initial="{opacity: 0}"
+        :visible-once="
+          {
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 800,
+            }
+          } "
       >
-        <h2 class="text-center font-serif text-xl">
+        <h1
+          class="text-center font-serif text-2xl"
+          v-motion
+          :initial="{opacity: 0}"
+          :visible-once="
+            {
+              opacity: 1,
+              transition: {
+                ease: 'easeInOut',
+                duration: 1200,
+              }
+            } "
+        >
+          Welcome!
+        </h1>
+        <h2
+          class="text-center font-serif text-xl"
+          v-motion
+          :initial="{opacity: 0}"
+          :visible-once="
+            {
+              opacity: 1,
+              transition: {
+                ease: 'easeInOut',
+                duration: 800,
+                delay: 200,
+              }
+            } "
+        >
           You may RSVP for any or all of the below guests:
         </h2>
         <ul
           role="list"
-          class="divide-y divide-gray-100 pt-4"
+          class="mt-4 divide-y divide-gray-100 rounded-md shadow-lg"
+          v-motion
+          :initial="{opacity: 0}"
+          :visible-once="
+            {
+              opacity: 1,
+              transition: {
+                ease: 'easeInOut',
+                duration: 800,
+                delay: 200,
+              }
+            } "
         >
           <li
-            v-for="member in guestGroup"
+            v-for="(member, index) in guestGroup"
             :key="member.id"
-            class="relative flex justify-between gap-x-6 px-4 py-5 sm:px-6 lg:px-8"
+            class="group relative flex justify-between  gap-x-6 px-4 py-5 transition-colors duration-150 first:rounded-t-md last:rounded-b-md sm:px-6 lg:px-8"
             :class="member.rsvp_response === null ? 'hover:bg-gray-50' : 'bg-green-50'"
+            v-motion
+            :initial="{opacity: 0}"
+            :visible-once="
+              {
+                opacity: 1,
+                transition: {
+                  ease: 'easeInOut',
+                  duration: 1200,
+                  delay: 200 + (index * 200),
+                }
+              } "
           >
             <div class="flex min-w-0 gap-x-4">
               <img
@@ -68,7 +139,7 @@
               </p>
               <ChevronRightIcon
                 v-if="member.rsvp_response === null"
-                class="size-5 flex-none text-gray-400"
+                class="size-5 flex-none text-gray-400 group-hover:text-gray-500"
                 aria-hidden="true"
               />
             </div>
@@ -94,6 +165,28 @@
         >Return</a>
       </div>
     </div>
+    <div
+      v-if="guest && guestCount > 1"
+      class="flex w-full items-center justify-center"
+    >
+      <button
+        @click="handleReload"
+        class="border border-transparent px-4 py-1.5 text-sm text-gray-700 transition duration-300 hover:border-gray-300"
+        v-motion
+        :initial="{opacity: 0}"
+        :visible-once="
+          {
+            opacity: 1,
+            transition: {
+              ease: 'easeInOut',
+              duration: 800,
+              delay: 200,
+            }
+          } "
+      >
+        Back to List
+      </button>
+    </div>
   </GuestAreaLayout>
 </template>
 <script setup>
@@ -102,7 +195,7 @@ import { ChevronRightIcon } from '@heroicons/vue/20/solid';
 import { router } from '@inertiajs/vue3';
 import axios from 'axios';
 import { createAvatar } from '@dicebear/core';
-import { funEmoji } from '@dicebear/collection';
+import { initials } from '@dicebear/collection';
 import GuestAreaLayout from '../../../shared/layouts/GuestAreaLayout.vue';
 import useGuest from '../../../../shared/composables/guest';
 import RsvpForm from '@/guest_facing/rsvp/form/components/RsvpForm.vue';
@@ -111,6 +204,8 @@ import GUEST_TYPES from '../../../../shared/constants/guestTypes';
 const {
     guest, guestGroup, setGuest, unsetGuest, setGuestGroup,
 } = useGuest();
+
+const guestCount = guestGroup.value?.length ?? 1;
 
 const props = defineProps({
     guests: {
@@ -121,10 +216,11 @@ const props = defineProps({
 setGuestGroup(props.guests);
 
 const getAvatar = (member) => {
-    const avatar = createAvatar(funEmoji, {
+    const avatar = createAvatar(initials, {
         seed: member.name,
         width: 64,
         height: 64,
+        scale: 75,
     });
     return `data:image/svg+xml,${encodeURIComponent(avatar)}`;
 };
@@ -147,6 +243,10 @@ const handleSubmit = (formData) => {
             unsetGuest();
             router.reload({ only: ['guests'] });
         });
+};
+
+const handleReload = () => {
+    unsetGuest();
 };
 
 </script>

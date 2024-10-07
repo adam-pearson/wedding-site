@@ -2,6 +2,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from 'ziggy-js';
 import Vueform from '@vueform/vueform';
+import { MotionPlugin } from '@vueuse/motion';
 import vueformConfig from '../../vueform.config';
 
 createInertiaApp({
@@ -10,12 +11,17 @@ createInertiaApp({
         return pages[`./${name}.vue`];
     },
     setup({
-        el, App, props, plugin,
+        el,
+        App,
+        props,
+        plugin,
     }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .use(Vueform, vueformConfig)
-            .mount(el);
+        const app = createApp({ render: () => h(App, props) });
+
+        app.use(plugin);
+        app.use(ZiggyVue);
+        app.use(Vueform, vueformConfig);
+        app.use(MotionPlugin);
+        app.mount(el);
     },
 });

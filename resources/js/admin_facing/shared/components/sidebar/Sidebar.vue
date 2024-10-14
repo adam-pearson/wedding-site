@@ -63,12 +63,8 @@
             <div
               class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2"
             >
-              <div class="flex h-16 shrink-0 items-center">
-                <img
-                  class="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt="Your Company"
-                >
+              <div class="flex shrink-0 items-center">
+                <SidebarHeader class="py-4" />
               </div>
               <nav class="flex flex-1 flex-col">
                 <ul
@@ -125,13 +121,7 @@
     <div
       class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6"
     >
-      <div class="flex h-16 shrink-0 items-center">
-        <img
-          class="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        >
-      </div>
+      <SidebarHeader class="pt-4" />
       <nav class="flex flex-1 flex-col">
         <ul
           role="list"
@@ -213,7 +203,7 @@
     </div>
     <img
       class="size-8 rounded-full bg-gray-50"
-      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      :src="getAvatar(page.props.auth?.user?.name)"
       alt=""
     >
   </div>
@@ -231,14 +221,16 @@ import {
 import {
     Bars3Icon,
     CalendarIcon,
-    FolderIcon,
+    QueueListIcon,
     HomeIcon,
+    ChartPieIcon,
     UsersIcon,
     XMarkIcon,
     Cog6ToothIcon,
 } from '@heroicons/vue/24/outline';
 import { createAvatar } from '@dicebear/core';
 import { funEmoji } from '@dicebear/collection';
+import SidebarHeader from '@/guest_facing/shared/components/sidebar/SidebarHeader.vue';
 
 const getAvatar = (member) => {
     const avatar = createAvatar(funEmoji, {
@@ -251,7 +243,7 @@ const getAvatar = (member) => {
 
 const navigation = reactive([
     {
-        name: 'Home',
+        name: 'Guest Site',
         href: route('home'),
         icon: HomeIcon,
         current: false,
@@ -259,7 +251,7 @@ const navigation = reactive([
     {
         name: 'Dashboard',
         href: route('admin.dashboard'),
-        icon: HomeIcon,
+        icon: ChartPieIcon,
         current: false,
     },
     {
@@ -271,7 +263,7 @@ const navigation = reactive([
     {
         name: 'To Do List',
         href: route('admin.todo.index'),
-        icon: FolderIcon,
+        icon: QueueListIcon,
         current: false,
     },
     {

@@ -91,7 +91,10 @@
               Forgot Password
             </Link>
             <!-- Footer -->
-            <div class="mt-6 border-t border-gray-200 pt-5 dark:border-gray-700">
+            <div
+              class="mt-6 border-t border-gray-200 pt-5 dark:border-gray-700"
+              v-if="userRegistrationAllowed"
+            >
               <div class="text-sm">
                 Need an account? <Link
                   class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-primary-400"
@@ -124,8 +127,11 @@
 </template>
 
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import LoginForm from '@/auth/login/components/LoginForm.vue';
+
+const page = usePage();
 
 defineProps({
     errors: {
@@ -134,6 +140,8 @@ defineProps({
         default: () => {},
     },
 });
+
+const userRegistrationAllowed = computed(() => page.props.features['user-registration']);
 
 function submit(formData) {
     router.post(route('login'), formData);

@@ -67,8 +67,11 @@
 </template>
 
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import RegisterForm from '@/auth/register/components/RegisterForm.vue';
+
+const page = usePage();
 
 defineProps({
     errors: {
@@ -78,8 +81,12 @@ defineProps({
     },
 });
 
+const userRegistrationAllowed = computed(() => page.props.features['user-registration']);
+
 function submit(formData) {
-    router.post(route('register'), formData);
+    if (userRegistrationAllowed.value) {
+        router.post(route('register'), formData);
+    }
 }
 
 </script>

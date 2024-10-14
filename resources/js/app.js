@@ -3,6 +3,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from 'ziggy-js';
 import Vueform from '@vueform/vueform';
 import { MotionPlugin } from '@vueuse/motion';
+import VueApexCharts from 'vue3-apexcharts';
 import vueformConfig from '../../vueform.config';
 
 createInertiaApp({
@@ -22,6 +23,7 @@ createInertiaApp({
         app.use(ZiggyVue);
         app.use(Vueform, vueformConfig);
         app.use(MotionPlugin);
+        app.use(VueApexCharts);
         app.mount(el);
     },
 });

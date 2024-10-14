@@ -25,6 +25,7 @@
       class="mt-4"
       full
       :submits="true"
+      :loading="loading"
     />
   </Vueform>
 </template>
@@ -37,6 +38,11 @@ const props = defineProps({
         type: Object,
         required: false,
         default: () => {},
+    },
+    loading: {
+        type: Boolean,
+        required: false,
+        default: false,
     },
 });
 

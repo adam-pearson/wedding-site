@@ -1,6 +1,5 @@
 <template>
   <!-- eslint-disable max-len -->
-  <!-- eslint-disable max-len -->
   <main class="bg-white dark:bg-gray-900">
     <div class="relative flex">
       <!-- Content -->
@@ -84,6 +83,7 @@
             <RequestPasswordResetForm
               @submit="submit"
               :errors="errors"
+              :loading="loading"
               v-if="!submitted"
             />
             <div
@@ -124,7 +124,6 @@
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
-import { ChevronLeftIcon } from '@heroicons/vue/20/solid/index.js';
 import RequestPasswordResetForm from '@/auth/password-reset/components/RequestPasswordResetForm.vue';
 
 const HTTP_OK = 200;
@@ -133,7 +132,10 @@ const UNPROCESSABLE = 422;
 const submitted = ref(false);
 const message = ref(null);
 const errors = ref({});
+const loading = ref(false);
+
 function submit(formData) {
+    loading.value = true;
     axios.post(route('password.email'), formData).then((res) => {
         if (res.status === HTTP_OK) {
             submitted.value = true;
@@ -145,6 +147,8 @@ function submit(formData) {
         } else {
             errors.value = { email: 'An error occurred. Please try again.' };
         }
+    }).finally(() => {
+        loading.value = false;
     });
 }
 

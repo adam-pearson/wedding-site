@@ -10,7 +10,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import CountBlock from '@/admin_facing/dashboard/components/CountBlock.vue';
 
-const title = ref('Total Remaining Invites');
+const title = ref('Total RSVPs Without Response');
 const count = ref(0);
 const loading = ref(true);
 

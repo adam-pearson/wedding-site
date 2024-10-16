@@ -40,7 +40,7 @@
   <!--      </p>-->
   <!--    </div>-->
   <!--  </div>-->
-  <main class="bg-white dark:bg-gray-900">
+  <main class="bg-white">
     <div class="relative flex">
       <!-- Content -->
       <div class="w-full md:w-1/2">
@@ -117,7 +117,7 @@
           </div>
 
           <div class="mx-auto w-full max-w-sm px-4 py-8">
-            <h1 class="mb-6 text-3xl font-bold text-gray-800 dark:text-gray-100">
+            <h1 class="mb-6 text-3xl font-bold text-gray-800">
               Reset Password
             </h1>
             <ResetPasswordForm

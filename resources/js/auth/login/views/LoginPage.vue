@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable max-len -->
-  <main class="bg-white dark:bg-gray-900">
+  <main class="bg-white">
     <div class="relative flex">
       <!-- Content -->
       <div class="w-full md:w-1/2">
@@ -77,7 +77,7 @@
           </div>
 
           <div class="mx-auto w-full max-w-sm px-4 py-8">
-            <h1 class="mb-6 text-3xl font-bold text-gray-800 dark:text-gray-100">
+            <h1 class="mb-6 text-3xl font-bold text-gray-800">
               Welcome back!
             </h1>
             <LoginForm
@@ -92,12 +92,12 @@
             </Link>
             <!-- Footer -->
             <div
-              class="mt-6 border-t border-gray-200 pt-5 dark:border-gray-700"
+              class="mt-6 border-t border-gray-200 pt-5"
               v-if="userRegistrationAllowed"
             >
               <div class="text-sm">
                 Need an account? <Link
-                  class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-primary-400"
+                  class="font-medium text-violet-500 hover:text-violet-600"
                   :href="route('register')"
                 >
                   Sign Up

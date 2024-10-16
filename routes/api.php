@@ -59,8 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get(uri: '/dashboard/stats/total-children-attending-count', action: [DashboardStatsController::class, 'totalChildrenAttendingCount'])
         ->name('admin.dashboard.stats.total-children-attending-count');
 
-    Route::get(uri: '/dashboard/stats/rsvp-over-time', action: [DashboardStatsController::class, 'rsvpOverTime'])
-        ->name('admin.dashboard.stats.rsvp-over-time');
+    Route::get(uri: '/dashboard/stats/rsvps-over-time', action: [DashboardStatsController::class, 'rsvpOverTime'])
+        ->name('admin.dashboard.stats.rsvps-over-time');
     // return {
     //  total_rsvps_to_send: [count]
     //  invite_data_by_date: [
